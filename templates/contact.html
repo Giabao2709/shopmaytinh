@@ -24,7 +24,7 @@
         .logo-text { color: var(--primary-yellow) !important; font-size: 1.8rem; font-weight: 900; text-decoration: none; }
         .header-links a { color: #ffffff !important; text-decoration: none; margin: 0 15px; font-weight: 500; font-size: 0.95rem; cursor: pointer; transition: 0.2s; padding-bottom: 5px; border-bottom: 2px solid transparent;}
         .header-links a:hover, .header-links a.active { color: var(--primary-yellow) !important; border-bottom: 2px solid var(--primary-yellow); }
-        .header-links a.link-deal { color: var(--primary-yellow) !important; }
+        .header-links a.link-deal { color: var(--red-price) !important; }
         .search-bar-header { background: #1E2B45; border: 1px solid #2A3B5C; border-radius: 20px; padding: 6px 15px; display: flex; align-items: center; width: 300px; }
         .search-bar-header input { background: transparent; border: none; color: white; width: 100%; outline: none; font-size: 0.85rem; }
         .search-bar-header input::placeholder { color: #8BA0B8; }
@@ -83,7 +83,7 @@
 </head>
 <body>
 
-    <!-- HEADER (Đã đổi thứ tự Menu) -->
+    <!-- HEADER (Đã đồng bộ link admin.html) -->
     <header class="custom-header">
         <div class="container-fluid px-4 px-lg-5 d-flex justify-content-between align-items-center">
             <a href="shop.html" class="logo-text">Khoavang.vn</a>
@@ -92,18 +92,18 @@
                 <a href="shop.html">Gaming</a>
                 <a href="shop.html">MacBook</a>
                 <a href="shop.html">Văn phòng</a>
-                <!-- Thứ tự mới: Phụ kiện -> Khuyến mãi -> Hỗ trợ -->
                 <a href="shop.html">Phụ kiện</a>
                 <a href="shop.html" class="link-deal fw-bold">Khuyến mãi</a>
                 <a href="contact.html" class="active">Hỗ trợ</a> 
             </div>
             <div class="d-flex align-items-center gap-4">
                 <div class="search-bar-header d-none d-md-flex">
-                    <input type="text" placeholder="Tìm kiếm công nghệ cao...">
+                    <input type="text" placeholder="Tìm kiếm tên sản phẩm...">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
                 <div class="header-icons">
-                    <a href="profile.html"><i class="fa-regular fa-user"></i></a>
+                    <!-- SỬA LẠI LINK VỀ ADMIN.HTML Ở ĐÂY -->
+                    <a href="admin.html"><i class="fa-regular fa-user"></i></a>
                     <a href="cart.html">
                         <i class="fa-solid fa-cart-shopping"></i>
                         <span class="cart-badge" id="header-cart-badge">0</span>
@@ -203,8 +203,8 @@
                 <!-- Bản đồ Showroom bằng Ảnh Tĩnh (Fix lỗi) -->
                 <div class="col-lg-6">
                     <div class="map-wrapper" title="Bấm để mở Google Maps">
-                        <!-- Link mở Google Maps thật -->
-                        <a href="https://maps.app.goo.gl/uP6c2K11k3N82J2K8" target="_blank">
+                        <!-- SỬA LẠI LINK MỞ GOOGLE MAPS THEO ĐỊA CHỈ YÊU CẦU -->
+                        <a href="https://www.google.com/maps/search/?api=1&query=283/47+CMT8,+P.12,+Q.10,+HCM" target="_blank">
                             <img src="/static/img/map.jpg" alt="Bản đồ đường đi đến Khoa Vàng">
                         </a>
                     </div>

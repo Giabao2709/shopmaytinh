@@ -9,385 +9,152 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-light: #F4F7FA;
-            --dark-navy: #0F172A;
+            --bg-body: #F4F6F8;
+            --dark-header: #0B1930;
             --primary-yellow: #FFB800;
-            --header-bg: #E6EDF9;
-            --footer-bg: #F1EBE1;
+            --primary-blue: #0A58CA;
+            --hover-blue: #1E2B45;
+            --border-color: #E2E8F0;
         }
 
-        /* KHÓA CUỘN TRANG TRÊN MÀN HÌNH MÁY TÍNH */
-        body {
-            background-color: var(--bg-light);
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            display: flex;
-            flex-direction: column;
+        body { 
+            background-color: var(--bg-body); 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            color: #333; 
             margin: 0;
-            height: 100vh; 
-            overflow: hidden; 
+            overflow-x: hidden;
         }
 
-        /* --- HEADER --- */
-        .custom-header {
-            background-color: var(--header-bg);
-            padding: 10px 0;
-            flex-shrink: 0;
-        }
-        .logo-text { color: var(--primary-yellow); font-size: 1.8rem; font-weight: 800; text-decoration: none; }
-        .header-links a { color: #fff; text-decoration: none; margin: 0 12px; font-weight: 500; font-size: 0.95rem; }
-        .header-icons i { color: var(--primary-yellow); font-size: 1.2rem; margin-left: 20px; cursor: pointer; }
-
-        /* --- KHÔNG GIAN CHÍNH --- */
-        .profile-wrapper {
-            flex-grow: 1;
-            padding: 3vh 0; 
-            display: flex;
-            overflow: hidden;
-        }
-        .row-full-height { height: 100%; }
-
-        /* SIDEBAR (BÊN TRÁI) */
-        .profile-sidebar {
-            background-color: var(--dark-navy);
-            border-radius: 12px;
-            padding: 30px 20px;
-            color: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            height: 100%;
-            overflow-y: auto; 
-        }
-        .profile-sidebar::-webkit-scrollbar, .profile-content::-webkit-scrollbar { display: none; }
-
-        .user-avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 2px solid var(--primary-yellow);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; color: var(--primary-yellow);
-            margin: 0 auto 10px auto;
-        }
-        .nav-profile { display: flex; flex-direction: column; gap: 5px; margin-top: 20px; }
-        .nav-profile a {
-            color: #94A3B8; text-decoration: none; padding: 10px 15px;
-            border-radius: 8px; font-weight: 500; display: flex; align-items: center; transition: all 0.3s;
-        }
-        .nav-profile a i { width: 25px; font-size: 1.1rem; }
-        .nav-profile a:hover { color: white; background: rgba(255,255,255,0.1); }
-        .nav-profile a.active {
-            color: var(--primary-yellow); background: rgba(255, 184, 0, 0.1);
-            border-left: 4px solid var(--primary-yellow);
-        }
-
-        /* KHUNG NỘI DUNG (BÊN PHẢI) */
-        .profile-content {
-            background: #fff; border-radius: 12px; padding: 25px 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02); height: 100%;
-            display: flex; flex-direction: column; overflow-y: auto;
-        }
-        .content-title { font-weight: 700; color: var(--dark-navy); margin-bottom: 5px; }
+        /* --- SIDEBAR TRÁI --- */
+        .wrapper { display: flex; min-height: 100vh; }
+        .sidebar { width: 260px; background-color: var(--dark-header); color: #fff; position: fixed; top: 0; left: 0; height: 100vh; display: flex; flex-direction: column; padding: 20px 15px; z-index: 100; }
         
-        /* CÁC THẺ TRẠNG THÁI (SUMMARY CARDS) */
-        .status-card {
-            border: 1px solid #E2E8F0; border-radius: 10px; padding: 12px 15px;
-            display: flex; align-items: center; gap: 15px; background: #fff;
-        }
-        .status-icon {
-            width: 40px; height: 40px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
-        }
-        .bg-light-blue { background: #E0F2FE; color: #0284C7; }
-        .bg-light-green { background: #DCFCE7; color: #16A34A; }
-        .bg-light-orange { background: #FFEDD5; color: #EA580C; }
-
-        /* THANH TÌM KIẾM */
-        .search-bar { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; }
+        .sidebar-brand { display: flex; align-items: center; gap: 10px; color: var(--primary-yellow) !important; font-size: 1.4rem; font-weight: 900; text-decoration: none; margin-bottom: 40px; padding: 0 5px; transition: 0.3s; }
+        .sidebar-brand:hover { transform: scale(1.05); }
+        .sidebar-brand-icon { background: var(--primary-yellow); color: var(--dark-header); padding: 5px 8px; border-radius: 8px; font-size: 1.2rem; }
         
-        /* BẢNG ĐƠN HÀNG TRÊN PC */
-        .table-custom th { font-size: 0.75rem; color: #64748B; font-weight: 700; }
-        .table-custom td { font-size: 0.9rem; vertical-align: middle; color: var(--dark-navy); font-weight: 500; }
-        .table-custom tbody tr:hover { background-color: #F8FAFC; }
-        
-        /* HIỂN THỊ DẠNG THẺ TRÊN MOBILE */
-        .mobile-order-card {
-            display: none; background: #fff; border: 1px solid #E2E8F0;
-            border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
+        .sidebar-nav { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+        .nav-item { margin-bottom: 8px; }
+        .nav-link { color: #cbd5e1 !important; font-size: 1.05rem; font-weight: 500; padding: 12px 20px; border-radius: 8px; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
+        .nav-link i { font-size: 1.2rem; width: 25px; text-align: center; }
+        .nav-link:hover { background-color: var(--hover-blue); color: #fff !important; }
+        .nav-link.active { background-color: var(--primary-blue); color: #fff !important; box-shadow: 0 4px 10px rgba(10, 88, 202, 0.3); }
 
-        /* --- FOOTER --- */
-        .custom-footer { background-color: var(--footer-bg); padding: 15px 0; flex-shrink: 0; color: #444; }
-
-        /* RESPONSIVE CHO MOBILE */
-        @media (max-width: 991px) {
-            body { height: auto; overflow: auto; } 
-            .profile-wrapper { padding: 20px; display: block; }
-            .profile-sidebar { height: auto; margin-bottom: 20px; }
-            .profile-content { height: auto; padding: 20px; }
-            .desktop-table { display: none; }
-            .mobile-order-card { display: block; }
-        }
-
-        /* =========================================
-           THÊM MỚI: ĐÃ THU GỌN 2 KHỐI HỖ TRỢ 
-           ========================================= */
-        .support-section { margin-top: 15px; margin-bottom: 5px; } /* Đã thu nhỏ margin */
-        .support-card { 
-            border-radius: 10px; 
-            padding: 15px 25px; /* Thu nhỏ padding */
-            height: 100%; position: relative; overflow: hidden; 
-            display: flex; flex-direction: column; justify-content: center; 
-        }
+        /* --- KHU VỰC NỘI DUNG PHẢI --- */
+        .main-content { margin-left: 260px; padding: 40px 40px 0 40px; width: calc(100% - 260px); display: flex; flex-direction: column; min-height: 100vh;}
+        .page-title { font-weight: 900; color: var(--dark-header); margin-bottom: 30px; font-size: 2rem; }
         
-        /* Khối màu xanh */
-        .card-support { background-color: #0b5edd; color: white; border: none; }
-        .card-support .bg-overlay {
-            position: absolute; right: 0; top: 0; bottom: 0; width: 55%;
-            background: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop') center/cover no-repeat;
-            opacity: 0.25; mix-blend-mode: luminosity; pointer-events: none;
-        }
-        .btn-chat { background-color: white; color: #0b5edd; font-weight: 700; border: none; border-radius: 6px; width: fit-content; }
+        .content-card { background: #fff; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.03); overflow: hidden; margin-bottom: 50px; padding: 40px;}
         
-        /* Khối màu vàng */
-        .card-warranty { background-color: #fff; border: 1px solid var(--primary-yellow); }
-        .card-warranty .bg-icon {
-            position: absolute; right: -5px; top: 50%; transform: translateY(-50%);
-            font-size: 6rem; /* Thu nhỏ logo in chìm */
-            color: #FFF8E1; pointer-events: none; z-index: 0;
-        }
-        .btn-warranty { background-color: var(--primary-yellow); color: var(--dark-navy); font-weight: 700; border: none; border-radius: 6px; width: fit-content; }
+        /* Trạng thái trống */
+        .empty-state { text-align: center; padding: 50px 20px; }
+        .empty-state-icon { font-size: 5rem; color: #cbd5e1; margin-bottom: 20px; }
+        .empty-state h3 { font-weight: 800; color: var(--dark-header); margin-bottom: 10px; }
+        .empty-state p { color: #64748b; font-size: 1rem; margin-bottom: 30px; }
+        
+        .btn-shop-now { background: var(--primary-yellow); color: #000; font-weight: 800; padding: 12px 35px; border-radius: 8px; border: none; text-decoration: none; transition: 0.3s; display: inline-block; }
+        .btn-shop-now:hover { background: #e6a600; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,184,0,0.3); color: #000; }
+
+        /* --- GIAO DIỆN HIỂN THỊ ĐƠN HÀNG THẬT --- */
+        .order-item-card { border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 25px; overflow: hidden; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .order-header { background: #F8FAFC; padding: 15px 25px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .order-body { padding: 25px; }
+        .order-footer { background: #F8FAFC; padding: 15px 25px; border-top: 1px dashed var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        
+        .product-row { display: flex; align-items: center; gap: 20px; padding-bottom: 15px; margin-bottom: 15px; border-bottom: 1px solid #f1f5f9; }
+        .product-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .product-img { width: 90px; height: 90px; object-fit: contain; border: 1px solid #e2e8f0; border-radius: 8px; padding: 5px; background: #fff; }
+        .product-info { flex-grow: 1; }
+        .product-name { font-weight: 700; font-size: 1.05rem; color: var(--dark-header); margin-bottom: 5px; }
+        .product-meta { color: #64748b; font-size: 0.9rem; }
+
+        .info-block { display: flex; flex-direction: column; }
+        .info-label { font-size: 0.85rem; color: #64748b; font-weight: 600; margin-bottom: 3px; }
+        .info-value { font-weight: 700; color: var(--dark-header); font-size: 1rem; }
+        .total-price { color: #DC2626; font-size: 1.3rem; font-weight: 900; }
+
+        /* --- FOOTER DƯỚI CÙNG --- */
+        .footer-bottom { margin-top: auto; background-color: var(--dark-header); color: #fff; padding: 40px; border-radius: 15px 15px 0 0; margin-left: -40px; margin-right: -40px;}
+        .footer-text { color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; }
+
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header class="custom-header">
-        <div class="container-fluid px-4 px-lg-5 d-flex justify-content-between align-items-center">
-            <a href="/" class="logo-text">Khoavang.vn</a>
-            <div class="header-links d-none d-md-block">
-                <a href="/">Gaming</a>
-                <a href="/">Workstation</a>
-                <a href="/">MacBook</a>
-                <a href="/">Office</a>
-                <a href="/">Deals</a>
-            </div>
-            <div class="header-icons">
-                <a href="/profile"><i class="fa-regular fa-user"></i></a>
-                <a href="/checkout"><i class="fa-solid fa-cart-shopping"></i></a>
-            </div>
+    <div class="wrapper">
+        
+        <!-- SIDEBAR TRÁI -->
+        <div class="sidebar">
+            <a href="shop.html" class="sidebar-brand">
+                <i class="fa-solid fa-laptop-code sidebar-brand-icon"></i> Khoavang.vn
+            </a>
+            
+            <ul class="sidebar-nav">
+                <li class="nav-item"><a href="admin.html" class="nav-link"><i class="fa-solid fa-user-pen"></i> Khách hàng</a></li>
+                <li class="nav-item"><a href="shop.html" class="nav-link"><i class="fa-solid fa-desktop"></i> Sản phẩm</a></li>
+                <li class="nav-item"><a href="cart.html" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> Đơn hàng</a></li>
+                <li class="nav-item"><a href="order.html" class="nav-link active"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn hàng</a></li>
+                <li class="nav-item"><a href="warranty.html" class="nav-link"><i class="fa-solid fa-shield-halved"></i> Tra cứu bảo hành</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fa-solid fa-headset"></i> Hỗ trợ</a></li>
+            </ul>
+
+            <ul class="sidebar-nav" style="flex-grow: 0;">
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-danger" onclick="confirmLogout(event)">
+                        <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+                    </a>
+                </li>
+            </ul>
         </div>
-    </header>
 
-    <!-- KHUNG CHÍNH -->
-    <div class="profile-wrapper container-fluid px-4 px-lg-5">
-        <div class="row row-full-height w-100 m-0">
+        <!-- NỘI DUNG PHẢI -->
+        <div class="main-content">
+            <h1 class="page-title">Lịch sử đơn hàng</h1>
             
-            <!-- CỘT TRÁI: SIDEBAR MENU -->
-            <div class="col-lg-3 h-100 pb-2">
-                <div class="profile-sidebar">
-                    <div class="user-avatar"><i class="fa-regular fa-user"></i></div>
-                    <div class="text-center">
-                        <h5 class="fw-bold mb-1">Nguyễn Văn Khách</h5>
-                        <p class="small mb-0" style="color: #94A3B8;">Thành viên Vàng</p>
-                    </div>
+            <div class="content-card">
+                
+                <!-- GIAO DIỆN TRỐNG -->
+                <div class="empty-state" id="empty-orders-view">
+                    <i class="fa-solid fa-box-open empty-state-icon"></i>
+                    <h3>Bạn chưa có đơn hàng nào</h3>
+                    <p>Có vẻ như bạn chưa thực hiện giao dịch nào. Hãy khám phá các sản phẩm công nghệ đỉnh cao của chúng tôi!</p>
+                    <a href="shop.html" class="btn-shop-now"><i class="fa-solid fa-cart-plus me-2"></i> TIẾP TỤC MUA SẮM</a>
+                </div>
 
-                    <div class="nav-profile">
-                        <a href="/profile"><i class="fa-regular fa-id-badge"></i> Hồ sơ cá nhân</a>
-                        <a href="/orders" class="active"><i class="fa-solid fa-box"></i> Lịch sử đơn hàng</a>
-                        <a href="#"><i class="fa-solid fa-location-dot"></i> Sổ địa chỉ</a>
-                        <a href="#"><i class="fa-regular fa-bell"></i> Thông báo</a>
-                        
-                        <!-- ĐÃ SỬA: Bấm vào đây sẽ hiện Modal thay vì chuyển trang thẳng -->
-                        <a href="#" class="text-danger mt-4" style="color: #EF4444 !important;" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                            <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Đăng xuất
-                        </a>
+                <!-- GIAO DIỆN CÓ ĐƠN HÀNG (Sẽ được JS render vào đây) -->
+                <div id="real-orders-view" class="d-none">
+                    <!-- Javascript sẽ đổ HTML vào đây -->
+                </div>
+
+            </div>
+
+            <!-- FOOTER Ở CUỐI TRANG -->
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <h4 style="color: var(--primary-yellow); font-weight: 800; margin-bottom: 15px;">Về Khoavang.vn</h4>
+                        <p class="footer-text mb-3">Được thành lập với sứ mệnh mang đến những giải pháp công nghệ tối ưu nhất, Khoavang.vn tự hào là hệ thống bán lẻ các dòng Laptop Gaming, Máy trạm (Workstation), MacBook và linh kiện Hi-End uy tín hàng đầu tại Việt Nam.</p>
+                        <p class="footer-text mb-0">© 2026 Khoavang.vn - High-End Hardware Retailer.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- CỘT PHẢI: LỊCH SỬ ĐƠN HÀNG -->
-            <div class="col-lg-9 h-100 pb-2">
-                <div class="profile-content">
-                    
-                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
-                        <div>
-                            <h4 class="content-title">Lịch sử đơn hàng</h4>
-                            <p class="text-muted small mb-0">Theo dõi trạng thái các đơn hàng của bạn</p>
-                        </div>
-                        <div class="d-flex gap-2 mt-3 mt-md-0">
-                            <div class="input-group search-bar">
-                                <span class="input-group-text bg-transparent border-0 text-muted"><i class="fa-solid fa-magnifying-glass"></i></span>
-                                <input type="text" class="form-control border-0 bg-transparent" placeholder="Mã đơn, sản phẩm...">
-                            </div>
-                            <button class="btn btn-outline-secondary d-flex align-items-center gap-2"><i class="fa-solid fa-filter"></i> Bộ lọc</button>
-                        </div>
-                    </div>
-
-                    <!-- 3 THẺ TÓM TẮT -->
-                    <div class="row g-3 mb-3">
-                        <div class="col-12 col-md-4">
-                            <div class="status-card">
-                                <div class="status-icon bg-light-blue"><i class="fa-solid fa-clipboard-list"></i></div>
-                                <div>
-                                    <p class="small text-muted mb-0">Tổng số đơn hàng</p>
-                                    <h5 class="fw-bold mb-0">34</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="status-card">
-                                <div class="status-icon bg-light-green"><i class="fa-solid fa-check"></i></div>
-                                <div>
-                                    <p class="small text-muted mb-0">Hoàn thành</p>
-                                    <h5 class="fw-bold mb-0">31</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="status-card">
-                                <div class="status-icon bg-light-orange"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                                <div>
-                                    <p class="small text-muted mb-0">Đang xử lý</p>
-                                    <h5 class="fw-bold mb-0">03</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BẢNG ĐƠN HÀNG (HIỂN THỊ TRÊN PC) -->
-                    <div class="table-responsive desktop-table flex-grow-1">
-                        <table class="table table-custom align-middle">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>MÃ ĐƠN HÀNG</th>
-                                    <th>NGÀY ĐẶT</th>
-                                    <th>SẢN PHẨM CHÍNH</th>
-                                    <th>TỔNG TIỀN</th>
-                                    <th>TRẠNG THÁI</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-primary fw-bold">#KV-99283</td>
-                                    <td>12/10/2026</td>
-                                    <td>MacBook Pro M3 14" (1TB SSD, 36GB)</td>
-                                    <td class="text-danger fw-bold">45.900.000đ</td>
-                                    <td><span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill">Hoàn thành</span></td>
-                                    <td class="text-end"><a href="#" class="text-muted"><i class="fa-solid fa-chevron-right"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-primary fw-bold">#KV-99410</td>
-                                    <td>25/10/2026</td>
-                                    <td>Dell XPS 15 9530</td>
-                                    <td class="text-danger fw-bold">38.500.000đ</td>
-                                    <td><span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill">Đang xử lý</span></td>
-                                    <td class="text-end"><a href="#" class="text-muted"><i class="fa-solid fa-chevron-right"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-primary fw-bold">#KV-98104</td>
-                                    <td>05/09/2026</td>
-                                    <td>HP Spectre x360</td>
-                                    <td class="text-danger fw-bold">32.200.000đ</td>
-                                    <td><span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill">Hoàn thành</span></td>
-                                    <td class="text-end"><a href="#" class="text-muted"><i class="fa-solid fa-chevron-right"></i></a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- THẺ ĐƠN HÀNG (HIỂN THỊ TRÊN MOBILE) -->
-                    <div class="mobile-order-card">
-                        <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
-                            <span class="fw-bold text-primary">#KV-99283</span>
-                            <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill">Hoàn thành</span>
-                        </div>
-                        <div class="d-flex mb-3">
-                            <img src="https://via.placeholder.com/60" class="rounded me-3" alt="Laptop">
-                            <div>
-                                <h6 class="mb-1 fw-bold" style="font-size: 0.95rem;">MacBook Pro M3 14"</h6>
-                                <p class="text-muted small mb-0">Ngày đặt: 12/10/2026</p>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <span class="text-muted small">Tổng thanh toán</span>
-                            <span class="fw-bold text-danger">45.900.000đ</span>
-                        </div>
-                    </div>
-
-                    <!-- Phân trang -->
-                    <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
-                        <span class="small text-muted d-none d-md-block">Hiển thị 1 - 3 của 34 đơn hàng</span>
-                        <ul class="pagination pagination-sm mb-0 mx-auto mx-md-0">
-                            <li class="page-item disabled"><a class="page-link" href="#"><i class="fa-solid fa-chevron-left"></i></a></li>
-                            <li class="page-item active"><a class="page-link bg-warning border-warning text-dark" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link text-dark" href="#"><i class="fa-solid fa-chevron-right"></i></a></li>
-                        </ul>
-                    </div>
-                    
-                    <!-- =========================================
-                         THÊM MỚI: 2 KHỐI HỖ TRỢ ĐÃ ĐƯỢC THU NHỎ
-                         ========================================= -->
-                    <div class="row g-3 support-section">
-                        <div class="col-md-6">
-                            <div class="support-card card-support">
-                                <div class="bg-overlay"></div>
-                                <div style="position: relative; z-index: 1;">
-                                    <h6 class="fw-bold mb-2">Cần hỗ trợ đơn hàng?</h6>
-                                    <p class="small mb-2" style="opacity: 0.9; max-width: 85%;">Đội ngũ kỹ thuật viên của chúng tôi sẵn sàng giúp đỡ bạn 24/7.</p>
-                                    <button class="btn btn-chat btn-sm px-3 py-1 mt-1">Chat ngay</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="support-card card-warranty">
-                                <!-- Icon in chìm đã thu nhỏ -->
-                                <i class="fa-solid fa-certificate bg-icon"></i>
-                                <div style="position: relative; z-index: 1;">
-                                    <h6 class="fw-bold text-dark mb-2">Chính sách bảo hành</h6>
-                                    <p class="small text-muted mb-2" style="max-width: 85%;">Tìm hiểu thêm về quyền lợi bảo hành chính hãng của bạn tại Khoavang.</p>
-                                    <button class="btn btn-warranty btn-sm px-3 py-1 text-dark mt-1">Xem chi tiết</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="custom-footer">
-        <div class="container-fluid px-4 px-lg-5">
-            <div class="row align-items-center">
-                <div class="col-lg-5 mb-1 mb-lg-0">
-                    <h6 class="fw-bold text-dark mb-1">Khoavang.vn</h6>
-                    <p class="text-muted small mb-0">Đơn vị cung cấp giải pháp máy tính cao cấp.</p>
-                </div>
-                <div class="col-lg-7 text-lg-end">
-                    <p class="text-muted small mb-0">© 2026 Khoavang.vn - High-End Computing Solutions</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-  <!-- MODAL XÁC NHẬN ĐĂNG XUẤT -->
+    <!-- BẢNG THÔNG BÁO ĐĂNG XUẤT (MODAL) -->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content border-0 shadow">
-                <div class="modal-body text-center p-4">
-                    <div class="text-warning mb-3">
-                        <i class="fa-solid fa-circle-exclamation" style="font-size: 3.5rem;"></i>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 15px; border: none;">
+                <div class="modal-body text-center py-5">
+                    <div style="width: 80px; height: 80px; background: #fee2e2; color: #DC2626; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 20px auto;">
+                        <i class="fa-solid fa-right-from-bracket"></i>
                     </div>
-                    <h5 class="fw-bold mb-2">Đăng xuất</h5>
-                    <p class="text-muted small mb-4">Xác nhận đăng xuất khỏi hệ thống Admin?</p>
-                    <div class="d-flex justify-content-center gap-2">
-                        <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Không</button>
-                        <!-- NÚT NÀY SẼ ĐƯA VỀ LOGIN.HTML CỦA BẠN (DÀNH CHO LIVE SERVER) -->
-                        <a href="login.html" class="btn btn-danger px-4">Có</a>
+                    <h3 class="fw-bold mb-2">Đăng xuất tài khoản?</h3>
+                    <p class="text-muted mb-4 fs-5">Bạn có chắc chắn muốn thoát khỏi hệ thống không?</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="button" class="btn btn-light border px-5 py-2 fw-bold fs-6" data-bs-dismiss="modal">Hủy</button>
+                        <a href="login.html" class="btn btn-danger px-5 py-2 fw-bold fs-6" onclick="logoutUser()">Đăng xuất</a>
                     </div>
                 </div>
             </div>
@@ -396,5 +163,98 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- SCRIPT XỬ LÝ LỊCH SỬ ĐƠN HÀNG -->
+    <script>
+        function confirmLogout(event) {
+            event.preventDefault(); 
+            var myModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+            myModal.show();
+        }
+
+        function logoutUser() {
+            // localStorage.removeItem('khoavang_user'); 
+        }
+
+        // --- ĐỌC VÀ HIỂN THỊ DỮ LIỆU ĐƠN HÀNG ---
+        window.onload = function() {
+            const historyData = localStorage.getItem('khoavang_orderHistory');
+            
+            if (historyData) {
+                const orders = JSON.parse(historyData);
+                
+                if (orders.length > 0) {
+                    // Ẩn giao diện trống, hiện khối dữ liệu
+                    document.getElementById('empty-orders-view').classList.add('d-none');
+                    const realView = document.getElementById('real-orders-view');
+                    realView.classList.remove('d-none');
+                    
+                    let htmlContent = '';
+                    
+                    // Đảo ngược mảng để đơn hàng mới nhất hiện lên trên cùng
+                    orders.reverse().forEach(order => {
+                        
+                        // Render danh sách sản phẩm trong từng đơn hàng
+                        let itemsHtml = '';
+                        order.items.forEach(item => {
+                            itemsHtml += `
+                                <div class="product-row">
+                                    <img src="${item.img}" alt="${item.name}" class="product-img">
+                                    <div class="product-info">
+                                        <div class="product-name">${item.name}</div>
+                                        <div class="product-meta">Số lượng: <strong>x${item.qty}</strong></div>
+                                    </div>
+                                    <div class="fw-bold text-dark">${(item.price * item.qty).toLocaleString('vi-VN')} đ</div>
+                                </div>
+                            `;
+                        });
+
+                        // Render Card của đơn hàng
+                        htmlContent += `
+                            <div class="order-item-card">
+                                <div class="order-header">
+                                    <div class="d-flex align-items-center gap-4">
+                                        <div class="info-block">
+                                            <span class="info-label">Mã đơn hàng</span>
+                                            <span class="info-value text-primary">${order.orderId}</span>
+                                        </div>
+                                        <div class="info-block">
+                                            <span class="info-label">Ngày đặt</span>
+                                            <span class="info-value"><i class="fa-regular fa-clock me-1"></i> ${order.date}</span>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-success px-3 py-2" style="font-size: 0.85rem;"><i class="fa-solid fa-truck-fast me-1"></i> Đang giao hàng</span>
+                                </div>
+                                
+                                <div class="order-body">
+                                    ${itemsHtml}
+                                </div>
+                                
+                                <div class="order-footer">
+                                    <div class="d-flex gap-4">
+                                        <div class="info-block">
+                                            <span class="info-label">Mã bảo hành</span>
+                                            <span class="info-value text-success">${order.warrantyId}</span>
+                                        </div>
+                                        <div class="info-block">
+                                            <span class="info-label">Phương thức</span>
+                                            <span class="info-value">${order.method}</span>
+                                        </div>
+                                    </div>
+                                    <div class="info-block text-end">
+                                        <span class="info-label">Tổng thanh toán</span>
+                                        <span class="total-price">${order.total.toLocaleString('vi-VN')} đ</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    // Đổ HTML vào view
+                    realView.innerHTML = htmlContent;
+                }
+            }
+        };
+    </script>
 </body>
 </html>

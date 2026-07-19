@@ -3,398 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Khoavang.vn</title>
+    <title>Trang cá nhân - Khoavang.vn</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-body: #F8FAFC;
-            --sidebar-bg: #0A1629;
-            --sidebar-active: #1D3A70;
+            --bg-body: #F4F6F8;
+            --dark-header: #0B1930;
             --primary-yellow: #FFB800;
-            --text-main: #1E293B;
-            --text-muted: #64748B;
+            --primary-blue: #0A58CA;
+            --hover-blue: #1E2B45;
             --border-color: #E2E8F0;
         }
 
-        body {
-            background-color: var(--bg-body);
-            font-family: 'Segoe UI', Tahoma, sans-serif;
+        body { 
+            background-color: var(--bg-body); 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            color: #333; 
             margin: 0;
-            color: var(--text-main);
             overflow-x: hidden;
         }
 
-        /* ================= SIDEBAR ================= */
-        .admin-sidebar {
-            width: 250px;
-            background-color: var(--sidebar-bg);
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-        }
-        .sidebar-brand {
-            padding: 25px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .brand-logo {
-            width: 35px;
-            height: 35px;
-            background-color: var(--primary-yellow);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-size: 1.2rem;
-        }
-        .brand-text { color: white; font-weight: 700; font-size: 1.2rem; letter-spacing: 0.5px; }
+        /* --- SIDEBAR TRÁI --- */
+        .wrapper { display: flex; min-height: 100vh; }
+        .sidebar { width: 260px; background-color: var(--dark-header); color: #fff; position: fixed; top: 0; left: 0; height: 100vh; display: flex; flex-direction: column; padding: 20px 15px; z-index: 100; }
         
-        .sidebar-menu { padding: 10px 15px; }
-        .menu-item {
-            color: #94A3B8;
-            text-decoration: none;
-            padding: 14px 20px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: 0.2s;
-        }
-        .menu-item i { width: 30px; font-size: 1.1rem; }
-        .menu-item:hover { color: white; background: rgba(255,255,255,0.05); }
-        .menu-item.active { background-color: var(--sidebar-active); color: white; }
-
-        /* ================= MAIN CONTENT ================= */
-        .admin-main { margin-left: 250px; min-height: 100vh; display: flex; flex-direction: column; }
-
-        /* Topbar */
-        .admin-topbar {
-            background: #fff;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 999;
-        }
-        .search-box {
-            background: #F1F5F9;
-            border-radius: 8px;
-            padding: 10px 15px;
-            width: 350px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .search-box input { border: none; background: transparent; outline: none; width: 100%; font-size: 0.9rem; }
-        .topbar-right { display: flex; align-items: center; gap: 25px; }
-        .notification-icon { position: relative; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; }
-        .notification-badge { position: absolute; top: -5px; right: -5px; background: #EF4444; color: white; font-size: 0.6rem; font-weight: bold; width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        .admin-profile { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-        .admin-profile img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 1px solid #ddd; }
-
-        /* Layout Container */
-        .content-wrapper { padding: 30px; flex-grow: 1; }
-        .page-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 2px; }
-        .page-subtitle { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 25px; }
-
-        /* ================= SUMMARY CARDS ================= */
-        .summary-card {
-            background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;
-        }
-        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
-        .icon-box { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-        .trend-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+        .sidebar-brand { display: flex; align-items: center; gap: 10px; color: var(--primary-yellow) !important; font-size: 1.4rem; font-weight: 900; text-decoration: none; margin-bottom: 40px; padding: 0 5px; transition: 0.3s; }
+        .sidebar-brand:hover { transform: scale(1.05); }
+        .sidebar-brand-icon { background: var(--primary-yellow); color: var(--dark-header); padding: 5px 8px; border-radius: 8px; font-size: 1.2rem; }
         
-        .trend-up { background: #DCFCE7; color: #16A34A; }
-        .trend-down { background: #FEE2E2; color: #EF4444; }
-        
-        .icon-blue { background: #E0F2FE; color: #2563EB; }
-        .icon-cyan { background: #CFFAFE; color: #0891B2; }
-        .icon-orange { background: #FFEDD5; color: #EA580C; }
-        .icon-brown { background: #F5E5D9; color: #8B5A2B; }
+        .sidebar-nav { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+        .nav-item { margin-bottom: 8px; }
+        .nav-link { color: #cbd5e1 !important; font-size: 1.05rem; font-weight: 500; padding: 12px 20px; border-radius: 8px; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
+        .nav-link i { font-size: 1.2rem; width: 25px; text-align: center; }
+        .nav-link:hover { background-color: var(--hover-blue); color: #fff !important; }
+        .nav-link.active { background-color: var(--primary-blue); color: #fff !important; box-shadow: 0 4px 10px rgba(10, 88, 202, 0.3); }
 
-        .card-title { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; margin-bottom: 5px; }
-        .card-value { font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin: 0; }
-
-        /* ================= MIDDLE SECTION ================= */
-        .section-box { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; height: 100%; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        /* --- KHU VỰC NỘI DUNG PHẢI --- */
+        .main-content { margin-left: 260px; padding: 40px 40px 0 40px; width: calc(100% - 260px); display: flex; flex-direction: column; min-height: 100vh;}
+        .page-title { font-weight: 900; color: var(--dark-header); margin-bottom: 30px; font-size: 2rem; }
         
-        /* Fake Chart */
-        .chart-container { display: flex; align-items: flex-end; justify-content: space-between; height: 250px; padding-top: 20px; border-left: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; position: relative; }
-        .y-axis { position: absolute; left: -35px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-between; font-size: 0.7rem; color: #94A3B8; }
-        .chart-bar-wrapper { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
-        .chart-bar { width: 50%; background-color: #93C5FD; border-radius: 4px 4px 0 0; transition: 0.3s; }
-        .chart-bar.active { background-color: #1D4ED8; }
-        .x-axis-label { font-size: 0.75rem; color: #94A3B8; margin-top: 10px; }
-
-        /* Top Products */
-        .top-product-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .top-product-item:last-child { margin-bottom: 0; }
-        .prod-info { display: flex; gap: 15px; align-items: center; }
-        .prod-img { width: 60px; height: 50px; object-fit: contain; border-radius: 6px; border: 1px solid #f1f5f9; padding: 2px; }
-        .prod-name { font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; color: var(--text-main); }
-        .prod-sales { font-size: 0.75rem; color: var(--text-muted); margin: 0; }
-        .prod-price { font-size: 0.95rem; font-weight: 700; color: #DC2626; }
-
-        /* ================= BOTTOM TABLE ================= */
-        .table-custom { margin-bottom: 0; }
-        .table-custom th { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); border-bottom: 1px solid var(--border-color); padding: 15px 10px; }
-        .table-custom td { padding: 15px 10px; vertical-align: middle; border-bottom: 1px solid #f8fafc; font-size: 0.85rem; }
+        /* Profile Card */
+        .profile-card { background: #fff; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.03); overflow: hidden; margin-bottom: 50px;}
+        .profile-cover { height: 120px; background: linear-gradient(135deg, var(--dark-header), var(--primary-blue)); position: relative; }
         
-        .badge-status { padding: 5px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
-        .badge-success { background: #DCFCE7; color: #16A34A; }
-        .badge-processing { background: #DBEAFE; color: #1D4ED8; }
-        .badge-warning { background: #FEF08A; color: #CA8A04; }
-        
-        .action-eye { color: var(--text-muted); transition: 0.2s; cursor: pointer; }
-        .action-eye:hover { color: var(--text-main); }
+        .profile-avatar-wrapper { margin-top: -50px; position: relative; display: inline-block; }
+        .profile-avatar { width: 110px; height: 110px; background: #fff; border: 4px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; color: #cbd5e1; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        /* Form styling */
+        .section-title { font-size: 1.1rem; font-weight: 800; color: var(--dark-header); border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 25px; }
+        .form-label { font-weight: 700; color: #475569; font-size: 0.9rem; }
+        .input-group-text { background: #f8fafc; border-color: #cbd5e1; color: #64748b; }
+        .form-control { border-radius: 0 8px 8px 0; padding: 12px 15px; border: 1px solid #cbd5e1; background: #fff; font-size: 0.95rem; }
+        .form-control:focus { border-color: var(--primary-blue); box-shadow: none; outline: 1px solid var(--primary-blue); }
+        .form-control:disabled { background: #f1f5f9; cursor: not-allowed; }
+
+        .btn-save { background: var(--primary-yellow); color: #000; font-weight: 800; padding: 12px 35px; border-radius: 8px; border: none; transition: 0.3s; }
+        .btn-save:hover { background: #e6a600; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,184,0,0.3); }
+
+        /* Toast thông báo Lưu thành công */
+        .toast-custom { position: fixed; top: 30px; right: 30px; background: #16A34A; color: white; padding: 15px 25px; border-radius: 8px; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 9999; transform: translateX(150%); transition: transform 0.3s ease-in-out; display: flex; align-items: center; gap: 10px;}
+        .toast-custom.show { transform: translateX(0); }
+
+        /* --- FOOTER DƯỚI CÙNG --- */
+        .footer-bottom { margin-top: auto; background-color: var(--dark-header); color: #fff; padding: 40px; border-radius: 15px 15px 0 0; margin-left: -40px; margin-right: -40px;}
+        .footer-text { color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; }
+
     </style>
 </head>
 <body>
 
-    <!-- ================= SIDEBAR ================= -->
-    <div class="admin-sidebar">
-        <div class="sidebar-brand">
-            <div class="brand-logo"><i class="fa-solid fa-laptop-code"></i></div>
-            <div class="brand-text">Khoavang.vn</div>
-        </div>
-        <div class="sidebar-menu">
-            <a href="#" class="menu-item active"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-desktop"></i> Sản phẩm</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-cart-shopping"></i> Đơn hàng</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-users"></i> Khách hàng</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-chart-simple"></i> Báo cáo</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-gear"></i> Cài đặt</a>
-        </div>
+    <!-- BẢNG THÔNG BÁO LƯU THÀNH CÔNG -->
+    <div class="toast-custom" id="save-toast">
+        <i class="fa-solid fa-circle-check fs-4"></i>
+        <span>Bạn đã thay đổi thành công.</span>
     </div>
 
-    <!-- ================= MAIN ================= -->
-    <div class="admin-main">
+    <div class="wrapper">
         
-        <!-- Topbar -->
-        <div class="admin-topbar">
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass text-muted"></i>
-                <input type="text" placeholder="Tìm kiếm đơn hàng, sản phẩm...">
-            </div>
-            <div class="topbar-right">
-                <div class="notification-icon">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notification-badge">4</span>
-                </div>
-                <div class="admin-profile">
-                    <span class="fw-bold" style="font-size: 0.9rem;">Chào mừng, Admin</span>
-                    <!-- HÌNH ẢNH ADMIN TỪ THƯ MỤC CỦA BẠN -->
-                    <img src="/static/img/admin.jpg" alt="Admin">
-                </div>
-            </div>
+        <!-- SIDEBAR TRÁI -->
+        <div class="sidebar">
+            <a href="shop.html" class="sidebar-brand">
+                <i class="fa-solid fa-laptop-code sidebar-brand-icon"></i> Khoavang.vn
+            </a>
+            
+            <ul class="sidebar-nav">
+                <li class="nav-item"><a href="admin.html" class="nav-link active"><i class="fa-solid fa-user-pen"></i> Khách hàng</a></li>
+                <li class="nav-item"><a href="shop.html" class="nav-link"><i class="fa-solid fa-desktop"></i> Sản phẩm</a></li>
+                <li class="nav-item"><a href="cart.html" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> Đơn hàng</a></li>
+                <li class="nav-item"><a href="order.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn hàng</a></li>
+                
+                <!-- MỤC MỚI ĐƯỢC THÊM VÀO -->
+                <li class="nav-item"><a href="warranty.html" class="nav-link"><i class="fa-solid fa-shield-halved"></i> Tra cứu bảo hành</a></li>
+                
+                <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fa-solid fa-headset"></i> Hỗ trợ</a></li>
+            </ul>
+
+            <ul class="sidebar-nav" style="flex-grow: 0;">
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-danger" onclick="confirmLogout(event)">
+                        <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+                    </a>
+                </li>
+            </ul>
         </div>
 
-        <div class="content-wrapper">
-            <h1 class="page-title">Tổng quan hệ thống</h1>
-            <p class="page-subtitle">Cập nhật lúc 09:42 SA, 24/05/2024</p>
+        <!-- NỘI DUNG PHẢI -->
+        <div class="main-content">
+            <h1 class="page-title">Quản lý tài khoản</h1>
+            
+            <div class="profile-card">
+                <!-- Ảnh bìa -->
+                <div class="profile-cover"></div>
+                
+                <div class="px-5 pb-5">
+                    <!-- Khu vực Avatar và Tên -->
+                    <div class="d-flex flex-wrap justify-content-between align-items-end mb-5">
+                        <div class="d-flex align-items-end gap-4">
+                            <div class="profile-avatar-wrapper">
+                                <div class="profile-avatar"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="pb-2">
+                                <h3 class="fw-bold mb-1" id="display-fullname">Khách hàng mới</h3>
+                                <p class="text-muted mb-0"><i class="fa-regular fa-clock me-1"></i> Thành viên mới</p>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- ================= 4 CARDS ================= -->
-            <div class="row g-4 mb-4">
-                <!-- Card 1 -->
-                <div class="col-12 col-md-6 col-xl-3">
-                    <div class="summary-card">
-                        <div class="card-top">
-                            <div class="icon-box icon-blue"><i class="fa-solid fa-money-bill"></i></div>
-                            <div class="trend-badge trend-up"><i class="fa-solid fa-arrow-trend-up"></i> 12.5%</div>
+                    <!-- Khu vực Form -->
+                    <form>
+                        <div class="row g-5">
+                            <!-- Cột 1: Thông tin cá nhân -->
+                            <div class="col-xl-6">
+                                <h4 class="section-title">THÔNG TIN LIÊN HỆ</h4>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Họ và tên</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-regular fa-id-badge"></i></span>
+                                        <input type="text" class="form-control" id="profile-fullname" placeholder="Nhập họ và tên...">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Số điện thoại</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                                        <input type="tel" class="form-control" id="profile-phone" placeholder="Nhập số điện thoại...">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-regular fa-envelope"></i></span>
+                                        <input type="email" class="form-control" id="profile-email" placeholder="Nhập địa chỉ email...">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cột 2: Bảo mật & Địa chỉ -->
+                            <div class="col-xl-6">
+                                <h4 class="section-title">ĐỊA CHỈ & BẢO MẬT</h4>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Địa chỉ giao hàng mặc định</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-map-location-dot"></i></span>
+                                        <input type="text" class="form-control" id="profile-address" placeholder="Nhập địa chỉ nhận hàng...">
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Tên đăng nhập</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-at"></i></span>
+                                        <input type="text" class="form-control" id="profile-username" disabled>
+                                    </div>
+                                    <small class="text-muted mt-1 d-block"><i class="fa-solid fa-circle-info me-1"></i> Tên đăng nhập không thể thay đổi.</small>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Mật khẩu</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                        <input type="password" class="form-control" value="********" disabled style="border-radius: 0;">
+                                        <button class="btn btn-secondary" type="button" style="border-radius: 0 8px 8px 0;">Đổi mật khẩu</button>
+                                    </div>
+                                </div>
+
+                                <div class="text-end mt-5">
+                                    <button type="button" class="btn-save" onclick="saveUserData()"><i class="fa-solid fa-floppy-disk me-2"></i> LƯU THAY ĐỔI</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-title">Tổng doanh thu<br>(Tháng)</div>
-                        <div class="card-value">2.450.000.000đ</div>
-                    </div>
-                </div>
-                <!-- Card 2 -->
-                <div class="col-12 col-md-6 col-xl-3">
-                    <div class="summary-card">
-                        <div class="card-top">
-                            <div class="icon-box icon-cyan"><i class="fa-solid fa-bag-shopping"></i></div>
-                            <div class="trend-badge trend-up"><i class="fa-solid fa-arrow-trend-up"></i> 8.2%</div>
-                        </div>
-                        <div class="card-title">Tổng số đơn hàng<br>&nbsp;</div>
-                        <div class="card-value">1,284</div>
-                    </div>
-                </div>
-                <!-- Card 3 -->
-                <div class="col-12 col-md-6 col-xl-3">
-                    <div class="summary-card">
-                        <div class="card-top">
-                            <div class="icon-box icon-orange"><i class="fa-solid fa-user-plus"></i></div>
-                            <div class="trend-badge trend-down"><i class="fa-solid fa-arrow-trend-down"></i> 2.1%</div>
-                        </div>
-                        <div class="card-title">Khách hàng mới<br>&nbsp;</div>
-                        <div class="card-value">456</div>
-                    </div>
-                </div>
-                <!-- Card 4 -->
-                <div class="col-12 col-md-6 col-xl-3">
-                    <div class="summary-card">
-                        <div class="card-top">
-                            <div class="icon-box icon-brown"><i class="fa-solid fa-bullseye"></i></div>
-                            <div class="trend-badge trend-up"><i class="fa-regular fa-circle-check"></i> Tốt</div>
-                        </div>
-                        <div class="card-title">Tỷ lệ chuyển đổi<br>&nbsp;</div>
-                        <div class="card-value">4.82%</div>
-                    </div>
+                    </form>
                 </div>
             </div>
 
-            <!-- ================= CHART & TOP PRODUCTS ================= -->
-            <div class="row g-4 mb-4">
-                <!-- Biểu đồ -->
-                <div class="col-12 col-xl-8">
-                    <div class="section-box">
-                        <div class="section-header">
-                            <div>
-                                <h6 class="fw-bold mb-1">Xu hướng doanh thu</h6>
-                                <p class="small text-muted mb-0">Thống kê theo 7 ngày gần nhất</p>
-                            </div>
-                            <select class="form-select form-select-sm" style="width: auto; box-shadow: none;">
-                                <option>7 ngày qua</option>
-                            </select>
-                        </div>
-                        
-                        <div class="chart-container">
-                            <div class="y-axis">
-                                <span>500M</span><span>400M</span><span>300M</span><span>200M</span><span>100M</span><span>0</span>
-                            </div>
-                            <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 45%;"></div><div class="x-axis-label">T2</div></div>
-                            <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 65%;"></div><div class="x-axis-label">T3</div></div>
-                            <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 85%;"></div><div class="x-axis-label">T4</div></div>
-                            <div class="chart-bar-wrapper"><div class="chart-bar active" style="height: 100%;"></div><div class="x-axis-label fw-bold" style="color: #1D4ED8;">T5</div></div>
-                            <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 70%;"></div><div class="x-axis-label">T6</div></div>
-                            <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 60%;"></div><div class="x-axis-label">T7</div></div>
-                            <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 55%;"></div><div class="x-axis-label">CN</div></div>
-                        </div>
+            <!-- FOOTER Ở CUỐI TRANG ADMIN -->
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <h4 style="color: var(--primary-yellow); font-weight: 800; margin-bottom: 15px;">Về Khoavang.vn</h4>
+                        <p class="footer-text mb-3">Được thành lập với sứ mệnh mang đến những giải pháp công nghệ tối ưu nhất, Khoavang.vn tự hào là hệ thống bán lẻ các dòng Laptop Gaming, Máy trạm (Workstation), MacBook và linh kiện Hi-End uy tín hàng đầu tại Việt Nam.</p>
+                        <p class="footer-text mb-0">© 2026 Khoavang.vn - High-End Hardware Retailer.</p>
                     </div>
-                </div>
-
-                <!-- Top Sản phẩm -->
-                <div class="col-12 col-xl-4">
-                    <div class="section-box">
-                        <div class="section-header">
-                            <h6 class="fw-bold mb-0">Top sản phẩm</h6>
-                            <a href="#" class="text-decoration-none small fw-bold" style="color: #2563EB;">Tất cả</a>
-                        </div>
-
-                        <!-- ẢNH GẮN CHUẨN TỪ THƯ MỤC CỦA BẠN -->
-                        <div class="top-product-item">
-                            <div class="prod-info">
-                                <img src="/static/img/pro16m3.jpeg" alt="MacBook" class="prod-img">
-                                <div>
-                                    <h6 class="prod-name">MacBook Pro 16" M3 Max</h6>
-                                    <p class="prod-sales">84 đơn hàng</p>
-                                </div>
-                            </div>
-                            <div class="prod-price">65,9tr</div>
-                        </div>
-
-                        <div class="top-product-item">
-                            <div class="prod-info">
-                                <img src="/static/img/msiraider.jpg" alt="MSI" class="prod-img">
-                                <div>
-                                    <h6 class="prod-name">MSI Raider GE78 HX</h6>
-                                    <p class="prod-sales">62 đơn hàng</p>
-                                </div>
-                            </div>
-                            <div class="prod-price">54,5tr</div>
-                        </div>
-
-                        <div class="top-product-item">
-                            <div class="prod-info">
-                                <img src="/static/img/rogg14.jpg" alt="ASUS" class="prod-img">
-                                <div>
-                                    <h6 class="prod-name">ASUS ROG Zephyrus G14</h6>
-                                    <p class="prod-sales">45 đơn hàng</p>
-                                </div>
-                            </div>
-                            <div class="prod-price">38,2tr</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ================= RECENT ORDERS TABLE ================= -->
-            <div class="section-box">
-                <div class="section-header mb-3">
-                    <h6 class="fw-bold mb-0">Đơn hàng gần đây</h6>
-                    <div class="d-flex align-items-center gap-3">
-                        <span class="small text-muted">Lọc theo trạng thái</span>
-                        <button class="btn btn-dark btn-sm fw-bold" style="background-color: var(--sidebar-bg);">Xem tất cả</button>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-custom">
-                        <thead>
-                            <tr>
-                                <th>MÃ ĐƠN HÀNG</th>
-                                <th>KHÁCH HÀNG</th>
-                                <th>SẢN PHẨM</th>
-                                <th>TỔNG CỘNG</th>
-                                <th>TRẠNG THÁI</th>
-                                <th class="text-center">HÀNH ĐỘNG</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="fw-bold text-primary">#KV-89210</td>
-                                <td>
-                                    <div class="fw-bold text-dark">Nguyễn Văn An</div>
-                                    <div class="small text-muted">an.nguyen@email.com</div>
-                                </td>
-                                <td class="text-muted">MacBook Air M2,<br>Chuột Magic Mouse</td>
-                                <td class="fw-bold text-danger">28.500.000đ</td>
-                                <td><span class="badge-status badge-success">Đã giao hàng</span></td>
-                                <td class="text-center"><i class="fa-regular fa-eye action-eye"></i></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold text-primary">#KV-89211</td>
-                                <td>
-                                    <div class="fw-bold text-dark">Trần Thị Bích</div>
-                                    <div class="small text-muted">bich.tran@email.com</div>
-                                </td>
-                                <td class="text-muted">Dell XPS 15 9530</td>
-                                <td class="fw-bold text-danger">42.200.000đ</td>
-                                <td><span class="badge-status badge-processing">Đang xử lý</span></td>
-                                <td class="text-center"><i class="fa-regular fa-eye action-eye"></i></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold text-primary">#KV-89212</td>
-                                <td>
-                                    <div class="fw-bold text-dark">Lê Hoàng Nam</div>
-                                    <div class="small text-muted">nam.lh@email.com</div>
-                                </td>
-                                <td class="text-muted">HP ZBook Fury G10</td>
-                                <td class="fw-bold text-danger">58.900.000đ</td>
-                                <td><span class="badge-status badge-warning">Chờ thanh toán</span></td>
-                                <td class="text-center"><i class="fa-regular fa-eye action-eye"></i></td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
+    <!-- BẢNG THÔNG BÁO ĐĂNG XUẤT (MODAL) -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 15px; border: none;">
+                <div class="modal-body text-center py-5">
+                    <div style="width: 80px; height: 80px; background: #fee2e2; color: var(--red-price); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 20px auto;">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </div>
+                    <h3 class="fw-bold mb-2">Đăng xuất tài khoản?</h3>
+                    <p class="text-muted mb-4 fs-5">Bạn có chắc chắn muốn thoát khỏi hệ thống không?</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="button" class="btn btn-light border px-5 py-2 fw-bold fs-6" data-bs-dismiss="modal">Hủy</button>
+                        <a href="login.html" class="btn btn-danger px-5 py-2 fw-bold fs-6" onclick="logoutUser()">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // HÀM TẢI DỮ LIỆU KHI MỞ TRANG
+        function loadUserData() {
+            let savedUser = localStorage.getItem('khoavang_user');
+            
+            if (savedUser) {
+                let user = JSON.parse(savedUser);
+                
+                document.getElementById('profile-fullname').value = user.fullname || '';
+                document.getElementById('profile-phone').value = user.phone || '';
+                document.getElementById('profile-email').value = user.email || '';
+                document.getElementById('profile-address').value = user.address || '';
+                document.getElementById('profile-username').value = user.username || '';
+                
+                if(user.fullname) {
+                    document.getElementById('display-fullname').innerText = user.fullname;
+                }
+            } else {
+                document.getElementById('profile-username').value = 'khachhang_' + Math.floor(Math.random() * 10000);
+            }
+        }
+
+        // HÀM LƯU THAY ĐỔI
+        function saveUserData() {
+            let user = {
+                fullname: document.getElementById('profile-fullname').value,
+                phone: document.getElementById('profile-phone').value,
+                email: document.getElementById('profile-email').value,
+                address: document.getElementById('profile-address').value,
+                username: document.getElementById('profile-username').value
+            };
+            
+            localStorage.setItem('khoavang_user', JSON.stringify(user));
+            
+            if(user.fullname) {
+                document.getElementById('display-fullname').innerText = user.fullname;
+            }
+
+            const toast = document.getElementById('save-toast');
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function logoutUser() {
+            // Tùy chọn xóa phiên đăng nhập nếu cần
+        }
+
+        function confirmLogout(event) {
+            event.preventDefault(); 
+            var myModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+            myModal.show();
+        }
+
+        window.onload = loadUserData;
+    </script>
 </body>
 </html>

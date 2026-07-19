@@ -11,8 +11,8 @@
         :root {
             --bg-light: #F4F7FA;
             --dark-navy: #0F172A;
+            --header-navy: #0b1528; 
             --primary-yellow: #FFB800;
-            --header-bg: #E6EDF9;
             --footer-bg: #F1EBE1;
         }
         
@@ -28,8 +28,8 @@
 
         /* --- HEADER --- */
         .custom-header {
-            background-color: var(--header-bg);
-            padding: 10px 0;
+            background-color: var(--header-navy);
+            padding: 15px 0;
             flex-shrink: 0;
         }
         .logo-text {
@@ -38,18 +38,42 @@
             font-weight: 800;
             text-decoration: none;
         }
+        .header-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+        }
         .header-links a {
             color: #fff;
             text-decoration: none;
-            margin: 0 12px;
-            font-weight: 500;
+            margin: 0 15px;
+            font-weight: 600;
             font-size: 0.95rem;
+            position: relative;
         }
-        .header-icons i {
+        .header-links a:hover {
             color: var(--primary-yellow);
+        }
+        .header-links a.text-red-custom {
+            color: #e30019 !important;
+        }
+        
+        .header-login-btn {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        .header-login-btn i {
             font-size: 1.2rem;
-            margin-left: 20px;
-            cursor: pointer;
+        }
+        .header-login-btn:hover {
+            color: var(--primary-yellow);
         }
 
         /* --- KHÔNG GIAN CHÍNH --- */
@@ -104,7 +128,6 @@
             margin-top: 10px;
         }
         
-        /* NÚT SOCIAL LOGIN */
         .social-btn {
             border: 1px solid #ddd;
             background: #fff;
@@ -122,12 +145,13 @@
         }
         .social-btn:hover { background: #f8f9fa; }
 
-        /* CỘT ẢNH BÊN PHẢI (ĐÃ FIX LỖI CẮT CHỮ) */
+        /* CỘT ẢNH BÊN PHẢI */
         .image-column {
             width: 60%;
             background: url('/static/img/login1.png') no-repeat;
+            background-color: #e9ecef;
             background-size: cover;
-            background-position: center bottom; /* Ép phần dưới của ảnh luôn hiển thị */
+            background-position: center bottom; 
             height: 100%;
         }
 
@@ -159,6 +183,7 @@
             .auth-container { flex-direction: column; height: auto; }
             .form-column, .image-column { width: 100%; }
             .image-column { min-height: 350px; background-position: center; }
+            .header-links { display: none !important; }
         }
     </style>
 </head>
@@ -167,19 +192,26 @@
     <!-- HEADER -->
     <header class="custom-header">
         <div class="container-fluid px-5 d-flex justify-content-between align-items-center">
-            <a href="/" class="logo-text">Khoavang.vn</a>
-            <div class="header-links d-none d-md-block">
-                <a href="#">Gaming</a>
-                <a href="#">Workstation</a>
-                <a href="#">MacBook</a>
-                <a href="#">Office</a>
-                <a href="#">Deals</a>
-                <a href="#">Support</a>
+            
+            <a href="index.html" class="logo-text">Khoavang.vn</a>
+            
+            <div class="header-links d-none d-xl-flex">
+                <a href="shop.html">Tất cả</a>
+                <a href="shop.html?cat=gaming">Gaming</a>
+                <a href="shop.html?cat=macbook">MacBook</a>
+                <a href="shop.html?cat=office">Văn phòng</a>
+                <a href="shop.html?cat=accessory">Phụ kiện</a>
+                <a href="shop.html?cat=deals" class="text-red-custom">Khuyến mãi</a>
+                <a href="contact.html">Hỗ trợ</a>
             </div>
-            <div class="header-icons">
-                <i class="fa-regular fa-user"></i>
-                <i class="fa-solid fa-cart-shopping"></i>
+
+            <div>
+                <a href="login.html" class="header-login-btn">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Đăng nhập / Đăng ký</span>
+                </a>
             </div>
+
         </div>
     </header>
 
@@ -193,25 +225,30 @@
                 <!-- KHU VỰC ĐĂNG NHẬP -->
                 <div id="loginSection">
                     <h2 class="fw-bold mb-2">Chào mừng trở lại</h2>
-                    <p class="text-muted mb-4" style="font-size: 0.9rem;">Đăng nhập vào tài khoản Khoavang.vn của bạn để tiếp tục trải nghiệm mua sắm.</p>
+                    <p class="text-muted mb-3" style="font-size: 0.9rem;">Đăng nhập vào tài khoản Khoavang.vn của bạn để tiếp tục trải nghiệm mua sắm.</p>
 
-                    <form action="/api/login" method="POST">
+                    <!-- DIV CHỨA THÔNG BÁO LỖI -->
+                    <div id="loginError" class="alert alert-danger py-2 d-none" style="font-size: 0.85rem; border-radius: 4px;">
+                        <i class="fa-solid fa-circle-exclamation me-1"></i> Tài Khoản hoặc Mật Khẩu không đúng.
+                    </div>
+
+                    <form id="loginForm">
                         <div class="mb-3">
                             <label class="form-label fw-bold" style="font-size: 0.75rem;">TÀI KHOẢN</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-white text-muted border-end-0"><i class="fa-regular fa-user"></i></span>
-                                <input type="text" class="form-control border-start-0 ps-0" placeholder="Nhập tên đăng nhập..." required>
+                                <input type="text" id="loginUsername" class="form-control border-start-0 ps-0" placeholder="Nhập tên đăng nhập..." required>
                             </div>
                         </div>
                         
                         <div class="mb-3">
                             <div class="d-flex justify-content-between align-items-center">
                                 <label class="form-label fw-bold mb-0" style="font-size: 0.75rem;">MẬT KHẨU</label>
-                                <a href="#" class="text-decoration-none text-primary" style="font-size: 0.8rem;">Quên mật khẩu?</a>
+                                <a href="javascript:void(0)" class="text-decoration-none text-primary" style="font-size: 0.8rem;">Quên mật khẩu?</a>
                             </div>
                             <div class="input-group mt-2">
                                 <span class="input-group-text bg-white text-muted border-end-0"><i class="fa-solid fa-lock"></i></span>
-                                <input type="password" class="form-control border-start-0 border-end-0 ps-0 pwd-input" placeholder="••••••••" required>
+                                <input type="password" id="loginPassword" class="form-control border-start-0 border-end-0 ps-0 pwd-input" placeholder="••••••••" required>
                                 <span class="input-group-text bg-white text-muted border-start-0 toggle-pwd" style="cursor: pointer;">
                                     <i class="fa-regular fa-eye-slash"></i>
                                 </span>
@@ -229,7 +266,6 @@
                     <div class="text-center mt-4">
                         <p class="small text-muted mb-3">Chưa có tài khoản? <a href="javascript:void(0)" class="text-primary fw-bold text-decoration-none" onclick="toggleAuthForms()">Đăng ký ngay</a></p>
                         
-                        <!-- NÚT GOOGLE VÀ FACEBOOK (ĐÃ FIX LOGO & THÊM TÍNH NĂNG MÔ PHỎNG) -->
                         <div class="d-flex gap-3">
                             <a href="javascript:void(0)" onclick="simulateSocialLogin('Google')" class="social-btn text-decoration-none">
                                 <i class="fa-brands fa-google" style="color: #DB4437;"></i> Google
@@ -246,20 +282,28 @@
                     <h2 class="fw-bold mb-2">Tạo tài khoản mới</h2>
                     <p class="text-muted mb-4" style="font-size: 0.9rem;">Trở thành thành viên của Khoavang.vn để nhận nhiều ưu đãi.</p>
 
-                    <form action="/api/register" method="POST">
+                    <!-- DIV CHỨA THÔNG BÁO LỖI ĐĂNG KÝ -->
+                    <div id="regError" class="alert alert-danger py-2 d-none" style="font-size: 0.85rem; border-radius: 4px;"></div>
+
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold" style="font-size: 0.75rem;">HỌ VÀ TÊN</label>
+                            <input type="text" id="regFullName" class="form-control" placeholder="Nhập họ và tên..." required>
+                        </div>
+
                         <div class="mb-3">
                             <label class="form-label fw-bold" style="font-size: 0.75rem;">TÀI KHOẢN</label>
-                            <input type="text" class="form-control" placeholder="Tên đăng nhập" required>
+                            <input type="text" id="regUsername" class="form-control" placeholder="Tên đăng nhập" required>
                         </div>
                         
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold" style="font-size: 0.75rem;">EMAIL</label>
-                                <input type="email" class="form-control" placeholder="example@email.com" required>
+                                <input type="email" id="regEmail" class="form-control" placeholder="example@email.com" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold" style="font-size: 0.75rem;">SỐ ĐIỆN THOẠI</label>
-                                <input type="tel" class="form-control" placeholder="090xxxxxxx" required>
+                                <input type="text" id="regPhone" class="form-control" placeholder="090xxxxxxx" required>
                             </div>
                         </div>
 
@@ -267,7 +311,7 @@
                             <label class="form-label fw-bold" style="font-size: 0.75rem;">MẬT KHẨU</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-white text-muted border-end-0"><i class="fa-solid fa-lock"></i></span>
-                                <input type="password" class="form-control border-start-0 border-end-0 ps-0 pwd-input" placeholder="Tạo mật khẩu" required>
+                                <input type="password" id="regPassword" class="form-control border-start-0 border-end-0 ps-0 pwd-input" placeholder="Tạo mật khẩu" required>
                                 <span class="input-group-text bg-white text-muted border-start-0 toggle-pwd" style="cursor: pointer;">
                                     <i class="fa-regular fa-eye-slash"></i>
                                 </span>
@@ -319,6 +363,9 @@
             const loginForm = document.getElementById('loginSection');
             const registerForm = document.getElementById('registerSection');
             
+            document.getElementById('loginError').classList.add('d-none');
+            document.getElementById('regError').classList.add('d-none');
+            
             if (loginForm.classList.contains('d-none')) {
                 loginForm.classList.remove('d-none');
                 registerForm.classList.add('d-none');
@@ -346,9 +393,80 @@
             });
         });
 
-        // 3. Hàm mô phỏng Social Login dành cho Giảng viên kiểm tra
+        // 3. LOGIC ĐĂNG KÝ
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            const fullName = document.getElementById('regFullName').value;
+            const user = document.getElementById('regUsername').value;
+            const pass = document.getElementById('regPassword').value;
+            const email = document.getElementById('regEmail').value;
+            const phone = document.getElementById('regPhone').value;
+            const regErrorBox = document.getElementById('regError');
+
+            if (/\d/.test(fullName)) {
+                regErrorBox.innerHTML = '<i class="fa-solid fa-circle-exclamation me-1"></i> Họ và tên không được chứa số.';
+                regErrorBox.classList.remove('d-none');
+                return;
+            }
+
+            const phoneRegex = /^[0-9]+$/;
+            if (!phoneRegex.test(phone)) {
+                regErrorBox.innerHTML = '<i class="fa-solid fa-circle-exclamation me-1"></i> Bắt buộc phải nhập số điện thoại hợp lệ.';
+                regErrorBox.classList.remove('d-none');
+                return; 
+            }
+
+            let usersArray = JSON.parse(localStorage.getItem('tempDatabase')) || [];
+            
+            const isExist = usersArray.find(u => u.username === user);
+            if(isExist) {
+                regErrorBox.innerHTML = '<i class="fa-solid fa-circle-exclamation me-1"></i> Tên đăng nhập này đã có người sử dụng!';
+                regErrorBox.classList.remove('d-none');
+                return;
+            }
+
+            regErrorBox.classList.add('d-none'); 
+
+            usersArray.push({ fullname: fullName, username: user, password: pass, email: email, phone: phone, address: "" });
+            localStorage.setItem('tempDatabase', JSON.stringify(usersArray));
+            
+            alert('Tạo tài khoản thành công! Bạn có thể tiến hành đăng nhập.');
+            
+            this.reset();
+            toggleAuthForms();
+        });
+
+        // 4. LOGIC ĐĂNG NHẬP (ĐÃ CẬP NHẬT ĐỂ LIÊN KẾT ADMIN)
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            const user = document.getElementById('loginUsername').value;
+            const pass = document.getElementById('loginPassword').value;
+            const errorBox = document.getElementById('loginError');
+
+            let usersArray = JSON.parse(localStorage.getItem('tempDatabase')) || [];
+            
+            const validUser = usersArray.find(u => u.username === user && u.password === pass);
+
+            if (validUser) {
+                errorBox.classList.add('d-none'); 
+                
+                // --- ĐÂY LÀ DÒNG CODE QUAN TRỌNG NHẤT GIÚP ADMIN ĐỌC ĐƯỢC ---
+                // Lưu người dùng đang đăng nhập vào 'khoavang_user'
+                localStorage.setItem('khoavang_user', JSON.stringify(validUser));
+                
+                alert(`Đăng nhập thành công! Chào mừng ${validUser.fullname || validUser.username}. Đang chuyển hướng sang cửa hàng...`);
+                
+                // Sau khi login, chuyển qua trang shop (hoặc bạn có thể tự đổi sang admin.html nếu muốn)
+                window.location.href = 'shop.html'; 
+            } else {
+                errorBox.classList.remove('d-none');
+            }
+        });
+
         function simulateSocialLogin(provider) {
-            alert(`Tính năng đăng nhập qua ${provider} đã được thiết kế sẵn luồng (flow) và đang chờ cấp quyền API Authentication. Nhóm đã sẵn sàng tích hợp ở giai đoạn Backend!`);
+            alert(`Tính năng đăng nhập qua ${provider} đang được phát triển.`);
         }
     </script>
 </body>
