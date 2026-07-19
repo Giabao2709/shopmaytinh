@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng của bạn - Khoavang.vn</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #FAFAFA;
+            --dark-navy: #0F172A;
+            --primary-yellow: #FFB800;
+            --red-price: #DC2626;
+            --border-color: #E2E8F0;
+            --table-header-bg: #FDF8F5;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            color: #333;
+        }
+
+        /* --- HEADER --- */
+        .custom-header { background-color: #fff; padding: 15px 0; border-bottom: 1px solid var(--border-color); }
+        .logo-text { color: var(--primary-yellow); font-size: 1.8rem; font-weight: 900; text-decoration: none; }
+        .header-links a { color: #555; text-decoration: none; margin: 0 15px; font-weight: 600; font-size: 0.95rem; }
+        .header-icons a { color: var(--dark-navy); font-size: 1.3rem; margin-left: 20px; text-decoration: none; }
+
+        /* --- CART TITLE --- */
+        .page-title { font-weight: 800; color: #111; margin-top: 40px; margin-bottom: 5px; font-size: 2rem; }
+        .page-subtitle { color: #666; margin-bottom: 30px; font-size: 0.95rem; }
+
+        /* --- TRÁI: BẢNG GIỎ HÀNG --- */
+        .cart-header {
+            background-color: var(--table-header-bg);
+            padding: 15px 20px;
+            border-radius: 8px 8px 0 0;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #666;
+            text-transform: uppercase;
+        }
+        
+        .cart-items-container {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            padding: 0 20px;
+        }
+
+        .cart-item-row {
+            display: flex;
+            align-items: center;
+            padding: 25px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: opacity 0.3s ease;
+        }
+        .cart-item-row:last-child { border-bottom: none; }
+
+        .prod-img { width: 90px; height: 90px; object-fit: contain; background: #f8f9fa; border-radius: 8px; padding: 5px; border: 1px solid #eee; }
+        .prod-name { font-weight: 700; color: #111; font-size: 1.05rem; margin-bottom: 8px; }
+        .prod-tags span { background: #F3E8E1; color: #8B5A2B; font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; font-weight: 600; margin-right: 5px; }
+        
+        .btn-delete { color: #DC2626; background: none; border: none; font-size: 0.85rem; font-weight: 600; padding: 0; margin-top: 10px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
+        .btn-delete:hover { text-decoration: underline; }
+
+        .price-text { font-weight: 600; color: #444; font-size: 0.95rem; }
+        
+        .qty-control {
+            display: flex; align-items: center; border: 1px solid #ccc; border-radius: 4px; width: fit-content; background: #fff;
+        }
+        .qty-btn { background: none; border: none; padding: 5px 12px; font-weight: bold; color: #555; cursor: pointer; }
+        .qty-btn:hover { background: #f1f1f1; }
+        .qty-input { width: 40px; text-align: center; border: none; border-left: 1px solid #ccc; border-right: 1px solid #ccc; font-weight: 600; outline: none; }
+
+        .total-price-text { font-weight: 800; color: var(--red-price); font-size: 1.1rem; }
+
+        /* Nút hành động dưới giỏ hàng */
+        .cart-actions { display: flex; gap: 15px; margin-top: 20px; }
+        .btn-continue { background: #fff; border: 1px solid #ccc; color: #333; font-weight: 600; padding: 10px 20px; border-radius: 6px; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .btn-update { background: #F3E8E1; border: 1px solid #E5D5C5; color: #8B5A2B; font-weight: 600; padding: 10px 20px; border-radius: 6px; display: flex; align-items: center; gap: 8px; border: none;}
+
+        /* --- PHẢI: TÓM TẮT ĐƠN HÀNG --- */
+        .summary-box {
+            background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02); position: sticky; top: 20px;
+        }
+        .summary-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 25px; color: #111; }
+        
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.95rem; color: #555; }
+        .summary-row .discount { color: var(--red-price); }
+
+        .promo-box { display: flex; gap: 0; margin-bottom: 25px; margin-top: 10px; }
+        .promo-box input { flex-grow: 1; border: 1px solid #ccc; border-right: none; border-radius: 4px 0 0 4px; padding: 10px; font-size: 0.9rem; outline: none; }
+        .promo-box button { background: var(--dark-navy); color: white; border: none; border-radius: 0 4px 4px 0; padding: 0 20px; font-weight: 600; font-size: 0.85rem; cursor: pointer; }
+
+        .total-row { display: flex; justify-content: space-between; align-items: flex-start; border-top: 1px solid #eee; padding-top: 20px; margin-bottom: 5px; }
+        .total-label { font-weight: 800; font-size: 1.2rem; color: #111; }
+        .total-amount { font-weight: 900; color: var(--red-price); font-size: 1.6rem; text-align: right; line-height: 1.2; }
+        .vat-note { display: block; font-size: 0.75rem; color: #888; font-weight: normal; margin-top: 5px; }
+
+        /* Nút Thanh Toán (LINK TỚI CHECKOUT.HTML) */
+        .btn-checkout {
+            display: block; width: 100%; background: var(--primary-yellow); color: #fff; text-align: center;
+            font-weight: 800; font-size: 1.1rem; padding: 15px; border-radius: 6px; border: none;
+            margin-top: 25px; text-decoration: none; transition: 0.2s; text-transform: uppercase;
+        }
+        .btn-checkout:hover { background: #e6a600; color: #fff; }
+
+        .payment-methods { text-align: center; margin-top: 20px; }
+        .payment-methods p { font-size: 0.7rem; font-weight: 700; color: #666; margin-bottom: 10px; }
+        .payment-badges span { background: #f8f9fa; border: 1px solid #ddd; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 700; color: #555; margin: 0 3px; }
+
+        /* --- LIÊN QUAN (SẢN PHẨM BẠN CÓ THỂ QUAN TÂM) --- */
+        .related-section { margin-top: 60px; margin-bottom: 60px; }
+        .related-title { font-weight: 800; font-size: 1.4rem; margin-bottom: 25px; }
+        .product-card { background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; text-align: left; transition: 0.3s; }
+        .product-card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        .product-card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 15px; }
+        .prod-cat { font-size: 0.7rem; font-weight: 800; color: #8B5A2B; text-transform: uppercase; margin-bottom: 5px; }
+        .prod-card-name { font-weight: 700; font-size: 1rem; color: #111; margin-bottom: 10px; height: 45px; overflow: hidden; }
+        .prod-card-price { font-weight: 800; color: var(--red-price); font-size: 1.1rem; }
+
+        /* --- FOOTER FIGMA CHUẨN --- */
+        .footer-dark { background-color: #3E3832; color: #e5e7eb; padding: 40px 0 20px 0; font-size: 0.85rem; }
+        .footer-dark h5 { color: var(--primary-yellow); font-weight: 800; margin-bottom: 15px; }
+        .footer-dark h6 { color: #fff; font-weight: 700; margin-bottom: 15px; font-size: 0.9rem; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 8px; }
+        .footer-links a { color: #ccc; text-decoration: none; transition: 0.2s; }
+        .footer-links a:hover { color: var(--primary-yellow); }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="custom-header">
+        <div class="container-fluid px-4 px-lg-5 d-flex justify-content-between align-items-center">
+            <a href="/" class="logo-text">Khoavang.vn</a>
+            <div class="header-links d-none d-md-block">
+                <a href="/">Gaming</a>
+                <a href="/">Workstation</a>
+                <a href="/">MacBook</a>
+                <a href="/">Office</a>
+                <a href="/">Deals</a>
+            </div>
+            <div class="header-icons">
+                <a href="/profile"><i class="fa-regular fa-user"></i></a>
+                <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-4 mb-5">
+        <h1 class="page-title">Giỏ hàng của bạn</h1>
+        <p class="page-subtitle">Bạn đang có <span id="cart-count-text" class="text-warning fw-bold">2 sản phẩm</span> trong giỏ hàng</p>
+
+        <div class="row g-4">
+            <!-- CỘT TRÁI: DANH SÁCH SẢN PHẨM -->
+            <div class="col-lg-8">
+                
+                <div class="cart-header d-flex text-center">
+                    <div style="width: 45%; text-align: left;">SẢN PHẨM</div>
+                    <div style="width: 20%;">GIÁ</div>
+                    <div style="width: 15%;">SỐ LƯỢNG</div>
+                    <div style="width: 20%; text-align: right;">TỔNG CỘNG</div>
+                </div>
+
+                <div class="cart-items-container" id="cart-items-wrapper">
+                    
+                    <!-- ITEM 1 -->
+                    <div class="cart-item-row">
+                        <div style="width: 45%;" class="d-flex gap-3 align-items-start">
+                            <img src="/static/img/rogg14.jpg" class="prod-img" alt="ASUS ROG">
+                            <div>
+                                <div class="prod-name">Laptop Gaming ASUS ROG Strix SCAR 16 2024</div>
+                                <div class="prod-tags">
+                                    <span>INTEL i9-14900HX</span>
+                                    <span>RTX 4060</span>
+                                </div>
+                                <button class="btn-delete" onclick="removeCartItem(this)"><i class="fa-regular fa-trash-can"></i> Xóa</button>
+                            </div>
+                        </div>
+                        <div style="width: 20%;" class="text-center price-text" data-unit-price="58990000">
+                            58.990.000 VNĐ
+                        </div>
+                        <div style="width: 15%;" class="d-flex justify-content-center">
+                            <div class="qty-control">
+                                <button class="qty-btn" onclick="updateQty(this, -1)">−</button>
+                                <input type="text" class="qty-input" value="1" readonly>
+                                <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+                            </div>
+                        </div>
+                        <div style="width: 20%; text-align: right;" class="total-price-text item-total">
+                            58.990.000 VNĐ
+                        </div>
+                    </div>
+
+                    <!-- ITEM 2 -->
+                    <div class="cart-item-row">
+                        <div style="width: 45%;" class="d-flex gap-3 align-items-start">
+                            <img src="/static/img/pro16m3.jpeg" class="prod-img" alt="Dell Precision">
+                            <div>
+                                <div class="prod-name">Dell Precision 5680 Workstation</div>
+                                <div class="prod-tags">
+                                    <span>i7-13800H</span>
+                                    <span>RTX A1000</span>
+                                </div>
+                                <button class="btn-delete" onclick="removeCartItem(this)"><i class="fa-regular fa-trash-can"></i> Xóa</button>
+                            </div>
+                        </div>
+                        <div style="width: 20%;" class="text-center price-text" data-unit-price="45500000">
+                            45.500.000 VNĐ
+                        </div>
+                        <div style="width: 15%;" class="d-flex justify-content-center">
+                            <div class="qty-control">
+                                <button class="qty-btn" onclick="updateQty(this, -1)">−</button>
+                                <input type="text" class="qty-input" value="1" readonly>
+                                <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+                            </div>
+                        </div>
+                        <div style="width: 20%; text-align: right;" class="total-price-text item-total">
+                            45.500.000 VNĐ
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cart-actions">
+                    <a href="/" class="btn-continue"><i class="fa-solid fa-arrow-left"></i> TIẾP TỤC MUA SẮM</a>
+                    <button class="btn-update"><i class="fa-solid fa-rotate-right"></i> CẬP NHẬT GIỎ HÀNG</button>
+                </div>
+            </div>
+
+            <!-- CỘT PHẢI: TÓM TẮT ĐƠN HÀNG -->
+            <div class="col-lg-4">
+                <div class="summary-box">
+                    <h3 class="summary-title">Tóm tắt đơn hàng</h3>
+                    
+                    <div class="summary-row">
+                        <span id="summary-qty-text">Tạm tính (2 sản phẩm)</span>
+                        <span class="fw-bold" id="summary-subtotal">104.490.000 VNĐ</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Phí vận chuyển</span>
+                        <span class="fw-bold text-dark">Miễn phí</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Giảm giá voucher</span>
+                        <span class="fw-bold discount" id="summary-discount">- 500.000 VNĐ</span>
+                    </div>
+
+                    <div class="promo-box">
+                        <input type="text" placeholder="Nhập mã giảm giá">
+                        <button>ÁP DỤNG</button>
+                    </div>
+
+                    <div class="total-row">
+                        <span class="total-label">Tổng<br>cộng:</span>
+                        <div class="text-end">
+                            <div class="total-amount" id="summary-total">103.990.000<br>VNĐ</div>
+                            <span class="vat-note">(Đã bao gồm VAT nếu có)</span>
+                        </div>
+                    </div>
+
+                    <!-- CHUYỂN SANG TRANG THANH TOÁN (checkout.html) -->
+                    <a href="checkout.html" class="btn-checkout">
+                        <i class="fa-solid fa-credit-card me-2"></i> Thanh Toán
+                    </a>
+
+                    <div class="payment-methods">
+                        <p>CHẤP NHẬN THANH TOÁN</p>
+                        <div class="payment-badges">
+                            <span>VISA</span>
+                            <span>MC</span>
+                            <span>ATM</span>
+                            <span>COD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SẢN PHẨM LIÊN QUAN ================= -->
+        <div class="related-section">
+            <h3 class="related-title">Sản phẩm có thể bạn quan tâm</h3>
+            <div class="row g-4">
+                
+                <!-- SP 1 -->
+                <div class="col-6 col-md-3">
+                    <div class="product-card">
+                        <img src="/static/img/y9000p.jpg" alt="Lenovo Y9000P">
+                        <div class="prod-cat">PHỤ KIỆN</div>
+                        <div class="prod-card-name">Lenovo Y9000P 2025</div>
+                        <div class="prod-card-price">56.990.000 VNĐ</div>
+                    </div>
+                </div>
+                <!-- SP 2 -->
+                <div class="col-6 col-md-3">
+                    <div class="product-card">
+                        <img src="/static/img/y7000p.jpg" alt="Lenovo Y7000P">
+                        <div class="prod-cat">BẢO VỆ</div>
+                        <div class="prod-card-name">Lenovo Y7000P 2025</div>
+                        <div class="prod-card-price">35.850.000 VNĐ</div>
+                    </div>
+                </div>
+                <!-- SP 3 -->
+                <div class="col-6 col-md-3">
+                    <div class="product-card">
+                        <img src="/static/img/logitech.jpg" alt="Logitech Pro">
+                        <div class="prod-cat">LƯU TRỮ</div>
+                        <div class="prod-card-name">Chuột Logitech pro</div>
+                        <div class="prod-card-price">1.450.000 VNĐ</div>
+                    </div>
+                </div>
+                <!-- SP 4 -->
+                <div class="col-6 col-md-3">
+                    <div class="product-card">
+                        <img src="/static/img/sonyWH.jpg" alt="Sony WH">
+                        <div class="prod-cat">ÂM THANH</div>
+                        <div class="prod-card-name">Tai nghe Sony WH-1000XM5 Black</div>
+                        <div class="prod-card-price">7.290.000 VNĐ</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER CHUẨN FIGMA -->
+    <footer class="footer-dark">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h5>Khoavang.vn</h5>
+                    <p class="pe-4">Chuyên cung cấp các dòng Laptop Gaming, Workstation và máy bộ cao cấp chính hãng tại Việt Nam.</p>
+                    <div class="d-flex gap-3 fs-5 mt-3">
+                        <i class="fa-brands fa-facebook"></i>
+                        <i class="fa-brands fa-youtube"></i>
+                        <i class="fa-solid fa-share-nodes"></i>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-6">
+                    <h6>HỖ TRỢ</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-6">
+                    <h6>CHÍNH SÁCH</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h6>LIÊN HỆ</h6>
+                    <p class="mb-1">Hotline:<br>1800 6820</p>
+                </div>
+            </div>
+            <div class="border-top border-secondary mt-4 pt-3 d-flex justify-content-between align-items-center">
+                <span>© 2024 Khoavang.vn - High-End Hardware Retailer. All rights reserved.</span>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-light text-decoration-none small">Điều khoản</a>
+                    <a href="#" class="text-light text-decoration-none small">Bảo mật</a>
+                    <a href="#" class="text-light text-decoration-none small">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- ========================================================
+         JAVASCRIPT: XỬ LÝ LOGIC GIỎ HÀNG (TĂNG/GIẢM/XÓA/TÍNH TIỀN)
+         ======================================================== -->
+    <script>
+        // Hàm định dạng số tiền (Ví dụ: 58990000 -> 58.990.000 VNĐ)
+        function formatMoney(amount) {
+            return amount.toLocaleString('vi-VN') + ' VNĐ';
+        }
+
+        // 1. HÀM CẬP NHẬT SỐ LƯỢNG KHI BẤM NÚT [+] VÀ [-]
+        function updateQty(btn, change) {
+            // Lấy ra input số lượng nằm cạnh nút bấm
+            let input = btn.parentElement.querySelector('.qty-input');
+            let currentQty = parseInt(input.value);
+            
+            // Tính số lượng mới (không cho phép nhỏ hơn 1)
+            let newQty = currentQty + change;
+            if (newQty < 1) return; 
+            
+            input.value = newQty;
+
+            // Tìm dòng sản phẩm hiện tại để tính lại tiền
+            let row = btn.closest('.cart-item-row');
+            let unitPrice = parseInt(row.querySelector('.price-text').getAttribute('data-unit-price'));
+            
+            // Cập nhật "Tổng cộng" của riêng sản phẩm đó
+            let itemTotal = unitPrice * newQty;
+            row.querySelector('.item-total').innerText = formatMoney(itemTotal);
+
+            // Tính lại tổng tiền toàn bộ giỏ hàng
+            recalculateCart();
+        }
+
+        // 2. HÀM XÓA SẢN PHẨM KHI BẤM "XÓA"
+        function removeCartItem(btn) {
+            let row = btn.closest('.cart-item-row');
+            // Tạo hiệu ứng mờ dần rồi xóa
+            row.style.opacity = '0';
+            setTimeout(() => {
+                row.remove();
+                recalculateCart(); // Tính lại tiền sau khi xóa
+            }, 300);
+        }
+
+        // 3. HÀM TÍNH TÓÁN LẠI TỔNG TIỀN VÀ CẬP NHẬT GIAO DIỆN BÊN PHẢI
+        function recalculateCart() {
+            let rows = document.querySelectorAll('.cart-item-row');
+            let subtotal = 0;
+            let totalItems = 0;
+
+            // Duyệt qua từng sản phẩm còn lại trong giỏ
+            rows.forEach(row => {
+                let unitPrice = parseInt(row.querySelector('.price-text').getAttribute('data-unit-price'));
+                let qty = parseInt(row.querySelector('.qty-input').value);
+                subtotal += (unitPrice * qty);
+                totalItems += qty;
+            });
+
+            // Tiền giảm giá (Cố định 500k theo thiết kế, nếu giỏ rỗng thì giảm 0đ)
+            let discount = (subtotal > 0) ? 500000 : 0;
+            let grandTotal = subtotal - discount;
+            if (grandTotal < 0) grandTotal = 0;
+
+            // Cập nhật các con số lên màn hình
+            document.getElementById('cart-count-text').innerText = totalItems + " sản phẩm";
+            document.getElementById('summary-qty-text').innerText = `Tạm tính (${totalItems} sản phẩm)`;
+            document.getElementById('summary-subtotal').innerText = formatMoney(subtotal);
+            
+            if (discount > 0) {
+                document.getElementById('summary-discount').innerText = "- " + formatMoney(discount);
+            } else {
+                document.getElementById('summary-discount').innerText = "0 VNĐ";
+            }
+
+            // Tách phần tổng cộng thành 2 dòng (Số tiền rớt xuống dòng như Figma)
+            let formattedTotal = grandTotal.toLocaleString('vi-VN');
+            document.getElementById('summary-total').innerHTML = `${formattedTotal}<br>VNĐ`;
+        }
+    </script>
+</body>
+</html>
+
+<script>
+        function formatMoney(amount) {
+            return amount.toLocaleString('vi-VN') + ' VNĐ';
+        }
+
+        function updateQty(btn, change) {
+            let input = btn.parentElement.querySelector('.qty-input');
+            let currentQty = parseInt(input.value);
+            let newQty = currentQty + change;
+            if (newQty < 1) return; 
+            
+            input.value = newQty;
+            let row = btn.closest('.cart-item-row');
+            let unitPrice = parseInt(row.querySelector('.price-text').getAttribute('data-unit-price'));
+            let itemTotal = unitPrice * newQty;
+            row.querySelector('.item-total').innerText = formatMoney(itemTotal);
+
+            recalculateCart();
+        }
+
+        function removeCartItem(btn) {
+            let row = btn.closest('.cart-item-row');
+            row.style.opacity = '0';
+            setTimeout(() => {
+                row.remove();
+                recalculateCart(); 
+            }, 300);
+        }
+
+        function recalculateCart() {
+            let rows = document.querySelectorAll('.cart-item-row');
+            let subtotal = 0;
+            let totalItems = 0;
+            let cartItemsData = []; // Mảng chứa dữ liệu đẩy qua Checkout
+
+            rows.forEach(row => {
+                let unitPrice = parseInt(row.querySelector('.price-text').getAttribute('data-unit-price'));
+                let qty = parseInt(row.querySelector('.qty-input').value);
+                subtotal += (unitPrice * qty);
+                totalItems += qty;
+
+                // Thu thập thông tin từng sản phẩm
+                cartItemsData.push({
+                    img: row.querySelector('.prod-img').src,
+                    name: row.querySelector('.prod-name').innerText,
+                    price: unitPrice,
+                    qty: qty
+                });
+            });
+
+            let discount = (subtotal > 0) ? 500000 : 0;
+            let grandTotal = subtotal - discount;
+            if (grandTotal < 0) grandTotal = 0;
+
+            document.getElementById('cart-count-text').innerText = totalItems + " sản phẩm";
+            document.getElementById('summary-qty-text').innerText = `Tạm tính (${totalItems} sản phẩm)`;
+            document.getElementById('summary-subtotal').innerText = formatMoney(subtotal);
+            document.getElementById('summary-discount').innerText = (discount > 0) ? "- " + formatMoney(discount) : "0 VNĐ";
+            document.getElementById('summary-total').innerHTML = `${grandTotal.toLocaleString('vi-VN')}<br>VNĐ`;
+
+            // LƯU TOÀN BỘ VÀO BỘ NHỚ TRÌNH DUYỆT ĐỂ CHECKOUT ĐỌC
+            let checkoutData = {
+                items: cartItemsData,
+                subtotal: subtotal,
+                discount: discount,
+                total: grandTotal
+            };
+            localStorage.setItem('khoavang_cartData', JSON.stringify(checkoutData));
+        }
+
+        // Chạy hàm 1 lần khi load trang để lưu dữ liệu gốc
+        window.onload = recalculateCart;
+    </script>

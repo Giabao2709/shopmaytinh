@@ -2,183 +2,399 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Quản trị hệ thống - IT DOCKER</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Khoavang.vn</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Nunito', sans-serif; background-color: #f4f7fa; overflow-x: hidden; }
-        
-        /* Sidebar Design */
-        .sidebar { 
-            background: #4e73df; 
-            background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
-            min-height: 100vh; 
-            color: white; 
-            transition: all 0.3s;
+        :root {
+            --bg-body: #F8FAFC;
+            --sidebar-bg: #0A1629;
+            --sidebar-active: #1D3A70;
+            --primary-yellow: #FFB800;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
         }
-        .sidebar .nav-link {
-            color: rgba(255,255,255,0.8);
-            padding: 1.5rem 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-weight: 600;
-        }
-        .sidebar .nav-link:hover, .sidebar .nav-link.active {
-            color: #fff;
-            background: rgba(255,255,255,0.1);
-        }
-        .sidebar .nav-link i { margin-right: 10px; width: 20px; text-align: center; }
 
-        /* Main Content */
-        .content-area { padding: 30px; }
-        .card { border: none; border-radius: 15px; box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15); }
-        .section-content { display: none; }
-        .section-content.active { display: block; animation: fadeIn 0.5s; }
+        body {
+            background-color: var(--bg-body);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* ================= SIDEBAR ================= */
+        .admin-sidebar {
+            width: 250px;
+            background-color: var(--sidebar-bg);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar-brand {
+            padding: 25px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .brand-logo {
+            width: 35px;
+            height: 35px;
+            background-color: var(--primary-yellow);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 1.2rem;
+        }
+        .brand-text { color: white; font-weight: 700; font-size: 1.2rem; letter-spacing: 0.5px; }
         
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .sidebar-menu { padding: 10px 15px; }
+        .menu-item {
+            color: #94A3B8;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+        .menu-item i { width: 30px; font-size: 1.1rem; }
+        .menu-item:hover { color: white; background: rgba(255,255,255,0.05); }
+        .menu-item.active { background-color: var(--sidebar-active); color: white; }
+
+        /* ================= MAIN CONTENT ================= */
+        .admin-main { margin-left: 250px; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Topbar */
+        .admin-topbar {
+            background: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        .search-box {
+            background: #F1F5F9;
+            border-radius: 8px;
+            padding: 10px 15px;
+            width: 350px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .search-box input { border: none; background: transparent; outline: none; width: 100%; font-size: 0.9rem; }
+        .topbar-right { display: flex; align-items: center; gap: 25px; }
+        .notification-icon { position: relative; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; }
+        .notification-badge { position: absolute; top: -5px; right: -5px; background: #EF4444; color: white; font-size: 0.6rem; font-weight: bold; width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .admin-profile { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .admin-profile img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 1px solid #ddd; }
+
+        /* Layout Container */
+        .content-wrapper { padding: 30px; flex-grow: 1; }
+        .page-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 2px; }
+        .page-subtitle { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 25px; }
+
+        /* ================= SUMMARY CARDS ================= */
+        .summary-card {
+            background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;
+        }
+        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .icon-box { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .trend-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+        
+        .trend-up { background: #DCFCE7; color: #16A34A; }
+        .trend-down { background: #FEE2E2; color: #EF4444; }
+        
+        .icon-blue { background: #E0F2FE; color: #2563EB; }
+        .icon-cyan { background: #CFFAFE; color: #0891B2; }
+        .icon-orange { background: #FFEDD5; color: #EA580C; }
+        .icon-brown { background: #F5E5D9; color: #8B5A2B; }
+
+        .card-title { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; margin-bottom: 5px; }
+        .card-value { font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin: 0; }
+
+        /* ================= MIDDLE SECTION ================= */
+        .section-box { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; height: 100%; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        
+        /* Fake Chart */
+        .chart-container { display: flex; align-items: flex-end; justify-content: space-between; height: 250px; padding-top: 20px; border-left: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; position: relative; }
+        .y-axis { position: absolute; left: -35px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-between; font-size: 0.7rem; color: #94A3B8; }
+        .chart-bar-wrapper { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+        .chart-bar { width: 50%; background-color: #93C5FD; border-radius: 4px 4px 0 0; transition: 0.3s; }
+        .chart-bar.active { background-color: #1D4ED8; }
+        .x-axis-label { font-size: 0.75rem; color: #94A3B8; margin-top: 10px; }
+
+        /* Top Products */
+        .top-product-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .top-product-item:last-child { margin-bottom: 0; }
+        .prod-info { display: flex; gap: 15px; align-items: center; }
+        .prod-img { width: 60px; height: 50px; object-fit: contain; border-radius: 6px; border: 1px solid #f1f5f9; padding: 2px; }
+        .prod-name { font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; color: var(--text-main); }
+        .prod-sales { font-size: 0.75rem; color: var(--text-muted); margin: 0; }
+        .prod-price { font-size: 0.95rem; font-weight: 700; color: #DC2626; }
+
+        /* ================= BOTTOM TABLE ================= */
+        .table-custom { margin-bottom: 0; }
+        .table-custom th { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); border-bottom: 1px solid var(--border-color); padding: 15px 10px; }
+        .table-custom td { padding: 15px 10px; vertical-align: middle; border-bottom: 1px solid #f8fafc; font-size: 0.85rem; }
+        
+        .badge-status { padding: 5px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+        .badge-success { background: #DCFCE7; color: #16A34A; }
+        .badge-processing { background: #DBEAFE; color: #1D4ED8; }
+        .badge-warning { background: #FEF08A; color: #CA8A04; }
+        
+        .action-eye { color: var(--text-muted); transition: 0.2s; cursor: pointer; }
+        .action-eye:hover { color: var(--text-main); }
     </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 col-lg-2 p-0 sidebar">
-                <div class="text-center py-4 border-bottom border-white border-opacity-25">
-                    <h5 class="fw-bold m-0"><i class="fa-solid fa-user-shield"></i> ADMIN PANEL</h5>
-                </div>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" onclick="showSection('dashboard')">
-                            <i class="fa-solid fa-house"></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('products')">
-                            <i class="fa-solid fa-mobile-screen"></i> Laptop
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('vouchers')">
-                            <i class="fa-solid fa-tags"></i> Phiếu giảm giá
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('users')">
-                            <i class="fa-solid fa-users"></i> Người dùng
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('feedback')">
-                            <i class="fa-solid fa-comment-dots"></i> Phản hồi
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-warning mt-5" href="/logout">
-                            <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
-                        </a>
-                    </li>
-                </ul>
-            </div>
 
-            <div class="col-md-9 col-lg-10 content-area">
-                
-                <div id="dashboard" class="section-content active">
-                    <h2 class="fw-bold text-dark mb-4">Tổng quan đơn hàng</h2>
-                    <div class="row g-4 mb-4">
-                        <div class="col-md-4">
-                            <div class="card p-3 border-start border-primary border-5">
-                                <p class="text-muted small fw-bold">DOANH THU</p>
-                                <h3 class="fw-bold text-primary">{{"{:,.0f}".format(total_rev)}}₫</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card p-3 border-start border-success border-5">
-                                <p class="text-muted small fw-bold">ĐƠN HÀNG</p>
-                                <h3 class="fw-bold text-success">{{ orders|length }}</h3>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-body">
-                            <table class="table align-middle">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Khách hàng</th>
-                                        <th>Sản phẩm</th>
-                                        <th>Thời gian</th>
-                                        <th>Tổng tiền</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for order in orders %}
-                                    <tr>
-                                        <td><strong>{{ order.customer }}</strong><br><small>{{ order.phone }}</small></td>
-                                        <td>
-                                            {% for item in order['items'] %}
-                                                • {{ item.name }}<br>
-                                            {% endfor %}
-                                        </td>
-                                        <td>{{ order.time }}</td>
-                                        <td class="text-danger fw-bold">{{"{:,.0f}".format(order.total)}}₫</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="products" class="section-content">
-                    <h2 class="fw-bold mb-4">Quản lý Laptop</h2>
-                    <div class="card p-5 text-center">
-                        <i class="fa-solid fa-boxes-stacked fs-1 text-muted mb-3"></i>
-                        <h5>Tính năng đang được cập nhật...</h5>
-                        <p class="text-muted">Tại đây bạn có thể thêm/xóa bớt các mẫu Laptop trong shop.</p>
-                    </div>
-                </div>
-
-                <div id="vouchers" class="section-content">
-                    <h2 class="fw-bold mb-4">Mã giảm giá (Vouchers)</h2>
-                    <div class="card p-4">
-                        <button class="btn btn-primary w-25 mb-3">+ Tạo mã mới</button>
-                        <p>Hiện chưa có mã giảm giá nào được tạo.</p>
-                    </div>
-                </div>
-
-                <div id="users" class="section-content">
-                    <h2 class="fw-bold mb-4">Danh sách khách hàng</h2>
-                    <div class="card">
-                        <div class="card-body">
-                            <table class="table">
-                                <thead><tr><th>Tên User</th><th>Vai trò</th><th>Trạng thái</th></tr></thead>
-                                <tbody>
-                                    <tr><td>giabao_user</td><td>Khách hàng</td><td><span class="badge bg-success">Hoạt động</span></td></tr>
-                                    <tr><td>admin_boss</td><td>Quản trị viên</td><td><span class="badge bg-success">Hoạt động</span></td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+    <!-- ================= SIDEBAR ================= -->
+    <div class="admin-sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-logo"><i class="fa-solid fa-laptop-code"></i></div>
+            <div class="brand-text">Khoavang.vn</div>
+        </div>
+        <div class="sidebar-menu">
+            <a href="#" class="menu-item active"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
+            <a href="#" class="menu-item"><i class="fa-solid fa-desktop"></i> Sản phẩm</a>
+            <a href="#" class="menu-item"><i class="fa-solid fa-cart-shopping"></i> Đơn hàng</a>
+            <a href="#" class="menu-item"><i class="fa-solid fa-users"></i> Khách hàng</a>
+            <a href="#" class="menu-item"><i class="fa-solid fa-chart-simple"></i> Báo cáo</a>
+            <a href="#" class="menu-item"><i class="fa-solid fa-gear"></i> Cài đặt</a>
         </div>
     </div>
 
-    <script>
-        function showSection(sectionId) {
-            // Ẩn tất cả các phần
-            document.querySelectorAll('.section-content').forEach(section => {
-                section.classList.remove('active');
-            });
-            // Hiển thị phần được chọn
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Đổi trạng thái active trên sidebar
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            event.currentTarget.classList.add('active');
-        }
-    </script>
+    <!-- ================= MAIN ================= -->
+    <div class="admin-main">
+        
+        <!-- Topbar -->
+        <div class="admin-topbar">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                <input type="text" placeholder="Tìm kiếm đơn hàng, sản phẩm...">
+            </div>
+            <div class="topbar-right">
+                <div class="notification-icon">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-badge">4</span>
+                </div>
+                <div class="admin-profile">
+                    <span class="fw-bold" style="font-size: 0.9rem;">Chào mừng, Admin</span>
+                    <!-- HÌNH ẢNH ADMIN TỪ THƯ MỤC CỦA BẠN -->
+                    <img src="/static/img/admin.jpg" alt="Admin">
+                </div>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <h1 class="page-title">Tổng quan hệ thống</h1>
+            <p class="page-subtitle">Cập nhật lúc 09:42 SA, 24/05/2024</p>
+
+            <!-- ================= 4 CARDS ================= -->
+            <div class="row g-4 mb-4">
+                <!-- Card 1 -->
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="summary-card">
+                        <div class="card-top">
+                            <div class="icon-box icon-blue"><i class="fa-solid fa-money-bill"></i></div>
+                            <div class="trend-badge trend-up"><i class="fa-solid fa-arrow-trend-up"></i> 12.5%</div>
+                        </div>
+                        <div class="card-title">Tổng doanh thu<br>(Tháng)</div>
+                        <div class="card-value">2.450.000.000đ</div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="summary-card">
+                        <div class="card-top">
+                            <div class="icon-box icon-cyan"><i class="fa-solid fa-bag-shopping"></i></div>
+                            <div class="trend-badge trend-up"><i class="fa-solid fa-arrow-trend-up"></i> 8.2%</div>
+                        </div>
+                        <div class="card-title">Tổng số đơn hàng<br>&nbsp;</div>
+                        <div class="card-value">1,284</div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="summary-card">
+                        <div class="card-top">
+                            <div class="icon-box icon-orange"><i class="fa-solid fa-user-plus"></i></div>
+                            <div class="trend-badge trend-down"><i class="fa-solid fa-arrow-trend-down"></i> 2.1%</div>
+                        </div>
+                        <div class="card-title">Khách hàng mới<br>&nbsp;</div>
+                        <div class="card-value">456</div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="summary-card">
+                        <div class="card-top">
+                            <div class="icon-box icon-brown"><i class="fa-solid fa-bullseye"></i></div>
+                            <div class="trend-badge trend-up"><i class="fa-regular fa-circle-check"></i> Tốt</div>
+                        </div>
+                        <div class="card-title">Tỷ lệ chuyển đổi<br>&nbsp;</div>
+                        <div class="card-value">4.82%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= CHART & TOP PRODUCTS ================= -->
+            <div class="row g-4 mb-4">
+                <!-- Biểu đồ -->
+                <div class="col-12 col-xl-8">
+                    <div class="section-box">
+                        <div class="section-header">
+                            <div>
+                                <h6 class="fw-bold mb-1">Xu hướng doanh thu</h6>
+                                <p class="small text-muted mb-0">Thống kê theo 7 ngày gần nhất</p>
+                            </div>
+                            <select class="form-select form-select-sm" style="width: auto; box-shadow: none;">
+                                <option>7 ngày qua</option>
+                            </select>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <div class="y-axis">
+                                <span>500M</span><span>400M</span><span>300M</span><span>200M</span><span>100M</span><span>0</span>
+                            </div>
+                            <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 45%;"></div><div class="x-axis-label">T2</div></div>
+                            <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 65%;"></div><div class="x-axis-label">T3</div></div>
+                            <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 85%;"></div><div class="x-axis-label">T4</div></div>
+                            <div class="chart-bar-wrapper"><div class="chart-bar active" style="height: 100%;"></div><div class="x-axis-label fw-bold" style="color: #1D4ED8;">T5</div></div>
+                            <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 70%;"></div><div class="x-axis-label">T6</div></div>
+                            <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 60%;"></div><div class="x-axis-label">T7</div></div>
+                            <div class="chart-bar-wrapper"><div class="chart-bar" style="height: 55%;"></div><div class="x-axis-label">CN</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Sản phẩm -->
+                <div class="col-12 col-xl-4">
+                    <div class="section-box">
+                        <div class="section-header">
+                            <h6 class="fw-bold mb-0">Top sản phẩm</h6>
+                            <a href="#" class="text-decoration-none small fw-bold" style="color: #2563EB;">Tất cả</a>
+                        </div>
+
+                        <!-- ẢNH GẮN CHUẨN TỪ THƯ MỤC CỦA BẠN -->
+                        <div class="top-product-item">
+                            <div class="prod-info">
+                                <img src="/static/img/pro16m3.jpeg" alt="MacBook" class="prod-img">
+                                <div>
+                                    <h6 class="prod-name">MacBook Pro 16" M3 Max</h6>
+                                    <p class="prod-sales">84 đơn hàng</p>
+                                </div>
+                            </div>
+                            <div class="prod-price">65,9tr</div>
+                        </div>
+
+                        <div class="top-product-item">
+                            <div class="prod-info">
+                                <img src="/static/img/msiraider.jpg" alt="MSI" class="prod-img">
+                                <div>
+                                    <h6 class="prod-name">MSI Raider GE78 HX</h6>
+                                    <p class="prod-sales">62 đơn hàng</p>
+                                </div>
+                            </div>
+                            <div class="prod-price">54,5tr</div>
+                        </div>
+
+                        <div class="top-product-item">
+                            <div class="prod-info">
+                                <img src="/static/img/rogg14.jpg" alt="ASUS" class="prod-img">
+                                <div>
+                                    <h6 class="prod-name">ASUS ROG Zephyrus G14</h6>
+                                    <p class="prod-sales">45 đơn hàng</p>
+                                </div>
+                            </div>
+                            <div class="prod-price">38,2tr</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= RECENT ORDERS TABLE ================= -->
+            <div class="section-box">
+                <div class="section-header mb-3">
+                    <h6 class="fw-bold mb-0">Đơn hàng gần đây</h6>
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="small text-muted">Lọc theo trạng thái</span>
+                        <button class="btn btn-dark btn-sm fw-bold" style="background-color: var(--sidebar-bg);">Xem tất cả</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-custom">
+                        <thead>
+                            <tr>
+                                <th>MÃ ĐƠN HÀNG</th>
+                                <th>KHÁCH HÀNG</th>
+                                <th>SẢN PHẨM</th>
+                                <th>TỔNG CỘNG</th>
+                                <th>TRẠNG THÁI</th>
+                                <th class="text-center">HÀNH ĐỘNG</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-bold text-primary">#KV-89210</td>
+                                <td>
+                                    <div class="fw-bold text-dark">Nguyễn Văn An</div>
+                                    <div class="small text-muted">an.nguyen@email.com</div>
+                                </td>
+                                <td class="text-muted">MacBook Air M2,<br>Chuột Magic Mouse</td>
+                                <td class="fw-bold text-danger">28.500.000đ</td>
+                                <td><span class="badge-status badge-success">Đã giao hàng</span></td>
+                                <td class="text-center"><i class="fa-regular fa-eye action-eye"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold text-primary">#KV-89211</td>
+                                <td>
+                                    <div class="fw-bold text-dark">Trần Thị Bích</div>
+                                    <div class="small text-muted">bich.tran@email.com</div>
+                                </td>
+                                <td class="text-muted">Dell XPS 15 9530</td>
+                                <td class="fw-bold text-danger">42.200.000đ</td>
+                                <td><span class="badge-status badge-processing">Đang xử lý</span></td>
+                                <td class="text-center"><i class="fa-regular fa-eye action-eye"></i></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold text-primary">#KV-89212</td>
+                                <td>
+                                    <div class="fw-bold text-dark">Lê Hoàng Nam</div>
+                                    <div class="small text-muted">nam.lh@email.com</div>
+                                </td>
+                                <td class="text-muted">HP ZBook Fury G10</td>
+                                <td class="fw-bold text-danger">58.900.000đ</td>
+                                <td><span class="badge-status badge-warning">Chờ thanh toán</span></td>
+                                <td class="text-center"><i class="fa-regular fa-eye action-eye"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

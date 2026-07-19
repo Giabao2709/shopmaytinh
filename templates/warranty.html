@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra cứu bảo hành - Khoavang.vn</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #FAFAFA;
+            --dark-navy: #0F172A;
+            --primary-yellow: #FFB800;
+            --border-color: #E2E8F0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER --- */
+        .custom-header { background-color: #fff; padding: 15px 0; border-bottom: 1px solid var(--border-color); }
+        .logo-text { color: var(--primary-yellow); font-size: 1.8rem; font-weight: 900; text-decoration: none; }
+        .header-links a { color: #555; text-decoration: none; margin: 0 15px; font-weight: 600; font-size: 0.95rem; }
+        .header-icons a { color: var(--dark-navy); font-size: 1.3rem; margin-left: 20px; text-decoration: none; }
+
+        /* --- KHU VỰC TÌM KIẾM --- */
+        .search-section {
+            background-color: var(--dark-navy);
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+            background-image: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .search-title { font-weight: 900; font-size: 2.2rem; margin-bottom: 15px; color: var(--primary-yellow); }
+        .search-desc { font-size: 1rem; color: #cbd5e1; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        
+        .search-box {
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .search-input {
+            flex-grow: 1;
+            padding: 20px 25px;
+            font-size: 1.1rem;
+            border: none;
+            outline: none;
+        }
+        .search-btn {
+            background-color: var(--primary-yellow);
+            color: var(--dark-navy);
+            border: none;
+            padding: 0 40px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+        .search-btn:hover { background-color: #e6a600; }
+
+        /* --- KHU VỰC KẾT QUẢ --- */
+        .result-wrapper { padding: 50px 20px; flex-grow: 1; }
+        
+        /* Box Báo lỗi */
+        .error-box {
+            max-width: 650px; margin: 0 auto; background: #FEF2F2; border: 1px solid #FCA5A5;
+            color: #991B1B; padding: 15px 20px; border-radius: 8px; text-align: center;
+            font-weight: 600; display: none;
+        }
+
+        /* Box Kết quả thành công */
+        .result-card {
+            max-width: 700px; margin: 0 auto; background: #fff; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--border-color);
+            overflow: hidden; display: none;
+        }
+        .card-header-result { background: #f8fafc; padding: 20px 30px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .card-header-result h4 { margin: 0; font-weight: 800; color: var(--dark-navy); font-size: 1.2rem; }
+        
+        /* Huy hiệu trạng thái */
+        .status-badge { padding: 6px 15px; border-radius: 20px; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; }
+        .status-active { background: #DCFCE7; color: #16A34A; }
+        .status-expired { background: #FEE2E2; color: #DC2626; }
+
+        .card-body-result { padding: 30px; }
+        .product-name-display { font-size: 1.4rem; font-weight: 800; color: var(--dark-navy); margin-bottom: 25px; }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .info-item { background: #F8FAFC; padding: 15px; border-radius: 8px; border: 1px dashed #cbd5e1; }
+        .info-label { font-size: 0.8rem; color: #64748B; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
+        .info-value { font-size: 1.1rem; font-weight: 700; color: #0F172A; }
+
+        /* --- HƯỚNG DẪN TÌM SỐ SERIAL --- */
+        .guide-section { max-width: 800px; margin: 40px auto; background: #fff; border-radius: 8px; border: 1px solid #E2E8F0; padding: 30px; }
+        .guide-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 20px; color: var(--dark-navy); text-align: center;}
+        .guide-img-box { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+        .guide-item { text-align: center; max-width: 200px; }
+        .guide-item i { font-size: 3rem; color: #94A3B8; margin-bottom: 15px; }
+        .guide-item p { font-size: 0.9rem; color: #475569; font-weight: 600; }
+
+        /* --- FOOTER --- */
+        .footer-dark { background-color: #3E3832; color: #e5e7eb; padding: 30px 0 15px 0; font-size: 0.85rem; margin-top: auto;}
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="custom-header">
+        <div class="container-fluid px-4 px-lg-5 d-flex justify-content-between align-items-center">
+            <a href="/" class="logo-text">Khoavang.vn</a>
+            <div class="header-links d-none d-md-block">
+                <a href="/">Gaming</a>
+                <a href="/">Workstation</a>
+                <a href="/">MacBook</a>
+                <a href="/">Office</a>
+            </div>
+            <div class="header-icons">
+                <a href="profile.html"><i class="fa-regular fa-user"></i></a>
+                <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- KHU VỰC TÌM KIẾM -->
+    <div class="search-section">
+        <div class="container">
+            <h1 class="search-title">TRA CỨU THÔNG TIN BẢO HÀNH</h1>
+            <p class="search-desc">Nhập số Serial Number (SN) hoặc Mã đơn hàng của bạn để kiểm tra thời hạn và thông tin bảo hành chính hãng tại hệ thống Khoavang.vn</p>
+            
+            <div class="search-box">
+                <input type="text" id="serial-input" class="search-input" placeholder="Ví dụ: KV-MAC123 hoặc 89210...">
+                <button class="search-btn" onclick="checkWarranty()"><i class="fa-solid fa-magnifying-glass me-2"></i> Kiểm tra</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- KHU VỰC KẾT QUẢ -->
+    <div class="result-wrapper container">
+        
+        <!-- Báo lỗi khi không tìm thấy -->
+        <div id="error-msg" class="error-box">
+            <i class="fa-solid fa-circle-exclamation me-2"></i> Không tìm thấy thông tin! Vui lòng kiểm tra lại mã Serial hoặc liên hệ Hotline 1800 6820.
+        </div>
+
+        <!-- Thẻ kết quả thành công -->
+        <div id="success-card" class="result-card">
+            <div class="card-header-result">
+                <h4>Kết quả tra cứu</h4>
+                <span id="res-status-badge" class="status-badge status-active">CÒN BẢO HÀNH</span>
+            </div>
+            <div class="card-body-result">
+                <h2 id="res-product-name" class="product-name-display">MacBook Pro 16" M3 Max 2024</h2>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Số Serial / IMEI</div>
+                        <div id="res-serial" class="info-value text-primary">KV-MAC123</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Gói bảo hành</div>
+                        <div id="res-package" class="info-value">Bảo hành VIP 12 Tháng</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Ngày mua hàng</div>
+                        <div id="res-buy-date" class="info-value">12/04/2024</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Ngày hết hạn</div>
+                        <div id="res-exp-date" class="info-value text-danger">12/04/2025</div>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center">
+                    <p class="small text-muted mb-0"><i class="fa-solid fa-shield-check me-1"></i> Sản phẩm được bảo hành chính hãng toàn quốc.</p>
+                    <button class="btn btn-outline-secondary btn-sm fw-bold">Yêu cầu hỗ trợ ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hướng dẫn -->
+        <div class="guide-section">
+            <h3 class="guide-title">Làm sao để tìm số Serial (S/N)?</h3>
+            <div class="guide-img-box">
+                <div class="guide-item">
+                    <i class="fa-solid fa-laptop"></i>
+                    <p>Được in ở mặt đáy (mặt D) của Laptop</p>
+                </div>
+                <div class="guide-item">
+                    <i class="fa-solid fa-box-open"></i>
+                    <p>Được in trên tem nhãn dán ngoài thùng hộp</p>
+                </div>
+                <div class="guide-item">
+                    <i class="fa-solid fa-receipt"></i>
+                    <p>In trực tiếp trên Hóa đơn mua hàng / Hóa đơn VAT</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer-dark text-center">
+        <div class="container">
+            <h5 style="color: var(--primary-yellow); font-weight: 800; margin-bottom: 5px;">Khoavang.vn</h5>
+            <p class="small text-muted mb-0">© 2026 Khoavang.vn - High-End Hardware Retailer.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- MOCK DATABASE VÀ LOGIC XỬ LÝ -->
+    <script>
+        // 1. Dữ liệu giả lập (Mock DB)
+        const warrantyDB = {
+            "KV-MAC123": {
+                name: "MacBook Pro 16\" M3 Max 1TB",
+                package: "Bảo hành Premium Care 12 Tháng",
+                buyDate: "15/05/2024",
+                expDate: "15/05/2025",
+                status: "active" // Còn bảo hành
+            },
+            "KV-DEL456": {
+                name: "Dell XPS 15 9530 (2023)",
+                package: "Bảo hành Tiêu chuẩn 12 Tháng",
+                buyDate: "10/01/2022",
+                expDate: "10/01/2023",
+                status: "expired" // Hết bảo hành
+            },
+            "89210": {
+                name: "ASUS ROG Zephyrus G14",
+                package: "Bảo hành Hãng 24 Tháng",
+                buyDate: "20/07/2024",
+                expDate: "20/07/2026",
+                status: "active"
+            }
+        };
+
+        // 2. Hàm kiểm tra khi bấm nút
+        function checkWarranty() {
+            // Lấy mã nhập vào và chuyển thành chữ in hoa, xóa khoảng trắng
+            let inputCode = document.getElementById('serial-input').value.trim().toUpperCase();
+            
+            let errorBox = document.getElementById('error-msg');
+            let successCard = document.getElementById('success-card');
+
+            // Ẩn cả 2 trước khi xử lý
+            errorBox.style.display = 'none';
+            successCard.style.display = 'none';
+
+            if (inputCode === "") {
+                errorBox.innerHTML = '<i class="fa-solid fa-circle-exclamation me-2"></i> Vui lòng nhập mã Serial hoặc Mã đơn hàng!';
+                errorBox.style.display = 'block';
+                return;
+            }
+
+            // Tìm kiếm trong DB giả
+            let productData = warrantyDB[inputCode];
+
+            if (productData) {
+                // Đổ dữ liệu vào thẻ HTML
+                document.getElementById('res-product-name').innerText = productData.name;
+                document.getElementById('res-serial').innerText = inputCode;
+                document.getElementById('res-package').innerText = productData.package;
+                document.getElementById('res-buy-date').innerText = productData.buyDate;
+                document.getElementById('res-exp-date').innerText = productData.expDate;
+
+                let badge = document.getElementById('res-status-badge');
+                if (productData.status === "active") {
+                    badge.className = "status-badge status-active";
+                    badge.innerText = "CÒN BẢO HÀNH";
+                } else {
+                    badge.className = "status-badge status-expired";
+                    badge.innerText = "HẾT BẢO HÀNH";
+                }
+
+                // Hiển thị thẻ kết quả
+                successCard.style.display = 'block';
+            } else {
+                // Hiện thông báo lỗi nếu không tìm thấy
+                errorBox.innerHTML = '<i class="fa-solid fa-circle-exclamation me-2"></i> Không tìm thấy thông tin! Vui lòng kiểm tra lại mã Serial.';
+                errorBox.style.display = 'block';
+            }
+        }
+
+        // Bắt sự kiện ấn phím Enter để tra cứu
+        document.getElementById("serial-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                checkWarranty();
+            }
+        });
+    </script>
+</body>
+</html>

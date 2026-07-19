@@ -1,0 +1,43 @@
+/* =========================================
+   1. CÁC BIẾN MÀU SẮC DÙNG CHUNG TOÀN TRANG
+   ========================================= */
+:root {
+    --bg-body: #F4F6F8;
+    --dark-header: #0B1930;
+    --primary-yellow: #FFB800;
+    --primary-blue: #0A58CA;
+    --red-price: #DC2626;
+    --border-color: #E2E8F0;
+}
+
+body { 
+    background-color: var(--bg-body); 
+    font-family: 'Segoe UI', Tahoma, sans-serif; 
+    color: #333; 
+}
+
+/* =========================================
+   2. HEADER & FOOTER CHUNG (Dùng cho mọi trang)
+   ========================================= */
+.custom-header { background-color: var(--dark-header); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
+.logo-text { color: var(--primary-yellow) !important; font-size: 1.8rem; font-weight: 900; text-decoration: none; }
+.header-links a { color: #ffffff !important; text-decoration: none; margin: 0 15px; font-weight: 500; font-size: 0.95rem; cursor: pointer; transition: 0.2s; padding-bottom: 5px; border-bottom: 2px solid transparent;}
+.header-links a:hover, .header-links a.active { color: var(--primary-yellow) !important; border-bottom: 2px solid var(--primary-yellow); }
+/* ... (Copy tiếp các CSS của thẻ header-icons, search-bar, footer-dark vào đây) ... */
+
+
+/* =========================================
+   3. CSS RIÊNG CHO TRANG SHOP (Danh mục)
+   ========================================= */
+.filter-sidebar { background: #fff; border-radius: 8px; padding: 25px; }
+.product-card { background: #fff; border: 1px solid var(--border-color);}
+
+/* =========================================
+   4. CSS RIÊNG CHO TRANG CHI TIẾT SẢN PHẨM
+   ========================================= */
+.main-img-box { border: 1px solid #f1f5f9; border-radius: 8px; }
+.price-current { font-size: 2rem; font-weight: 900; color: var(--red-price); }
+
+/* Toast thông báo chung */
+.toast-custom { position: fixed; top: 80px; right: 20px;}
+.toast-custom.show { transform: translateX(0); }
