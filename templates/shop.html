@@ -7,25 +7,26 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-   
+    
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
-
-<link rel="stylesheet" href="/static/css/style.css">
 
 <body>
 
     <!-- HEADER -->
     <header class="custom-header">
         <div class="container-fluid px-4 px-lg-5 d-flex justify-content-between align-items-center">
-            <a href="shop.html" class="logo-text">Khoavang.vn</a>
+            <!-- Link Trang chủ -->
+            <a href="index.html" class="logo-text">Khoavang.vn</a>
             
             <div class="header-links d-none d-lg-flex" id="nav-links">
-                <a onclick="setCategory('all')" id="nav-all" class="active">Tất cả</a>
-                <a onclick="setCategory('gaming')" id="nav-gaming">Gaming</a>
-                <a onclick="setCategory('macbook')" id="nav-macbook">MacBook</a>
-                <a onclick="setCategory('office')" id="nav-office">Văn phòng</a>
-                <a onclick="setCategory('accessory')" id="nav-accessory">Phụ kiện</a>
-                <a onclick="setCategory('deals')" id="nav-deals" class="link-deal fw-bold">Khuyến mãi</a>
+                <a href="#" onclick="setCategory('all')" id="nav-all" class="active">Tất cả</a>
+                <a href="#" onclick="setCategory('gaming')" id="nav-gaming">Gaming</a>
+                <a href="#" onclick="setCategory('macbook')" id="nav-macbook">MacBook</a>
+                <a href="#" onclick="setCategory('office')" id="nav-office">Văn phòng</a>
+                <a href="#" onclick="setCategory('accessory')" id="nav-accessory">Phụ kiện</a>
+                <a href="#" onclick="setCategory('deals')" id="nav-deals" class="link-deal fw-bold">Khuyến mãi</a>
                 <a href="contact.html">Hỗ trợ</a>
             </div>
 
@@ -34,14 +35,16 @@
                     <input type="text" id="search-input" placeholder="Tìm kiếm tên sản phẩm..." oninput="applyFilters()">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
-                <!-- DÒNG MỚI (Đã đổi link sang admin.html) -->
-                    <div class="header-icons">
-                        <a href="admin.html"><i class="fa-regular fa-user"></i></a>
-                            <a href="cart.html">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            <span class="cart-badge" id="header-cart-badge">0</span>
-                        </a>
-                    </div>
+                
+                <!-- ICON TÀI KHOẢN & GIỎ HÀNG -->
+                <div class="header-icons">
+                    <a href="#" onclick="requireLogin(event, 'admin.html')">
+                        <i class="fa-regular fa-user"></i>
+                    </a>
+                    <a href="#" onclick="requireLogin(event, 'cart.html')">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="cart-badge" id="header-cart-badge">0</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -55,7 +58,8 @@
     <div class="page-header">
         <div class="container-fluid px-4 px-lg-5">
             <div class="breadcrumb">
-                <a href="/">Trang chủ</a> / <a href="#">Laptop</a> / <span id="bread-category">Tất cả sản phẩm</span>
+                <!-- Sửa link Breadcrumb về index.html -->
+                <a href="index.html">Trang chủ</a> / <a href="#">Laptop</a> / <span id="bread-category">Tất cả sản phẩm</span>
             </div>
             <h1 class="page-title" id="page-main-title">Khám Phá Thế Giới Công Nghệ</h1>
             <p class="page-desc">Khám phá bộ sưu tập máy trạm chuyên nghiệp, dàn máy gaming đỉnh cao và ultrabook tinh xảo từ các nhà sản xuất hàng đầu thế giới.</p>
@@ -111,7 +115,7 @@
                 </div>
 
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4" id="product-grid">
-                    <!-- Dữ liệu JS -->
+                    <!-- Dữ liệu JS sẽ tự động điền vào đây -->
                 </div>
 
                 <div id="no-result">
@@ -123,7 +127,7 @@
         </div>
     </div>
 
-    <!-- KHỐI ABOUT US (THÊM MỚI Ở ĐÂY) -->
+    <!-- KHỐI ABOUT US -->
     <div class="about-section">
         <div class="container-fluid px-4 px-lg-5">
             <div class="row align-items-center">
@@ -169,6 +173,6 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/static/js/main.js"></script>
+    <script src="/static/js/main.js"></script>
 </body>
 </html>

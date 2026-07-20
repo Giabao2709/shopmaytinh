@@ -437,7 +437,7 @@
             toggleAuthForms();
         });
 
-        // 4. LOGIC ĐĂNG NHẬP (ĐÃ CẬP NHẬT ĐỂ LIÊN KẾT ADMIN)
+        // 4. LOGIC ĐĂNG NHẬP (ĐÃ CẬP NHẬT KIỂM TRA BẢO MẬT DÀNH CHO MAIN.JS)
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault(); 
             
@@ -447,18 +447,25 @@
 
             let usersArray = JSON.parse(localStorage.getItem('tempDatabase')) || [];
             
-            const validUser = usersArray.find(u => u.username === user && u.password === pass);
+            let validUser = usersArray.find(u => u.username === user && u.password === pass);
+
+            // TẠO TÀI KHOẢN MẶC ĐỊNH ĐỂ TEST (Cho phép đăng nhập bằng khoa / 123456)
+            if (!validUser && user === "khoa" && pass === "123456") {
+                validUser = { fullname: "Trần Nhật Khoa", username: "khoa", password: "123456", email: "khoa@gmail.com", phone: "0901234567" };
+            }
 
             if (validUser) {
                 errorBox.classList.add('d-none'); 
                 
-                // --- ĐÂY LÀ DÒNG CODE QUAN TRỌNG NHẤT GIÚP ADMIN ĐỌC ĐƯỢC ---
-                // Lưu người dùng đang đăng nhập vào 'khoavang_user'
+                // Lưu thông tin cá nhân của người dùng
                 localStorage.setItem('khoavang_user', JSON.stringify(validUser));
+                
+                // ĐÂY LÀ DÒNG LỆNH QUAN TRỌNG NHẤT ĐỂ MAIN.JS CHO PHÉP QUA CỬA
+                localStorage.setItem('isLoggedIn', 'true');
                 
                 alert(`Đăng nhập thành công! Chào mừng ${validUser.fullname || validUser.username}. Đang chuyển hướng sang cửa hàng...`);
                 
-                // Sau khi login, chuyển qua trang shop (hoặc bạn có thể tự đổi sang admin.html nếu muốn)
+                // Chuyển trang sau khi thiết lập xong bộ nhớ
                 window.location.href = 'shop.html'; 
             } else {
                 errorBox.classList.remove('d-none');

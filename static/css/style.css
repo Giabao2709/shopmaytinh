@@ -97,3 +97,27 @@
         .feat-text p { color: #94A3B8; margin: 0; font-size: 0.85rem; }
         
         .footer-dark { background-color: #3E3832; color: #e5e7eb; padding: 40px 0 20px 0; font-size: 0.85rem; }
+
+        /* ==========================================================================
+   BẢN VÁ LỖI: CHỈNH LẠI BỐ CỤC GIỎ HÀNG & FOOTER ADMIN
+   ========================================================================== */
+/* Cân đối lại tỷ lệ cột trong Giỏ Hàng */
+.cart-table-header, .cart-item {
+    display: flex;
+    align-items: center;
+}
+.col-product { flex: 5 !important; padding-right: 15px; } /* Thu nhỏ cột sản phẩm lại một chút */
+.col-price { flex: 2 !important; text-align: center; white-space: nowrap !important; } /* nowrap cấm rớt dòng */
+.col-qty { flex: 2 !important; display: flex; justify-content: center; }
+.col-total { flex: 2 !important; text-align: right; white-space: nowrap !important; }
+
+/* Tăng nhẹ size chữ cho giá tiền dễ nhìn hơn */
+.item-price-val { font-size: 1.05rem !important; }
+.item-total-val { font-size: 1.15rem !important; }
+
+/* Ngăn Footer bị lỗi đè chữ "Về Khoavang.vn" ở dưới cùng */
+.about-section, .footer-dark {
+    position: relative !important;
+    z-index: 10 !important;
+    width: 100%;
+}

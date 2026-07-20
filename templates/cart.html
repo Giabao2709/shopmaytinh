@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -114,22 +115,19 @@
         
         <!-- SIDEBAR TRÁI -->
         <div class="sidebar">
-            <a href="shop.html" class="sidebar-brand">
+            <a href="index.html" class="sidebar-brand">
                 <i class="fa-solid fa-laptop-code sidebar-brand-icon"></i> Khoavang.vn
             </a>
             
             <ul class="sidebar-nav">
                 <li class="nav-item"><a href="admin.html" class="nav-link"><i class="fa-solid fa-user-pen"></i> Khách hàng</a></li>
                 <li class="nav-item"><a href="shop.html" class="nav-link"><i class="fa-solid fa-desktop"></i> Sản phẩm</a></li>
-                
                 <li class="nav-item"><a href="cart.html" class="nav-link active"><i class="fa-solid fa-cart-shopping"></i> Đơn hàng</a></li>
-                
                 <li class="nav-item"><a href="order.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn hàng</a></li>
                 <li class="nav-item"><a href="warranty.html" class="nav-link"><i class="fa-solid fa-shield-halved"></i> Tra cứu bảo hành</a></li>
                 <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fa-solid fa-headset"></i> Hỗ trợ</a></li>
             </ul>
 
-            <!-- Đã dời nút Đăng xuất lên trên bằng margin-bottom: 40px -->
             <ul class="sidebar-nav" style="flex-grow: 0; margin-bottom: 40px;">
                 <li class="nav-item">
                     <a href="#" class="nav-link text-danger" onclick="confirmLogout(event)">
@@ -156,11 +154,12 @@
                 <!-- CỘT TRÁI: DANH SÁCH SẢN PHẨM -->
                 <div class="col-xl-8">
                     <div class="cart-items-container">
-                        <div class="cart-table-header d-none d-md-flex">
-                            <div class="col-product">Sản phẩm</div>
-                            <div class="col-price">Giá</div>
-                            <div class="col-qty">Số lượng</div>
-                            <div class="col-total">Tổng cộng</div>
+                        <!-- Đã chia lại tỷ lệ Flex cho các cột chuẩn xác hơn -->
+                        <div class="cart-table-header d-none d-md-flex align-items-center">
+                            <div style="flex: 5; padding-right: 15px;">Sản phẩm</div>
+                            <div class="text-center" style="flex: 2.5;">Giá</div>
+                            <div class="text-center" style="flex: 2;">Số lượng</div>
+                            <div class="text-end" style="flex: 2.5;">Tổng cộng</div>
                         </div>
 
                         <!-- Khung chứa các item -->
@@ -172,26 +171,24 @@
                     <a href="shop.html" class="btn btn-outline-dark fw-bold px-4 py-2 rounded-3"><i class="fa-solid fa-arrow-left me-2"></i> TIẾP TỤC MUA SẮM</a>
                 </div>
 
-                <!-- CỘT PHẢI: TÓM TẮT ĐÃ LÀM SẠCH -->
+                <!-- CỘT PHẢI: TÓM TẮT -->
                 <div class="col-xl-4">
                     <div class="summary-card">
                         <h4 class="summary-title">Tóm tắt đơn hàng</h4>
                         
                         <div class="summary-row">
-                            <span>Tạm tính (<span id="summary-qty">0</span> sản phẩm)</span>
-                            <span id="summary-subtotal" class="fw-bold text-dark">0 đ</span>
+                            <span>Tạm tính (<span id="summary-qty">0</span>)</span>
+                            <span id="summary-subtotal" class="fw-bold text-dark text-nowrap">0 đ</span>
                         </div>
                         <div class="summary-row">
                             <span>Phí vận chuyển</span>
-                            <span class="fw-bold text-success">Miễn phí</span>
+                            <span class="fw-bold text-success text-nowrap">Miễn phí</span>
                         </div>
-                        
-                        <!-- Đã xóa khối Nhập mã giảm giá -->
 
                         <div class="summary-total">
                             <span class="lbl">Tổng cộng:</span>
                             <div class="text-end">
-                                <span class="val" id="summary-total">0 đ</span>
+                                <span class="val text-nowrap" id="summary-total">0 đ</span>
                                 <div class="text-muted mt-1" style="font-size: 0.8rem; font-weight: 500;">(Đã bao gồm VAT nếu có)</div>
                             </div>
                         </div>
@@ -200,7 +197,7 @@
                         
                         <div class="text-center text-muted mt-4" style="font-size: 0.8rem;">
                             Chấp nhận thanh toán <br>
-                            <div class="d-flex justify-content-center gap-2 mt-2">
+                            <div class="d-flex justify-content-center gap-2 mt-2 flex-wrap">
                                 <span class="border rounded px-2 py-1 bg-light fw-bold text-dark">VISA</span>
                                 <span class="border rounded px-2 py-1 bg-light fw-bold text-dark">MasterCard</span>
                                 <span class="border rounded px-2 py-1 bg-light fw-bold text-dark">MOMO</span>
@@ -222,14 +219,13 @@
                 <a href="shop.html" class="btn-back-shop"><i class="fa-solid fa-fire me-2 text-warning"></i> SĂN DEAL NGAY</a>
             </div>
 
-            <!-- KHỐI ABOUT US & FOOTER (CẬP NHẬT MỚI Y HỆT ẢNH) -->
+            <!-- KHỐI ABOUT US & FOOTER -->
             <div class="about-section">
                 <div class="container-fluid">
                     <div class="row align-items-center">
                         <div class="col-lg-6 mb-4 mb-lg-0">
                             <h2 style="color: var(--primary-yellow); font-weight: 900; margin-bottom: 20px; font-size: 2rem;">Về Khoavang.vn</h2>
                             <p style="color: #cbd5e1; line-height: 1.8; font-size: 1.05rem; margin-bottom: 30px;">Được thành lập với sứ mệnh mang đến những giải pháp công nghệ tối ưu nhất, <strong>Khoavang.vn</strong> tự hào là hệ thống bán lẻ các dòng Laptop Gaming, Máy trạm (Workstation), MacBook và linh kiện Hi-End uy tín hàng đầu tại Việt Nam.</p>
-                            <p style="color: #cbd5e1; line-height: 1.8; font-size: 1.05rem; margin-bottom: 0;">Với đội ngũ kỹ thuật viên giàu kinh nghiệm và dịch vụ chăm sóc khách hàng tận tâm, chúng tôi cam kết không chỉ bán một sản phẩm, mà còn trao sự an tâm tuyệt đối cho khách hàng.</p>
                         </div>
                         <div class="col-lg-5 offset-lg-1">
                             <div class="feat-item">
@@ -243,14 +239,7 @@
                                 <div class="feat-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
                                 <div>
                                     <h5 style="font-weight: 700; margin: 0 0 5px 0; font-size: 1rem; color: #fff;">Bảo hành siêu tốc</h5>
-                                    <p style="color: #94A3B8; margin: 0; font-size: 0.85rem;">Hỗ trợ đổi trả trong 15 ngày đầu, bảo hành tận nơi tiện lợi.</p>
-                                </div>
-                            </div>
-                            <div class="feat-item mb-0">
-                                <div class="feat-icon"><i class="fa-solid fa-truck-fast"></i></div>
-                                <div>
-                                    <h5 style="font-weight: 700; margin: 0 0 5px 0; font-size: 1rem; color: #fff;">Giao hàng hỏa tốc 2H</h5>
-                                    <p style="color: #94A3B8; margin: 0; font-size: 0.85rem;">Miễn phí giao hàng nội thành, kiểm tra máy trước khi thanh toán.</p>
+                                    <p style="color: #94A3B8; margin: 0; font-size: 0.85rem;">Hỗ trợ đổi trả trong 15 ngày đầu.</p>
                                 </div>
                             </div>
                         </div>
@@ -258,7 +247,7 @@
                 </div>
             </div>
 
-            <footer class="footer-dark">
+            <footer class="footer-bottom text-center">
                 <div class="container">
                     <h5 style="color: var(--primary-yellow); font-weight: 800; margin-bottom: 5px;">Khoavang.vn</h5>
                     <p class="small mb-0" style="color: #9ca3af;">© 2026 Khoavang.vn - High-End Hardware Retailer.</p>
@@ -280,14 +269,22 @@
                     <p class="text-muted mb-4 fs-5">Bạn có chắc chắn muốn thoát khỏi hệ thống không?</p>
                     <div class="d-flex justify-content-center gap-3">
                         <button type="button" class="btn btn-light border px-5 py-2 fw-bold fs-6" data-bs-dismiss="modal">Hủy</button>
-                        <a href="login.html" class="btn btn-danger px-5 py-2 fw-bold fs-6">Đăng xuất</a>
+                        <!-- Gọi hàm logout() từ file main.js -->
+                        <a href="#" onclick="logout(event)" class="btn btn-danger px-4 py-2 fw-bold fs-6">
+                            Đăng xuất
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Thư viện JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- ĐÃ THÊM FILE MAIN.JS VÀO ĐÂY ĐỂ CÁC HÀM HOẠT ĐỘNG -->
+    <script src="/static/js/main.js"></script>
+    
     <script>
         function confirmLogout(event) {
             event.preventDefault(); 
@@ -327,9 +324,10 @@
                 let itemTotal = item.price * item.qty;
                 totalPrice += itemTotal;
 
+                // THÊM THUỘC TÍNH: text-nowrap để cấm rớt dòng và Flex để chỉnh tỷ lệ
                 let rowHTML = `
-                    <div class="cart-item d-flex flex-column flex-md-row align-items-md-center">
-                        <div class="col-product item-info-box mb-3 mb-md-0">
+                    <div class="cart-item d-flex flex-column flex-md-row align-items-md-center py-3">
+                        <div class="item-info-box mb-3 mb-md-0" style="flex: 5; padding-right: 15px;">
                             <div class="item-img-box">
                                 <img src="${item.img}" alt="${item.name}">
                             </div>
@@ -339,11 +337,11 @@
                             </div>
                         </div>
                         
-                        <div class="col-price item-price-val d-none d-md-block">
+                        <div class="item-price-val d-none d-md-block text-nowrap text-center" style="flex: 2.5;">
                             ${item.price.toLocaleString('vi-VN')} đ
                         </div>
                         
-                        <div class="col-qty d-flex justify-content-between justify-content-md-center align-items-center w-100 w-md-auto mb-2 mb-md-0">
+                        <div class="d-flex justify-content-between justify-content-md-center align-items-center w-100 w-md-auto mb-2 mb-md-0" style="flex: 2;">
                             <span class="d-md-none fw-bold text-muted" style="font-size:0.85rem">Số lượng:</span>
                             <div class="qty-control">
                                 <button class="qty-btn" onclick="updateQty(${index}, -1)"><i class="fa-solid fa-minus" style="font-size: 0.7rem;"></i></button>
@@ -352,8 +350,8 @@
                             </div>
                         </div>
                         
-                        <div class="col-total item-total-val d-flex justify-content-between justify-content-md-end align-items-center w-100 w-md-auto">
-                            <span class="d-md-none fw-bold text-muted" style="font-size:0.85rem">Thành tiền:</span>
+                        <div class="item-total-val text-nowrap text-danger d-flex justify-content-between justify-content-md-end align-items-center w-100 w-md-auto" style="flex: 2.5;">
+                            <span class="d-md-none fw-bold text-muted text-dark" style="font-size:0.85rem">Thành tiền:</span>
                             ${itemTotal.toLocaleString('vi-VN')} đ
                         </div>
                     </div>
@@ -377,6 +375,7 @@
                     if (cartData.items[index].qty < 1) cartData.items[index].qty = 1;
                     localStorage.setItem('khoavang_cartData', JSON.stringify(cartData));
                     loadCartData(); 
+                    if(typeof updateCartBadge === 'function') updateCartBadge();
                 }
             }
         }
@@ -389,6 +388,7 @@
                 cartData.items.splice(index, 1);
                 localStorage.setItem('khoavang_cartData', JSON.stringify(cartData));
                 loadCartData(); 
+                if(typeof updateCartBadge === 'function') updateCartBadge();
             }
         }
 
@@ -397,10 +397,14 @@
             if(confirm("Bạn có chắc chắn muốn xóa toàn bộ sản phẩm khỏi giỏ hàng?")) {
                 localStorage.removeItem('khoavang_cartData');
                 loadCartData(); 
+                if(typeof updateCartBadge === 'function') updateCartBadge();
             }
         }
 
-        window.onload = loadCartData;
+        // SỬA LỖI XUNG ĐỘT JAVASCRIPT BẰNG CÁCH DÙNG EVENT LISTENER
+        document.addEventListener("DOMContentLoaded", function() {
+            loadCartData();
+        });
     </script>
 </body>
 </html>

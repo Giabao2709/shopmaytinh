@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Khoavang.vn - High-End Hardware Retailer</title>
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -25,14 +24,22 @@
         .header-links a { color: #ffffff !important; text-decoration: none; margin: 0 15px; font-weight: 500; font-size: 0.95rem; cursor: pointer; transition: 0.2s; padding-bottom: 5px; border-bottom: 2px solid transparent;}
         .header-links a:hover, .header-links a.active { color: var(--primary-yellow) !important; border-bottom: 2px solid var(--primary-yellow); }
         
-        /* ========================================================================================= */
-        /* [CHỈNH MÀU Ở ĐÂY]: Đổi màu chữ Khuyến mãi trên menu. 
-           Đang dùng màu đỏ var(--red-price). Bạn có thể đổi thành mã màu khác (VD: #FF0000, #E11D48) */
+        /* [CHỈNH MÀU Ở ĐÂY]: Đổi màu chữ Khuyến mãi trên menu */
         .header-links a.link-deal { color: var(--red-price) !important; }
-        /* ========================================================================================= */
 
         .auth-link { color: #ffffff !important; transition: 0.2s; font-size: 0.95rem;}
         .auth-link:hover { color: var(--primary-yellow) !important; }
+
+        /* --- CSS CHO MENU TRƯỢT (OFFCANVAS) TRÊN MOBILE --- */
+        @media (max-width: 991px) {
+            /* Giới hạn độ rộng của menu trượt ở mức 60% màn hình */
+            .offcanvas.offcanvas-end {
+                width: 60% !important; /* Bạn có thể đổi thành 50% hoặc 250px tùy ý thích */
+            }
+            
+            .header-links a { margin: 10px 0; padding-bottom: 5px; display: block; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.05);}
+            .header-links a:hover, .header-links a.active { border-bottom: 1px solid var(--primary-yellow); color: var(--primary-yellow) !important; }
+        }
 
         /* --- SLIDER BANNER CHÍNH --- */
         .hero-carousel { margin-bottom: 40px; }
@@ -96,35 +103,46 @@
 </head>
 <body>
 
-    <!-- HEADER: ĐÃ GẮN LINK CHUYỂN TRANG SHOP KÈM THAM SỐ CAT -->
     <header class="custom-header">
-        <div class="container-fluid px-4 px-lg-5 d-flex justify-content-between align-items-center">
-            <a href="index.html" class="logo-text">Khoavang.vn</a>
-            <div class="header-links d-none d-lg-flex" id="nav-links">
-                <a href="shop.html?cat=all">Tất cả</a>
-                <a href="shop.html?cat=gaming">Gaming</a>
-                <a href="shop.html?cat=macbook">MacBook</a>
-                <a href="shop.html?cat=office">Văn phòng</a>
-                <a href="shop.html?cat=accessory">Phụ kiện</a>
-                <a href="shop.html?cat=deals" class="link-deal fw-bold">Khuyến mãi</a>
-                <a href="contact.html">Hỗ trợ</a> 
-            </div>
+        <nav class="navbar navbar-expand-lg navbar-dark container-fluid px-4 px-lg-5">
+            <a href="index.html" class="navbar-brand logo-text m-0">Khoavang.vn</a>
             
-            <div class="d-flex align-items-center">
-                <a href="login.html" class="auth-link d-flex align-items-center gap-2 text-decoration-none">
-                    <i class="fa-regular fa-user fs-4"></i>
-                    <span class="fw-bold d-none d-sm-block">Đăng nhập / Đăng ký</span>
-                </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightMenu" aria-controls="offcanvasRightMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightMenu" aria-labelledby="offcanvasRightMenuLabel" style="background-color: var(--dark-header);">
+                <div class="offcanvas-header border-bottom border-secondary d-lg-none">
+                    <h5 class="offcanvas-title logo-text m-0" id="offcanvasRightMenuLabel">Khoavang.vn</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                
+                <div class="offcanvas-body align-items-center">
+                    <div class="header-links navbar-nav mx-auto text-start gap-1 gap-lg-0 w-100 justify-content-lg-center mt-3 mt-lg-0">
+                        <a href="shop.html?cat=all" class="nav-link">Tất cả</a>
+                        <a href="shop.html?cat=gaming" class="nav-link">Gaming</a>
+                        <a href="shop.html?cat=macbook" class="nav-link">MacBook</a>
+                        <a href="shop.html?cat=office" class="nav-link">Văn phòng</a>
+                        <a href="shop.html?cat=accessory" class="nav-link">Phụ kiện</a>
+                        <a href="shop.html?cat=deals" class="nav-link link-deal fw-bold">Khuyến mãi</a>
+                        <a href="contact.html" class="nav-link">Hỗ trợ</a> 
+                    </div>
+                    
+                    <div class="d-flex justify-content-start justify-content-lg-end mt-4 mt-lg-0 pb-3 pb-lg-0">
+                        <a href="login.html" class="auth-link d-flex align-items-center gap-2 text-decoration-none">
+                            <i class="fa-regular fa-user fs-4"></i>
+                            <span class="fw-bold">Đăng nhập / Đăng ký</span>
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
+        </nav>
     </header>
 
-    <!-- TOAST THÔNG BÁO -->
     <div class="toast-custom" id="cart-toast">
         <i class="fa-solid fa-check-circle me-2"></i> Đã thêm vào giỏ hàng!
     </div>
 
-    <!-- CAROUSEL BANNERS -->
     <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
@@ -158,7 +176,6 @@
 
     <div class="container mb-5">
         
-        <!-- DANH MỤC NỔI BẬT: ĐÃ GẮN LINK CHUYỂN TRANG -->
         <div class="category-section">
             <h3 class="section-title">Danh Mục Nổi Bật</h3>
             <div class="row g-4">
@@ -189,12 +206,10 @@
             </div>
         </div>
 
-        <!-- SẢN PHẨM KHUYẾN MÃI -->
         <div class="hot-deals-section">
             <h3 class="section-title text-danger"><i class="fa-solid fa-bolt me-2"></i> Giá Sốc Hôm Nay</h3>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4" id="home-deals-grid">
-                <!-- Javascript sẽ tự động điền 4 sản phẩm hot vào đây -->
-            </div>
+                </div>
             
             <div class="text-center mt-5">
                 <a href="shop.html?cat=all" class="btn btn-outline-dark fw-bold px-5 py-2">Xem Tất Cả Sản Phẩm <i class="fa-solid fa-arrow-right ms-2"></i></a>
@@ -203,7 +218,6 @@
 
     </div>
 
-    <!-- CAM KẾT / CHÍNH SÁCH -->
     <div class="features-section">
         <div class="container">
             <div class="row g-4">
@@ -247,7 +261,6 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer class="footer-dark text-center">
         <div class="container">
             <h5 style="color: var(--primary-yellow); font-weight: 800; margin-bottom: 5px;">Khoavang.vn</h5>
@@ -255,10 +268,8 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- SCRIPT -->
     <script>
         const homeFeaturedProducts = [
             { id: 2, brand: 'ASUS', name: 'Laptop ASUS ROG Zephyrus G14 (2024)', img: 'rogg14.jpg', price: 36990000, oldPrice: 45000000, specs: ['Ryzen 9 8945HS', 'RTX 4060', 'Mini LED'], rating: 5, reviews: 102, tagClass: 'tag-sale', tagText: 'GIÁ SỐC' },
