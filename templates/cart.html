@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ hàng - Khoavang.vn</title>
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -27,11 +25,11 @@
             overflow-x: hidden;
         }
 
-        /* --- SIDEBAR TRÁI --- */
-        .wrapper { display: flex; min-height: 100vh; }
-        .sidebar { width: 260px; background-color: var(--dark-header); color: #fff; position: fixed; top: 0; left: 0; height: 100vh; display: flex; flex-direction: column; padding: 20px 15px; z-index: 100; }
+        /* --- BỐ CỤC CHUNG & SIDEBAR TRÁI --- */
+        .wrapper { display: flex; min-height: 100vh; flex-direction: column;}
         
-        .sidebar-brand { display: flex; align-items: center; gap: 10px; color: var(--primary-yellow) !important; font-size: 1.4rem; font-weight: 900; text-decoration: none; margin-bottom: 40px; padding: 0 5px; transition: 0.3s; }
+        .sidebar { background-color: var(--dark-header); color: #fff; z-index: 1050; }
+        .sidebar-brand { display: flex; align-items: center; gap: 10px; color: var(--primary-yellow) !important; font-size: 1.4rem; font-weight: 900; text-decoration: none; margin-bottom: 30px; padding: 0 5px; transition: 0.3s; }
         .sidebar-brand:hover { transform: scale(1.05); }
         .sidebar-brand-icon { background: var(--primary-yellow); color: var(--dark-header); padding: 5px 8px; border-radius: 8px; font-size: 1.2rem; }
         
@@ -42,9 +40,6 @@
         .nav-link:hover { background-color: var(--hover-blue); color: #fff !important; }
         .nav-link.active { background-color: var(--primary-blue); color: #fff !important; box-shadow: 0 4px 10px rgba(10, 88, 202, 0.3); }
 
-        /* --- KHU VỰC NỘI DUNG PHẢI --- */
-        .main-content { margin-left: 260px; padding: 40px 40px 0 40px; width: calc(100% - 260px); display: flex; flex-direction: column; min-height: 100vh;}
-        
         /* HEADER GIỎ HÀNG */
         .cart-header { margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; }
         .page-title { font-weight: 900; color: var(--dark-header); margin-bottom: 5px; font-size: 2rem; }
@@ -57,11 +52,7 @@
         /* DANH SÁCH SẢN PHẨM */
         .cart-items-container { background: #fff; border-radius: 15px; border: 1px solid var(--border-color); padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); margin-bottom: 30px;}
         .cart-table-header { display: flex; font-weight: 700; color: #64748b; font-size: 0.85rem; text-transform: uppercase; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px; }
-        .col-product { flex: 12; }
-        .col-price { flex: 3; text-align: center; }
-        .col-qty { flex: 3; text-align: center; }
-        .col-total { flex: 3; text-align: right; }
-
+        
         .cart-item { display: flex; align-items: center; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px dashed #e2e8f0; }
         .cart-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         
@@ -77,7 +68,7 @@
         .item-price-val { font-weight: 700; color: #64748b; font-size: 1rem;}
         .item-total-val { font-weight: 900; color: var(--red-price); font-size: 1.1rem;}
 
-        /* Nút Tăng giảm số lượng CẢI TIẾN */
+        /* Nút Tăng giảm số lượng */
         .qty-control { display: inline-flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
         .qty-btn { width: 32px; height: 32px; border: none; background: #fff; color: #475569; font-weight: bold; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center;}
         .qty-btn:hover { background: #f1f5f9; color: var(--primary-blue); }
@@ -94,7 +85,7 @@
         .btn-checkout { background: var(--primary-yellow); color: #000; font-weight: 900; font-size: 1.1rem; padding: 15px; border-radius: 10px; border: none; width: 100%; margin-top: 25px; transition: 0.3s; display: block; text-align: center; text-decoration: none;}
         .btn-checkout:hover { background: #e6a600; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255,184,0,0.3); color: #000;}
 
-        /* --- TRẠNG THÁI GIỎ HÀNG TRỐNG --- */
+        /* TRẠNG THÁI GIỎ HÀNG TRỐNG */
         .empty-cart-view { text-align: center; padding: 80px 20px; background: #fff; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.02);}
         .empty-cart-view .icon-wrapper { width: 120px; height: 120px; background: #f8fafc; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px auto; color: #cbd5e1; font-size: 4rem; }
         .empty-cart-view h3 { font-weight: 900; color: var(--dark-header); margin-bottom: 15px; font-size: 1.8rem;}
@@ -102,45 +93,86 @@
         .btn-back-shop { background: var(--primary-blue); color: #fff; font-weight: 800; padding: 14px 40px; border-radius: 8px; border: none; transition: 0.3s; display: inline-block; text-decoration: none;}
         .btn-back-shop:hover { background: #084298; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(10, 88, 202, 0.3); color: #fff;}
 
-        /* --- FOOTER CẬP NHẬT MỚI (Đồng bộ với Admin/Shop) --- */
-        .about-section { background: var(--dark-header); padding: 50px 40px; margin-top: auto; margin-left: -40px; margin-right: -40px; }
-        .footer-dark { background-color: #3E3832; color: #e5e7eb; padding: 30px 0 15px 0; margin-left: -40px; margin-right: -40px; text-align: center; }
+        /* --- FOOTER CẬP NHẬT MỚI --- */
+        .about-section { background: var(--dark-header); }
+        .footer-dark { background-color: #3E3832; color: #e5e7eb; text-align: center; }
         .feat-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
         .feat-icon { width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: var(--primary-yellow); }
+
+        /* =========================================
+           RESPONSIVE CHO MÀN HÌNH MÁY TÍNH (>= 992px)
+           ========================================= */
+        @media (min-width: 992px) {
+            .wrapper { flex-direction: row; }
+            .sidebar { width: 260px; position: fixed; top: 0; left: 0; height: 100vh; padding: 20px 15px; }
+            .sidebar .offcanvas-body { padding: 0; overflow-y: visible; }
+            .main-content { margin-left: 260px; padding: 40px 40px 0 40px; width: calc(100% - 260px); display: flex; flex-direction: column; min-height: 100vh;}
+            
+            .about-section { padding: 50px 40px; margin-top: auto; margin-left: -40px; margin-right: -40px; }
+            .footer-dark { padding: 30px 0 15px 0; margin-left: -40px; margin-right: -40px; }
+        }
+
+        /* =========================================
+           RESPONSIVE CHO MÀN HÌNH ĐIỆN THOẠI (< 992px)
+           ========================================= */
+        @media (max-width: 991px) {
+            .sidebar.offcanvas-start { width: 280px; }
+            .main-content { margin-left: 0; padding: 20px 15px 0 15px; width: 100%; display: flex; flex-direction: column; min-height: calc(100vh - 70px);}
+            
+            .page-title { font-size: 1.6rem; }
+            .cart-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            
+            .about-section { padding: 40px 20px; margin-top: auto; margin-left: -15px; margin-right: -15px; }
+            .footer-dark { padding: 30px 0 15px 0; margin-left: -15px; margin-right: -15px; }
+        }
     </style>
 </head>
 <body>
 
+    <div class="d-flex d-lg-none justify-content-between align-items-center px-4 py-3 shadow-sm" style="background-color: var(--dark-header); position: sticky; top: 0; z-index: 999;">
+        <a href="index.html" class="text-decoration-none" style="color: var(--primary-yellow); font-size: 1.4rem; font-weight: 900;">Khoavang.vn</a>
+        <button class="btn text-white fs-3 p-0 border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartSidebar">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+
     <div class="wrapper">
         
-        <!-- SIDEBAR TRÁI -->
-        <div class="sidebar">
-            <a href="index.html" class="sidebar-brand">
-                <i class="fa-solid fa-laptop-code sidebar-brand-icon"></i> Khoavang.vn
-            </a>
+        <div class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="cartSidebar">
             
-            <ul class="sidebar-nav">
-                <li class="nav-item"><a href="admin.html" class="nav-link"><i class="fa-solid fa-user-pen"></i> Khách hàng</a></li>
-                <li class="nav-item"><a href="shop.html" class="nav-link"><i class="fa-solid fa-desktop"></i> Sản phẩm</a></li>
-                <li class="nav-item"><a href="cart.html" class="nav-link active"><i class="fa-solid fa-cart-shopping"></i> Đơn hàng</a></li>
-                <li class="nav-item"><a href="order.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn hàng</a></li>
-                <li class="nav-item"><a href="warranty.html" class="nav-link"><i class="fa-solid fa-shield-halved"></i> Tra cứu bảo hành</a></li>
-                <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fa-solid fa-headset"></i> Hỗ trợ</a></li>
-            </ul>
+            <div class="offcanvas-header d-lg-none border-bottom border-secondary mb-3">
+                <h5 class="offcanvas-title mb-0" style="color: var(--primary-yellow); font-weight: 900;">
+                    <i class="fa-solid fa-laptop-code sidebar-brand-icon p-1 me-2" style="font-size: 1rem;"></i> Khoavang.vn
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#cartSidebar"></button>
+            </div>
 
-            <ul class="sidebar-nav" style="flex-grow: 0; margin-bottom: 40px;">
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-danger" onclick="confirmLogout(event)">
-                        <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
-                    </a>
-                </li>
-            </ul>
+            <div class="offcanvas-body d-flex flex-column h-100 flex-grow-1 p-3 p-lg-0">
+                <a href="index.html" class="sidebar-brand d-none d-lg-flex">
+                    <i class="fa-solid fa-laptop-code sidebar-brand-icon"></i> Khoavang.vn
+                </a>
+                
+                <ul class="sidebar-nav">
+                    <li class="nav-item"><a href="admin.html" class="nav-link"><i class="fa-solid fa-user-pen"></i> Khách hàng</a></li>
+                    <li class="nav-item"><a href="shop.html" class="nav-link"><i class="fa-solid fa-desktop"></i> Sản phẩm</a></li>
+                    <li class="nav-item"><a href="cart.html" class="nav-link active"><i class="fa-solid fa-cart-shopping"></i> Đơn hàng</a></li>
+                    <li class="nav-item"><a href="order.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn hàng</a></li>
+                    <li class="nav-item"><a href="warranty.html" class="nav-link"><i class="fa-solid fa-shield-halved"></i> Tra cứu bảo hành</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fa-solid fa-headset"></i> Hỗ trợ</a></li>
+                </ul>
+
+                <ul class="sidebar-nav mt-auto" style="flex-grow: 0; margin-bottom: 20px;">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-danger" onclick="confirmLogout(event)">
+                            <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <!-- NỘI DUNG PHẢI -->
         <div class="main-content">
             
-            <!-- TIÊU ĐỀ GIỎ HÀNG -->
             <div class="cart-header" id="cart-header-area">
                 <div>
                     <h1 class="page-title">Giỏ hàng của bạn</h1>
@@ -151,10 +183,8 @@
             
             <div class="row g-4 mb-5" id="cart-main-area">
                 
-                <!-- CỘT TRÁI: DANH SÁCH SẢN PHẨM -->
                 <div class="col-xl-8">
                     <div class="cart-items-container">
-                        <!-- Đã chia lại tỷ lệ Flex cho các cột chuẩn xác hơn -->
                         <div class="cart-table-header d-none d-md-flex align-items-center">
                             <div style="flex: 5; padding-right: 15px;">Sản phẩm</div>
                             <div class="text-center" style="flex: 2.5;">Giá</div>
@@ -162,16 +192,13 @@
                             <div class="text-end" style="flex: 2.5;">Tổng cộng</div>
                         </div>
 
-                        <!-- Khung chứa các item -->
                         <div id="cart-items-list">
-                            <!-- JS render tại đây -->
-                        </div>
+                            </div>
                     </div>
                     
                     <a href="shop.html" class="btn btn-outline-dark fw-bold px-4 py-2 rounded-3"><i class="fa-solid fa-arrow-left me-2"></i> TIẾP TỤC MUA SẮM</a>
                 </div>
 
-                <!-- CỘT PHẢI: TÓM TẮT -->
                 <div class="col-xl-4">
                     <div class="summary-card">
                         <h4 class="summary-title">Tóm tắt đơn hàng</h4>
@@ -209,7 +236,6 @@
 
             </div>
 
-            <!-- GIAO DIỆN KHI GIỎ HÀNG TRỐNG -->
             <div id="empty-cart-area" class="empty-cart-view d-none mb-5">
                 <div class="icon-wrapper">
                     <i class="fa-solid fa-cart-shopping"></i>
@@ -219,7 +245,6 @@
                 <a href="shop.html" class="btn-back-shop"><i class="fa-solid fa-fire me-2 text-warning"></i> SĂN DEAL NGAY</a>
             </div>
 
-            <!-- KHỐI ABOUT US & FOOTER -->
             <div class="about-section">
                 <div class="container-fluid">
                     <div class="row align-items-center">
@@ -247,7 +272,7 @@
                 </div>
             </div>
 
-            <footer class="footer-bottom text-center">
+            <footer class="footer-dark text-center">
                 <div class="container">
                     <h5 style="color: var(--primary-yellow); font-weight: 800; margin-bottom: 5px;">Khoavang.vn</h5>
                     <p class="small mb-0" style="color: #9ca3af;">© 2026 Khoavang.vn - High-End Hardware Retailer.</p>
@@ -257,7 +282,6 @@
         </div>
     </div>
 
-    <!-- BẢNG THÔNG BÁO ĐĂNG XUẤT (MODAL) -->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 15px; border: none;">
@@ -269,20 +293,14 @@
                     <p class="text-muted mb-4 fs-5">Bạn có chắc chắn muốn thoát khỏi hệ thống không?</p>
                     <div class="d-flex justify-content-center gap-3">
                         <button type="button" class="btn btn-light border px-5 py-2 fw-bold fs-6" data-bs-dismiss="modal">Hủy</button>
-                        <!-- Gọi hàm logout() từ file main.js -->
-                        <a href="#" onclick="logout(event)" class="btn btn-danger px-4 py-2 fw-bold fs-6">
-                            Đăng xuất
-                        </a>
+                        <a href="#" onclick="logout(event)" class="btn btn-danger px-4 py-2 fw-bold fs-6">Đăng xuất</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Thư viện JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- ĐÃ THÊM FILE MAIN.JS VÀO ĐÂY ĐỂ CÁC HÀM HOẠT ĐỘNG -->
     <script src="/static/js/main.js"></script>
     
     <script>
@@ -324,7 +342,6 @@
                 let itemTotal = item.price * item.qty;
                 totalPrice += itemTotal;
 
-                // THÊM THUỘC TÍNH: text-nowrap để cấm rớt dòng và Flex để chỉnh tỷ lệ
                 let rowHTML = `
                     <div class="cart-item d-flex flex-column flex-md-row align-items-md-center py-3">
                         <div class="item-info-box mb-3 mb-md-0" style="flex: 5; padding-right: 15px;">
@@ -401,7 +418,6 @@
             }
         }
 
-        // SỬA LỖI XUNG ĐỘT JAVASCRIPT BẰNG CÁCH DÙNG EVENT LISTENER
         document.addEventListener("DOMContentLoaded", function() {
             loadCartData();
         });
