@@ -38,6 +38,7 @@
 
         /* --- SUCCESS CARD --- */
         .success-wrapper { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 50px 20px; }
+<<<<<<< HEAD
         .success-card { background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); padding: 40px 30px; max-width: 680px; width: 100%; text-align: center; border: 1px solid var(--border-color); position: relative; overflow: hidden; }
         .success-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--primary-yellow), #16A34A); }
 
@@ -61,6 +62,23 @@
         .code-badge { font-family: monospace; font-size: 0.85rem; padding: 3px 8px; border-radius: 4px; font-weight: 700; }
         .machine-code { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
         .warranty-code { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+=======
+        .success-card { background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); padding: 50px 40px; max-width: 600px; width: 100%; text-align: center; border: 1px solid var(--border-color); position: relative; overflow: hidden; }
+        .success-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--primary-yellow), #16A34A); }
+
+        .check-icon { width: 80px; height: 80px; background: #DCFCE7; color: #16A34A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 20px auto; box-shadow: 0 0 0 10px rgba(22, 163, 74, 0.1); }
+        .success-title { font-weight: 800; color: var(--dark-navy); font-size: 1.8rem; margin-bottom: 10px; }
+        .success-desc { color: #64748B; margin-bottom: 30px; font-size: 1rem; }
+
+        /* Khối thông tin đơn hàng */
+        .order-info-box { background: #F8FAFC; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 20px; margin-bottom: 30px; text-align: left; }
+        .info-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; }
+        .info-row:last-child { margin-bottom: 0; border-top: 1px solid #e2e8f0; padding-top: 12px; margin-top: 5px; }
+        .info-label { color: #64748B; font-weight: 600; }
+        .info-value { color: var(--dark-navy); font-weight: 700; text-align: right; }
+        .order-id { color: #2563EB; font-size: 1.1rem; }
+        .total-paid { color: var(--red-price); font-size: 1.2rem; }
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
 
         /* Nút điều hướng */
         .btn-group-custom { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
@@ -81,7 +99,11 @@
 </head>
 <body>
 
+<<<<<<< HEAD
     <!-- HEADER MỚI -->
+=======
+    <!-- HEADER MỚI (Đã sửa link admin) -->
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
     <header class="custom-header">
         <div class="container-fluid px-4 px-lg-5 d-flex justify-content-between align-items-center">
             <a href="shop.html" class="logo-text">Khoavang.vn</a>
@@ -100,9 +122,17 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
                 <div class="header-icons">
+<<<<<<< HEAD
                     <a href="admin.html"><i class="fa-regular fa-user"></i></a>
                     <a href="cart.html">
                         <i class="fa-solid fa-cart-shopping"></i>
+=======
+                    <!-- LINK ĐÃ ĐƯỢC ĐỔI THÀNH ADMIN.HTML -->
+                    <a href="admin.html"><i class="fa-regular fa-user"></i></a>
+                    <a href="cart.html">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <!-- Giỏ hàng lúc này hiển thị 0 vì đã mua xong -->
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                     </a>
                 </div>
             </div>
@@ -115,6 +145,7 @@
             <div class="success-card">
                 <div class="check-icon"><i class="fa-solid fa-check"></i></div>
                 <h2 class="success-title">Đặt hàng thành công!</h2>
+<<<<<<< HEAD
                 <p class="success-desc">Cảm ơn bạn đã tin tưởng mua sắm tại Khoavang.vn. Đơn hàng của bạn đã được khởi tạo thành công.</p>
                 
                 <div class="order-info-box">
@@ -139,17 +170,47 @@
                         </div>
                     </div>
 
+=======
+                <p class="success-desc">Cảm ơn bạn đã tin tưởng và mua sắm tại Khoavang.vn. Đơn hàng của bạn đã được ghi nhận và đang được xử lý.</p>
+                
+                <div class="order-info-box">
+                    <div class="info-row">
+                        <span class="info-label">Mã đơn hàng:</span>
+                        <span class="info-value order-id" id="display-order-id">#KV-ĐANG TẠO...</span>
+                    </div>
+                    <!-- ĐÃ THÊM MÃ BẢO HÀNH -->
+                    <div class="info-row">
+                        <span class="info-label">Mã bảo hành:</span>
+                        <span class="info-value text-success" id="display-warranty">#BH-ĐANG TẠO...</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Ngày đặt:</span>
+                        <span class="info-value" id="display-date">--/--/----</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Phương thức:</span>
+                        <span class="info-value" id="display-method">Đang tải...</span>
+                    </div>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                     <div class="info-row">
                         <span class="info-label">Tổng thanh toán:</span>
                         <span class="info-value total-paid" id="display-total">0đ</span>
                     </div>
                 </div>
 
+<<<<<<< HEAD
                 <p class="small text-muted mb-4">Chúng tôi đã gửi email xác nhận. Bạn có thể sử dụng các <b>Mã Bảo Hành</b> ở trên để tra cứu thời hạn bảo hành bất kỳ lúc nào.</p>
 
                 <div class="btn-group-custom">
                     <a href="shop.html" class="btn-home"><i class="fa-solid fa-house me-2"></i> Về trang chủ</a>
                     <a href="order.html" class="btn-orders">Xem lịch sử đơn hàng <i class="fa-solid fa-arrow-right ms-2"></i></a>
+=======
+                <p class="small text-muted mb-4">Chúng tôi đã gửi thông tin xác nhận vào Email của bạn. Nhân viên CSKH sẽ liên hệ với bạn trong thời gian sớm nhất để xác nhận giao hàng.</p>
+
+                <div class="btn-group-custom">
+                    <a href="shop.html" class="btn-home"><i class="fa-solid fa-house me-2"></i> Về trang chủ</a>
+                    <a href="order.html" class="btn-orders">Xem đơn hàng <i class="fa-solid fa-arrow-right ms-2"></i></a>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                 </div>
             </div>
         </div>
@@ -163,6 +224,12 @@
                         <p class="footer-text">
                             Được thành lập với sứ mệnh mang đến những giải pháp công nghệ tối ưu nhất, <strong>Khoavang.vn</strong> tự hào là hệ thống bán lẻ các dòng Laptop Gaming, Máy trạm (Workstation), MacBook và linh kiện Hi-End uy tín hàng đầu tại Việt Nam.
                         </p>
+<<<<<<< HEAD
+=======
+                        <p class="footer-text mb-0">
+                            Với đội ngũ kỹ thuật viên giàu kinh nghiệm và dịch vụ chăm sóc khách hàng tận tâm, chúng tôi cam kết không chỉ bán một sản phẩm, mà còn trao sự an tâm tuyệt đối cho khách hàng.
+                        </p>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                     </div>
                     <div class="col-lg-6">
                         <div class="d-flex flex-column gap-3">
@@ -180,6 +247,16 @@
                                     <small class="text-secondary">Hỗ trợ đổi trả trong 15 ngày đầu, bảo hành tận nơi tiện lợi.</small>
                                 </div>
                             </div>
+<<<<<<< HEAD
+=======
+                            <div class="feature-box d-flex align-items-center gap-3">
+                                <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                                <div>
+                                    <h6 class="mb-1 text-white fw-bold">Giao hàng hỏa tốc 2H</h6>
+                                    <small class="text-secondary">Miễn phí giao hàng nội thành, kiểm tra máy trước khi thanh toán.</small>
+                                </div>
+                            </div>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                         </div>
                     </div>
                 </div>
@@ -190,6 +267,7 @@
             </div>
         </footer>
     </div>
+<<<<<<< HEAD
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -279,5 +357,70 @@
             }
         };
     </script>
+=======
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- SCRIPT XỬ LÝ LOGIC -->
+<script>
+    window.onload = function() {
+        // 1. Tạo Mã đơn hàng và Mã bảo hành
+        const randomID = Math.floor(100000 + Math.random() * 900000);
+        const orderIdStr = "#KV-" + randomID;
+        document.getElementById('display-order-id').innerText = orderIdStr;
+        
+        const randomWarranty = Math.floor(100000 + Math.random() * 900000);
+        const warrantyIdStr = "#BH-" + randomWarranty;
+        document.getElementById('display-warranty').innerText = warrantyIdStr;
+
+        // 2. Lấy ngày hiện tại
+        const today = new Date();
+        const dateString = ("0" + today.getDate()).slice(-2) + "/" + ("0" + (today.getMonth() + 1)).slice(-2) + "/" + today.getFullYear();
+        document.getElementById('display-date').innerText = dateString;
+
+        // 3. Hiển thị phương thức thanh toán
+        const savedMethod = localStorage.getItem('khoavang_paymentMethod') || 'cod'; 
+        let methodText = "Thanh toán khi nhận hàng (COD)";
+        if (savedMethod === 'momo') methodText = "Thanh toán qua ví MoMo";
+        else if (savedMethod === 'bank') methodText = "Chuyển khoản ngân hàng";
+        document.getElementById('display-method').innerText = methodText;
+
+        // 4. Lấy dữ liệu giỏ hàng để tính tổng tiền VÀ LƯU VÀO LỊCH SỬ
+        const savedData = localStorage.getItem('khoavang_cartData');
+        let finalTotal = 0;
+        
+        if (savedData) {
+            const data = JSON.parse(savedData);
+            
+            if(data.items && data.items.length > 0) {
+                data.items.forEach(item => {
+                    finalTotal += (item.price * item.qty);
+                });
+
+                document.getElementById('display-total').innerText = finalTotal.toLocaleString('vi-VN') + ' đ';
+                
+                // --- PHẦN MỚI: LƯU VÀO LỊCH SỬ ĐƠN HÀNG TRƯỚC KHI XÓA GIỎ ---
+                const newOrder = {
+                    orderId: orderIdStr,
+                    warrantyId: warrantyIdStr,
+                    date: dateString,
+                    method: methodText,
+                    total: finalTotal,
+                    items: data.items // Lưu lại toàn bộ hình ảnh, tên, số lượng từ giỏ hàng
+                };
+
+                // Lấy lịch sử cũ (nếu có) hoặc tạo mảng mới
+                let history = JSON.parse(localStorage.getItem('khoavang_orderHistory')) || [];
+                history.push(newOrder); // Thêm đơn mới vào
+                localStorage.setItem('khoavang_orderHistory', JSON.stringify(history));
+            }
+            
+            // 5. Xoá dữ liệu giỏ hàng sau khi đã xử lý xong
+            localStorage.removeItem('khoavang_cartData');
+            localStorage.removeItem('khoavang_paymentMethod');
+        }
+    };
+</script>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
 </body>
 </html>

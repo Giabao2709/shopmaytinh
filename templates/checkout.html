@@ -125,6 +125,7 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label">Họ và tên <span class="text-danger">*</span></label>
+<<<<<<< HEAD
                                 <!-- Đã thêm id="fullName" -->
                                 <input type="text" id="fullName" class="form-control" placeholder="Nhập họ tên" required>
                             </div>
@@ -134,6 +135,16 @@
                                 <input type="tel" id="phoneNumber" class="form-control" placeholder="Nhập số điện thoại" required>
                             </div>
                             
+=======
+                                <input type="text" class="form-control" placeholder="Nhập họ tên" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Số điện thoại <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" placeholder="Nhập số điện thoại" required>
+                            </div>
+                            
+                            <!-- DROP DOWN ĐỊA CHỈ THÔNG MINH -->
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                             <div class="col-md-4">
                                 <label class="form-label">Tỉnh / Thành phố <span class="text-danger">*</span></label>
                                 <select class="form-select bg-light" disabled>
@@ -161,8 +172,12 @@
 
                             <div class="col-12">
                                 <label class="form-label">Địa chỉ cụ thể (Số nhà, tên đường) <span class="text-danger">*</span></label>
+<<<<<<< HEAD
                                 <!-- Đã thêm id="addressDetail" -->
                                 <input type="text" id="addressDetail" class="form-control" placeholder="Ví dụ: 283/47 CMT8" required>
+=======
+                                <input type="text" class="form-control" placeholder="Ví dụ: 283/47 CMT8" required>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                             </div>
                         </div>
                     </div>
@@ -184,6 +199,10 @@
                         <label class="payment-option" id="opt-momo">
                             <input type="radio" name="payment_method" value="momo" onchange="changePaymentMethod()">
                             <div class="d-flex align-items-center">
+<<<<<<< HEAD
+=======
+                                <!-- ĐÃ FIX LINK LOGO MOMO -->
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                                 <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-MoMo-Square.png" class="payment-icon" alt="MoMo">
                                 <div>
                                     <p class="payment-text">Thanh toán qua ví MoMo</p>
@@ -202,7 +221,11 @@
                         </label>
                         
                         <div id="bank-info" class="bank-details">
+<<<<<<< HEAD
                             <p class="mb-2 fw-bold text-dark">Thông tự tài khoản nhận tiền:</p>
+=======
+                            <p class="mb-2 fw-bold text-dark">Thông tin tài khoản nhận tiền:</p>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                             <p class="mb-1">• Ngân hàng: <strong>Vietcombank</strong></p>
                             <p class="mb-1">• Số tài khoản: <strong class="text-danger fs-6">1029 3847 56</strong></p>
                             <p class="mb-1">• Chủ tài khoản: <strong>CÔNG TY CỔ PHẦN KHOA VÀNG</strong></p>
@@ -210,11 +233,19 @@
                     </div>
                 </div>
 
+<<<<<<< HEAD
                 <!-- CỘT PHẢI: TÓM TẮT ĐƠN HÀNG -->
+=======
+                <!-- CỘT PHẢI: TÓM TẮT ĐƠN HÀNG (TỰ ĐỘNG ĐỌC TỪ GIỎ HÀNG) -->
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                 <div class="col-lg-5 col-xl-4">
                     <div class="summary-box">
                         <h3 class="summary-title">Đơn hàng của bạn</h3>
                         
+<<<<<<< HEAD
+=======
+                        <!-- Khung chứa danh sách sản phẩm động -->
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                         <div id="checkout-item-list">
                             <!-- JS sẽ đổ dữ liệu vào đây -->
                         </div>
@@ -237,7 +268,11 @@
                             <div class="total-amount" id="chk-total">0đ</div>
                         </div>
 
+<<<<<<< HEAD
                         <!-- Nút hoàn tất đặt hàng -->
+=======
+                        <!-- ĐÃ SỬA LẠI HÀM GỌI Ở ĐÂY -->
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                         <button type="button" class="btn-place-order" onclick="processOrder()">HOÀN TẤT ĐẶT HÀNG</button>               
                     </div>
                 </div>
@@ -344,11 +379,20 @@
                 
                 let calculatedSubtotal = 0;
 
+<<<<<<< HEAD
                 if (data.items && data.items.length > 0) {
                     data.items.forEach(item => {
                         let itemTotal = item.price * item.qty;
                         calculatedSubtotal += itemTotal; 
                         totalQty += item.qty; 
+=======
+                // Nếu có sản phẩm trong giỏ hàng
+                if (data.items && data.items.length > 0) {
+                    data.items.forEach(item => {
+                        let itemTotal = item.price * item.qty;
+                        calculatedSubtotal += itemTotal; // Cộng dồn tiền
+                        totalQty += item.qty; // Cộng dồn số lượng cho badge
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                         
                         itemList.innerHTML += `
                             <div class="summary-item">
@@ -367,11 +411,19 @@
                     itemList.innerHTML = '<p class="text-muted small">Giỏ hàng của bạn đang trống.</p>';
                 }
 
+<<<<<<< HEAD
+=======
+                // Cập nhật giá tiền ra giao diện (Tính toán động 100%)
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                 document.getElementById('chk-subtotal').innerText = calculatedSubtotal.toLocaleString('vi-VN') + 'đ';
                 document.getElementById('chk-discount').innerText = '0đ';
                 document.getElementById('chk-total').innerText = calculatedSubtotal.toLocaleString('vi-VN') + 'đ';
             }
 
+<<<<<<< HEAD
+=======
+            // Cập nhật số lượng giỏ hàng trên Header
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
             const badge = document.getElementById('header-cart-badge');
             if (totalQty > 0) {
                 badge.style.display = 'flex';
@@ -379,6 +431,7 @@
             }
         };
 
+<<<<<<< HEAD
         // 4. XỬ LÝ ĐẶT HÀNG: KIỂM TRA DỮ LIỆU VÀ CHUYỂN TRANG
         function processOrder() {
             // Lấy giá trị từ các ô nhập liệu
@@ -395,6 +448,11 @@
             }
 
             // Nếu đầy đủ, tiến hành lưu phương thức thanh toán
+=======
+        // 4. XỬ LÝ ĐẶT HÀNG: LƯU PHƯƠNG THỨC THANH TOÁN VÀ CHUYỂN TRANG
+        function processOrder() {
+            // Lấy phương thức thanh toán đang được chọn
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
             let checkedRadio = document.querySelector('input[name="payment_method"]:checked');
             if (checkedRadio) {
                 localStorage.setItem('khoavang_paymentMethod', checkedRadio.value);

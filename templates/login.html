@@ -68,7 +68,10 @@
             font-weight: 600;
             font-size: 0.95rem;
             transition: color 0.2s;
+<<<<<<< HEAD
             white-space: nowrap; 
+=======
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
         }
         .header-login-btn i {
             font-size: 1.2rem;
@@ -169,6 +172,7 @@
             margin-bottom: 10px;
             text-transform: uppercase;
         }
+<<<<<<< HEAD
         
         /* ĐÃ FIX: Tách các link ở footer ra cho PC */
         .footer-links a {
@@ -193,6 +197,24 @@
             .image-column { display: none !important; }
             .header-links { display: none !important; }
             .custom-footer { padding: 30px 15px 20px 15px; }
+=======
+        .footer-links a {
+            display: block;
+            color: #555;
+            text-decoration: none;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+        }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 991px) {
+            body { height: auto; overflow: auto; } 
+            .main-wrapper { padding: 20px; }
+            .auth-container { flex-direction: column; height: auto; }
+            .form-column, .image-column { width: 100%; }
+            .image-column { min-height: 350px; background-position: center; }
+            .header-links { display: none !important; }
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
         }
     </style>
 </head>
@@ -200,7 +222,11 @@
 
     <!-- HEADER -->
     <header class="custom-header">
+<<<<<<< HEAD
         <div class="container-fluid px-3 px-lg-5 d-flex justify-content-between align-items-center">
+=======
+        <div class="container-fluid px-5 d-flex justify-content-between align-items-center">
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
             
             <a href="index.html" class="logo-text">Khoavang.vn</a>
             
@@ -217,7 +243,11 @@
             <div>
                 <a href="login.html" class="header-login-btn">
                     <i class="fa-regular fa-user"></i>
+<<<<<<< HEAD
                     <span class="d-none d-sm-inline">Đăng nhập / Đăng ký</span>
+=======
+                    <span>Đăng nhập / Đăng ký</span>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                 </a>
             </div>
 
@@ -343,6 +373,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <!-- FOOTER (Đã fix lỗi dính chữ) -->
     <footer class="custom-footer">
         <div class="container-fluid px-3 px-lg-5">
@@ -353,11 +384,26 @@
                 </div>
                 <!-- Dùng class "gap-3 gap-lg-4" để tạo khoảng cách đều đặn tự động -->
                 <div class="col-lg-3 footer-links d-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0 gap-3 gap-lg-4">
+=======
+    <!-- FOOTER -->
+    <footer class="custom-footer">
+        <div class="container-fluid px-5">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <h5 class="fw-bold text-dark mb-1">Khoavang.vn</h5>
+                    <p class="text-muted small mb-0">Đơn vị cung cấp giải pháp máy tính cao cấp, Workstation và Laptop Gaming.</p>
+                </div>
+                <div class="col-lg-3 footer-links d-flex gap-4">
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                     <a href="#">Về chúng tôi</a>
                     <a href="#">Chính sách bảo hành</a>
                     <a href="#">Hỗ trợ</a>
                 </div>
+<<<<<<< HEAD
                 <div class="col-lg-4 text-center text-lg-end">
+=======
+                <div class="col-lg-4 text-end">
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                     <p class="text-muted small mb-0">© 2026 Khoavang.vn - High-End Computing Solutions</p>
                 </div>
             </div>
@@ -447,7 +493,11 @@
             toggleAuthForms();
         });
 
+<<<<<<< HEAD
         // 4. LOGIC ĐĂNG NHẬP
+=======
+        // 4. LOGIC ĐĂNG NHẬP (ĐÃ CẬP NHẬT KIỂM TRA BẢO MẬT DÀNH CHO MAIN.JS)
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault(); 
             
@@ -459,16 +509,33 @@
             
             let validUser = usersArray.find(u => u.username === user && u.password === pass);
 
+<<<<<<< HEAD
+=======
+            // TẠO TÀI KHOẢN MẶC ĐỊNH ĐỂ TEST (Cho phép đăng nhập bằng khoa / 123456)
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
             if (!validUser && user === "khoa" && pass === "123456") {
                 validUser = { fullname: "Trần Nhật Khoa", username: "khoa", password: "123456", email: "khoa@gmail.com", phone: "0901234567" };
             }
 
             if (validUser) {
                 errorBox.classList.add('d-none'); 
+<<<<<<< HEAD
                 localStorage.setItem('khoavang_user', JSON.stringify(validUser));
                 localStorage.setItem('isLoggedIn', 'true');
                 
                 alert(`Đăng nhập thành công! Chào mừng ${validUser.fullname || validUser.username}. Đang chuyển hướng sang cửa hàng...`);
+=======
+                
+                // Lưu thông tin cá nhân của người dùng
+                localStorage.setItem('khoavang_user', JSON.stringify(validUser));
+                
+                // ĐÂY LÀ DÒNG LỆNH QUAN TRỌNG NHẤT ĐỂ MAIN.JS CHO PHÉP QUA CỬA
+                localStorage.setItem('isLoggedIn', 'true');
+                
+                alert(`Đăng nhập thành công! Chào mừng ${validUser.fullname || validUser.username}. Đang chuyển hướng sang cửa hàng...`);
+                
+                // Chuyển trang sau khi thiết lập xong bộ nhớ
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                 window.location.href = 'shop.html'; 
             } else {
                 errorBox.classList.remove('d-none');

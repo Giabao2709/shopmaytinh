@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lịch sử đơn hàng - Khoavang.vn</title>
+<<<<<<< HEAD
     <!-- Bootstrap 5 CSS -->
+=======
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -60,6 +63,7 @@
         .order-body { padding: 25px; }
         .order-footer { background: #F8FAFC; padding: 15px 25px; border-top: 1px dashed var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         
+<<<<<<< HEAD
         .product-row { display: flex; align-items: flex-start; gap: 20px; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid #f1f5f9; }
         .product-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         .product-img { width: 100px; height: 100px; object-fit: contain; border: 1px solid #e2e8f0; border-radius: 8px; padding: 5px; background: #fff; }
@@ -72,19 +76,35 @@
         .code-badge { font-family: monospace; font-size: 0.9rem; padding: 4px 10px; border-radius: 6px; font-weight: 700; display: inline-block;}
         .machine-code { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
         .warranty-code { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+=======
+        .product-row { display: flex; align-items: center; gap: 20px; padding-bottom: 15px; margin-bottom: 15px; border-bottom: 1px solid #f1f5f9; }
+        .product-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .product-img { width: 90px; height: 90px; object-fit: contain; border: 1px solid #e2e8f0; border-radius: 8px; padding: 5px; background: #fff; }
+        .product-info { flex-grow: 1; }
+        .product-name { font-weight: 700; font-size: 1.05rem; color: var(--dark-header); margin-bottom: 5px; }
+        .product-meta { color: #64748b; font-size: 0.9rem; }
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
 
         .info-block { display: flex; flex-direction: column; }
         .info-label { font-size: 0.85rem; color: #64748b; font-weight: 600; margin-bottom: 3px; }
         .info-value { font-weight: 700; color: var(--dark-header); font-size: 1rem; }
+<<<<<<< HEAD
         .total-price { color: #DC2626; font-size: 1.4rem; font-weight: 900; }
 
         /* =========================================
            RESPONSIVE
+=======
+        .total-price { color: #DC2626; font-size: 1.3rem; font-weight: 900; }
+
+        /* =========================================
+           RESPONSIVE CHO MÀN HÌNH MÁY TÍNH (>= 992px)
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
            ========================================= */
         @media (min-width: 992px) {
             .wrapper { flex-direction: row; }
             .sidebar { width: 260px; position: fixed; top: 0; left: 0; height: 100vh; padding: 20px 15px; }
             .sidebar .offcanvas-body { padding: 0; overflow-y: visible; }
+<<<<<<< HEAD
             .main-content { margin-left: 260px; padding: 40px 40px 0 40px; width: calc(100% - 260px); display: flex; flex-direction: column; min-height: 100vh;}
             .content-card { padding: 40px; }
             .footer-bottom { margin-top: auto; background-color: var(--dark-header); color: #fff; padding: 40px; border-radius: 15px 15px 0 0; margin-left: -40px; margin-right: -40px;}
@@ -95,19 +115,51 @@
             .main-content { margin-left: 0; padding: 20px 15px 0 15px; width: 100%; display: flex; flex-direction: column; min-height: calc(100vh - 70px);}
             .page-title { font-size: 1.6rem; margin-bottom: 20px;}
             .content-card { padding: 15px; margin-bottom: 30px;}
+=======
+            
+            .main-content { margin-left: 260px; padding: 40px 40px 0 40px; width: calc(100% - 260px); display: flex; flex-direction: column; min-height: 100vh;}
+            .content-card { padding: 40px; }
+            
+            .footer-bottom { margin-top: auto; background-color: var(--dark-header); color: #fff; padding: 40px; border-radius: 15px 15px 0 0; margin-left: -40px; margin-right: -40px;}
+        }
+
+        /* =========================================
+           RESPONSIVE CHO MÀN HÌNH ĐIỆN THOẠI (< 992px)
+           ========================================= */
+        @media (max-width: 991px) {
+            .sidebar.offcanvas-start { width: 280px; }
+            .main-content { margin-left: 0; padding: 20px 15px 0 15px; width: 100%; display: flex; flex-direction: column; min-height: calc(100vh - 70px);}
+            
+            .page-title { font-size: 1.6rem; margin-bottom: 20px;}
+            .content-card { padding: 15px; margin-bottom: 30px;}
+            
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
             .order-header { padding: 12px 15px; }
             .order-body { padding: 15px; }
             .order-footer { padding: 15px; flex-direction: column; align-items: flex-start; gap: 10px; }
             .order-footer .text-md-end { text-align: left !important; margin-top: 5px; }
+<<<<<<< HEAD
             .product-row { gap: 15px; flex-direction: column; align-items: flex-start; }
             .product-img { width: 100%; height: 150px; }
             .footer-bottom { margin-top: auto; background-color: var(--dark-header); color: #fff; padding: 30px 20px; border-radius: 15px 15px 0 0; margin-left: -15px; margin-right: -15px;}
+=======
+            
+            .product-row { gap: 15px; flex-direction: column; align-items: flex-start; }
+            .product-img { width: 100%; height: 120px; }
+            .product-name { font-size: 1rem; }
+            
+            .footer-bottom { margin-top: auto; background-color: var(--dark-header); color: #fff; padding: 30px 20px; border-radius: 15px 15px 0 0; margin-left: -15px; margin-right: -15px;}
+            .footer-text { font-size: 0.85rem; }
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
         }
     </style>
 </head>
 <body>
 
+<<<<<<< HEAD
     <!-- Nút mở menu trên Mobile -->
+=======
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
     <div class="d-flex d-lg-none justify-content-between align-items-center px-4 py-3 shadow-sm" style="background-color: var(--dark-header); position: sticky; top: 0; z-index: 999;">
         <a href="index.html" class="text-decoration-none" style="color: var(--primary-yellow); font-size: 1.4rem; font-weight: 900;">Khoavang.vn</a>
         <button class="btn text-white fs-3 p-0 border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#orderSidebar">
@@ -117,8 +169,13 @@
 
     <div class="wrapper">
         
+<<<<<<< HEAD
         <!-- SIDEBAR -->
         <div class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="orderSidebar">
+=======
+        <div class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="orderSidebar">
+            
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
             <div class="offcanvas-header d-lg-none border-bottom border-secondary mb-3">
                 <h5 class="offcanvas-title mb-0" style="color: var(--primary-yellow); font-weight: 900;">
                     <i class="fa-solid fa-laptop-code sidebar-brand-icon p-1 me-2" style="font-size: 1rem;"></i> Khoavang.vn
@@ -134,7 +191,11 @@
                 <ul class="sidebar-nav">
                     <li class="nav-item"><a href="admin.html" class="nav-link"><i class="fa-solid fa-user-pen"></i> Khách hàng</a></li>
                     <li class="nav-item"><a href="shop.html" class="nav-link"><i class="fa-solid fa-desktop"></i> Sản phẩm</a></li>
+<<<<<<< HEAD
                     <li class="nav-item"><a href="cart.html" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</a></li>
+=======
+                    <li class="nav-item"><a href="cart.html" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> Đơn hàng</a></li>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                     <li class="nav-item"><a href="order.html" class="nav-link active"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn hàng</a></li>
                     <li class="nav-item"><a href="warranty.html" class="nav-link"><i class="fa-solid fa-shield-halved"></i> Tra cứu bảo hành</a></li>
                     <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fa-solid fa-headset"></i> Hỗ trợ</a></li>
@@ -150,13 +211,19 @@
             </div>
         </div>
 
+<<<<<<< HEAD
         <!-- MAIN CONTENT -->
+=======
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
         <div class="main-content">
             <h1 class="page-title">Lịch sử đơn hàng</h1>
             
             <div class="content-card">
                 
+<<<<<<< HEAD
                 <!-- Hiển thị khi không có đơn hàng -->
+=======
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                 <div class="empty-state" id="empty-orders-view">
                     <i class="fa-solid fa-box-open empty-state-icon"></i>
                     <h3>Bạn chưa có đơn hàng nào</h3>
@@ -164,12 +231,20 @@
                     <a href="shop.html" class="btn-shop-now"><i class="fa-solid fa-cart-plus me-2"></i> TIẾP TỤC MUA SẮM</a>
                 </div>
 
+<<<<<<< HEAD
                 <!-- Nơi chứa dữ liệu đơn hàng render bằng JS -->
                 <div id="real-orders-view" class="d-none"></div>
 
             </div>
 
             <!-- FOOTER -->
+=======
+                <div id="real-orders-view" class="d-none">
+                    </div>
+
+            </div>
+
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
             <div class="footer-bottom">
                 <div class="row align-items-center">
                     <div class="col-lg-7">
@@ -183,7 +258,10 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <!-- MODAL ĐĂNG XUẤT -->
+=======
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 15px; border: none;">
@@ -215,7 +293,11 @@
             // localStorage.removeItem('khoavang_user'); 
         }
 
+<<<<<<< HEAD
         // --- ĐỌC VÀ HIỂN THỊ DỮ LIỆU ĐƠN HÀNG TỪ LOCALSTORAGE ---
+=======
+        // --- ĐỌC VÀ HIỂN THỊ DỮ LIỆU ĐƠN HÀNG ---
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
         window.onload = function() {
             const historyData = localStorage.getItem('khoavang_orderHistory');
             
@@ -233,6 +315,7 @@
                     // Đảo ngược mảng để đơn hàng mới nhất hiện lên trên cùng
                     orders.reverse().forEach(order => {
                         
+<<<<<<< HEAD
                         let itemsHtml = '';
                         order.items.forEach(item => {
                             // Dự phòng ảnh mặc định nếu không load được
@@ -250,16 +333,35 @@
                                         </div>
                                     </div>
                                     <div class="fw-bold text-dark fs-5 text-md-end" style="min-width: 130px;">${(item.price * item.qty).toLocaleString('vi-VN')} đ</div>
+=======
+                        // Render danh sách sản phẩm trong từng đơn hàng
+                        let itemsHtml = '';
+                        order.items.forEach(item => {
+                            itemsHtml += `
+                                <div class="product-row">
+                                    <img src="${item.img}" alt="${item.name}" class="product-img">
+                                    <div class="product-info">
+                                        <div class="product-name">${item.name}</div>
+                                        <div class="product-meta">Số lượng: <strong>x${item.qty}</strong></div>
+                                    </div>
+                                    <div class="fw-bold text-dark w-100 text-md-end" style="max-width: 150px;">${(item.price * item.qty).toLocaleString('vi-VN')} đ</div>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                                 </div>
                             `;
                         });
 
+<<<<<<< HEAD
+=======
+                        // Render Card của đơn hàng
+                        // Đã thay đổi "text-end" thành "text-md-end" để responsive đẹp hơn trên di động
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                         htmlContent += `
                             <div class="order-item-card">
                                 <div class="order-header">
                                     <div class="d-flex align-items-center flex-wrap gap-4">
                                         <div class="info-block">
                                             <span class="info-label">Mã đơn hàng</span>
+<<<<<<< HEAD
                                             <span class="info-value text-primary fs-5">${order.orderId}</span>
                                         </div>
                                         <div class="info-block">
@@ -268,6 +370,16 @@
                                         </div>
                                     </div>
                                     <span class="badge bg-success px-3 py-2" style="font-size: 0.9rem;"><i class="fa-solid fa-truck-fast me-1"></i> Đang xử lý</span>
+=======
+                                            <span class="info-value text-primary">${order.orderId}</span>
+                                        </div>
+                                        <div class="info-block">
+                                            <span class="info-label">Ngày đặt</span>
+                                            <span class="info-value"><i class="fa-regular fa-clock me-1"></i> ${order.date}</span>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-success px-3 py-2" style="font-size: 0.85rem;"><i class="fa-solid fa-truck-fast me-1"></i> Đang giao hàng</span>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                                 </div>
                                 
                                 <div class="order-body">
@@ -277,8 +389,17 @@
                                 <div class="order-footer">
                                     <div class="d-flex flex-wrap gap-4">
                                         <div class="info-block">
+<<<<<<< HEAD
                                             <span class="info-label">Phương thức thanh toán</span>
                                             <span class="info-value"><i class="fa-solid fa-wallet me-1 text-muted"></i> ${order.method}</span>
+=======
+                                            <span class="info-label">Mã bảo hành</span>
+                                            <span class="info-value text-success">${order.warrantyId}</span>
+                                        </div>
+                                        <div class="info-block">
+                                            <span class="info-label">Phương thức</span>
+                                            <span class="info-value">${order.method}</span>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                                         </div>
                                     </div>
                                     <div class="info-block text-md-end">
@@ -290,6 +411,10 @@
                         `;
                     });
 
+<<<<<<< HEAD
+=======
+                    // Đổ HTML vào view
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                     realView.innerHTML = htmlContent;
                 }
             }

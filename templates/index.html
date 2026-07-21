@@ -12,16 +12,24 @@
             --dark-header: #0B1930;
             --primary-yellow: #FFB800;
             --primary-blue: #0A58CA;
+<<<<<<< HEAD
             --red-price: #DC2626; 
             --border-color: #E2E8F0;
         }
 
         
+=======
+            --red-price: #DC2626; /* Màu đỏ */
+            --border-color: #E2E8F0;
+        }
+
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
         body { background-color: var(--bg-body); font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
 
         /* --- HEADER --- */
         .custom-header { background-color: var(--dark-header); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
         .logo-text { color: var(--primary-yellow) !important; font-size: 1.8rem; font-weight: 900; text-decoration: none; }
+<<<<<<< HEAD
         
         /* GIAO DIỆN PC: Chống rớt dòng, dàn ngang */
         .header-links a { 
@@ -96,6 +104,26 @@
                 padding: 12px; 
                 margin-top: 20px; 
             } 
+=======
+        .header-links a { color: #ffffff !important; text-decoration: none; margin: 0 15px; font-weight: 500; font-size: 0.95rem; cursor: pointer; transition: 0.2s; padding-bottom: 5px; border-bottom: 2px solid transparent;}
+        .header-links a:hover, .header-links a.active { color: var(--primary-yellow) !important; border-bottom: 2px solid var(--primary-yellow); }
+        
+        /* [CHỈNH MÀU Ở ĐÂY]: Đổi màu chữ Khuyến mãi trên menu */
+        .header-links a.link-deal { color: var(--red-price) !important; }
+
+        .auth-link { color: #ffffff !important; transition: 0.2s; font-size: 0.95rem;}
+        .auth-link:hover { color: var(--primary-yellow) !important; }
+
+        /* --- CSS CHO MENU TRƯỢT (OFFCANVAS) TRÊN MOBILE --- */
+        @media (max-width: 991px) {
+            /* Giới hạn độ rộng của menu trượt ở mức 60% màn hình */
+            .offcanvas.offcanvas-end {
+                width: 60% !important; /* Bạn có thể đổi thành 50% hoặc 250px tùy ý thích */
+            }
+            
+            .header-links a { margin: 10px 0; padding-bottom: 5px; display: block; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.05);}
+            .header-links a:hover, .header-links a.active { border-bottom: 1px solid var(--primary-yellow); color: var(--primary-yellow) !important; }
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
         }
 
         /* --- SLIDER BANNER CHÍNH --- */
@@ -174,6 +202,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 
+<<<<<<< HEAD
                 <div class="offcanvas-body d-flex flex-column flex-lg-row align-items-lg-center w-100">
                     
                     <div class="header-links w-100 d-flex flex-column flex-lg-row mx-auto text-start justify-content-lg-center mt-3 mt-lg-0">
@@ -189,6 +218,22 @@
                     <div class="d-flex justify-content-center justify-content-lg-end mt-4 mt-lg-0 pb-3 pb-lg-0 ms-lg-4">
                         <a href="login.html" class="auth-btn d-flex align-items-center gap-2 text-decoration-none">
                             <i class="fa-regular fa-user fs-5"></i>
+=======
+                <div class="offcanvas-body align-items-center">
+                    <div class="header-links navbar-nav mx-auto text-start gap-1 gap-lg-0 w-100 justify-content-lg-center mt-3 mt-lg-0">
+                        <a href="shop.html?cat=all" class="nav-link">Tất cả</a>
+                        <a href="shop.html?cat=gaming" class="nav-link">Gaming</a>
+                        <a href="shop.html?cat=macbook" class="nav-link">MacBook</a>
+                        <a href="shop.html?cat=office" class="nav-link">Văn phòng</a>
+                        <a href="shop.html?cat=accessory" class="nav-link">Phụ kiện</a>
+                        <a href="shop.html?cat=deals" class="nav-link link-deal fw-bold">Khuyến mãi</a>
+                        <a href="contact.html" class="nav-link">Hỗ trợ</a> 
+                    </div>
+                    
+                    <div class="d-flex justify-content-start justify-content-lg-end mt-4 mt-lg-0 pb-3 pb-lg-0">
+                        <a href="login.html" class="auth-link d-flex align-items-center gap-2 text-decoration-none">
+                            <i class="fa-regular fa-user fs-4"></i>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                             <span class="fw-bold">Đăng nhập / Đăng ký</span>
                         </a>
                     </div>
@@ -327,8 +372,11 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<<<<<<< HEAD
     
     <script src="/static/js/main.js"></script>
+=======
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
 
     <script>
         const homeFeaturedProducts = [
@@ -367,7 +415,11 @@
                                     ${oldPriceHTML}
                                     <div class="price-current">${p.price.toLocaleString('vi-VN')} đ</div>
                                 </div>
+<<<<<<< HEAD
                                 <button class="btn-cart-blue" title="Thêm vào giỏ hàng" onclick="addToCart(${p.id})"><i class="fa-solid fa-cart-shopping"></i></button>
+=======
+                                <button class="btn-cart-blue" title="Thêm vào giỏ hàng" onclick="addFromHome(${p.id})"><i class="fa-solid fa-cart-shopping"></i></button>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
                             </div>
                         </div>
                     </div>
@@ -378,8 +430,15 @@
 
         window.onload = function() {
             renderHomeDeals();
+<<<<<<< HEAD
             if(typeof updateCartBadge === 'function') updateCartBadge();
         };
     </script>
 </body>
 </html>
+=======
+        };
+    </script>
+</body>
+</html>
+>>>>>>> b9841016a0060ff63af57c2629e7501e95977c16
