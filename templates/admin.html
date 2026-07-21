@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang cá nhân - Khoavang.vn</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #F4F6F8;
+            --dark-header: #0B1930;
+            --primary-yellow: #FFB800;
+            --primary-blue: #0A58CA;
+            --hover-blue: #1E2B45;
+            --border-color: #E2E8F0;
+        }
+
+        body { 
+            background-color: var(--bg-body); 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            color: #333; 
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- BỐ CỤC CHUNG & SIDEBAR TRÁI --- */
+        .wrapper { display: flex; min-height: 100vh; flex-direction: column; }
+        
+        .sidebar { background-color: var(--dark-header); color: #fff; z-index: 1050; }
+        .sidebar-brand { display: flex; align-items: center; gap: 10px; color: var(--primary-yellow) !important; font-size: 1.4rem; font-weight: 900; text-decoration: none; margin-bottom: 30px; padding: 0 5px; transition: 0.3s; }
+        .sidebar-brand:hover { transform: scale(1.05); }
+        .sidebar-brand-icon { background: var(--primary-yellow); color: var(--dark-header); padding: 5px 8px; border-radius: 8px; font-size: 1.2rem; }
+        
+        .sidebar-nav { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+        .nav-item { margin-bottom: 8px; }
+        .nav-link { color: #cbd5e1 !important; font-size: 1.05rem; font-weight: 500; padding: 12px 20px; border-radius: 8px; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
+        .nav-link i { font-size: 1.2rem; width: 25px; text-align: center; }
+        .nav-link:hover { background-color: var(--hover-blue); color: #fff !important; }
+        .nav-link.active { background-color: var(--primary-blue); color: #fff !important; box-shadow: 0 4px 10px rgba(10, 88, 202, 0.3); }
+
+        /* --- KHU VỰC NỘI DUNG CHÍNH --- */
+        .page-title { font-weight: 900; color: var(--dark-header); margin-bottom: 30px; font-size: 2rem; }
+        
+        /* Profile Card */
+        .profile-card { background: #fff; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.03); overflow: hidden; margin-bottom: 50px;}
+        .profile-cover { height: 120px; background: linear-gradient(135deg, var(--dark-header), var(--primary-blue)); position: relative; }
+        
+        .profile-avatar-wrapper { position: relative; display: inline-block; }
+        .profile-avatar { background: #fff; border: 4px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #cbd5e1; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        /* Form styling */
+        .section-title { font-size: 1.1rem; font-weight: 800; color: var(--dark-header); border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 25px; }
+        .form-label { font-weight: 700; color: #475569; font-size: 0.9rem; }
+        .input-group-text { background: #f8fafc; border-color: #cbd5e1; color: #64748b; }
+        .form-control { border-radius: 0 8px 8px 0; padding: 12px 15px; border: 1px solid #cbd5e1; background: #fff; font-size: 0.95rem; }
+        .form-control:focus { border-color: var(--primary-blue); box-shadow: none; outline: 1px solid var(--primary-blue); }
+        .form-control:disabled { background: #f1f5f9; cursor: not-allowed; }
+
+        .btn-save { background: var(--primary-yellow); color: #000; font-weight: 800; padding: 12px 35px; border-radius: 8px; border: none; transition: 0.3s; }
+        .btn-save:hover { background: #e6a600; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,184,0,0.3); }
+
+        /* Toast thông báo */
+        .toast-custom { position: fixed; top: 30px; right: 30px; background: #16A34A; color: white; padding: 15px 25px; border-radius: 8px; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 9999; transform: translateX(150%); transition: transform 0.3s ease-in-out; display: flex; align-items: center; gap: 10px;}
+        .toast-custom.show { transform: translateX(0); }
+
+        /* =========================================
+           RESPONSIVE CHO MÀN HÌNH MÁY TÍNH (>= 992px)
+           ========================================= */
+        @media (min-width: 992px) {
+            .wrapper { flex-direction: row; }
+            .sidebar { width: 260px; position: fixed; top: 0; left: 0; height: 100vh; padding: 20px 15px; }
+            .sidebar .offcanvas-body { padding: 0; overflow-y: visible; }
+            .main-content { margin-left: 260px; padding: 40px 40px 0 40px; width: calc(100% - 260px); display: flex; flex-direction: column; min-height: 100vh;}
+            
+            .profile-avatar { width: 110px; height: 110px; font-size: 3.5rem; }
+            .profile-avatar-wrapper { margin-top: -50px; }
+            
+            .footer-bottom { margin-top: auto; background-color: var(--dark-header); color: #fff; padding: 40px; border-radius: 15px 15px 0 0; margin-left: -40px; margin-right: -40px;}
+        }
+
+        /* =========================================
+           RESPONSIVE CHO MÀN HÌNH ĐIỆN THOẠI (< 992px)
+           ========================================= */
+        @media (max-width: 991px) {
+            .sidebar.offcanvas-start { width: 280px; }
+            .main-content { margin-left: 0; padding: 20px 15px 0 15px; width: 100%; display: flex; flex-direction: column; min-height: calc(100vh - 70px);}
+            
+            .page-title { font-size: 1.6rem; margin-bottom: 20px; }
+            .profile-card { margin-bottom: 30px; }
+            .profile-card .px-5 { padding-left: 20px !important; padding-right: 20px !important; } /* Thu nhỏ padding trong Card */
+            
+            .profile-avatar { width: 85px; height: 85px; font-size: 2.8rem; border-width: 3px; }
+            .profile-avatar-wrapper { margin-top: -35px; }
+            
+            .footer-bottom { margin-top: auto; background-color: var(--dark-header); color: #fff; padding: 30px 20px; border-radius: 15px 15px 0 0; margin-left: -15px; margin-right: -15px;}
+            .footer-text { font-size: 0.85rem; }
+            .btn-save { width: 100%; } /* Nút Lưu full viền để dễ ấn trên mobile */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toast-custom" id="save-toast">
+        <i class="fa-solid fa-circle-check fs-4"></i>
+        <span>Bạn đã thay đổi thành công.</span>
+    </div>
+
+    <div class="d-flex d-lg-none justify-content-between align-items-center px-4 py-3 shadow-sm" style="background-color: var(--dark-header); position: sticky; top: 0; z-index: 999;">
+        <a href="index.html" class="text-decoration-none" style="color: var(--primary-yellow); font-size: 1.4rem; font-weight: 900;">Khoavang.vn</a>
+        <button class="btn text-white fs-3 p-0 border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminSidebar">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+
+    <div class="wrapper">
+        
+        <div class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="adminSidebar">
+            
+            <div class="offcanvas-header d-lg-none border-bottom border-secondary mb-3">
+                <h5 class="offcanvas-title mb-0" style="color: var(--primary-yellow); font-weight: 900;">
+                    <i class="fa-solid fa-laptop-code sidebar-brand-icon p-1 me-2" style="font-size: 1rem;"></i> Khoavang.vn
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#adminSidebar"></button>
+            </div>
+            
+            <div class="offcanvas-body d-flex flex-column h-100 flex-grow-1 p-3 p-lg-0">
+                <a href="shop.html" class="sidebar-brand d-none d-lg-flex">
+                    <i class="fa-solid fa-laptop-code sidebar-brand-icon"></i> Khoavang.vn
+                </a>
+                
+                <ul class="sidebar-nav">
+                    <li class="nav-item"><a href="admin.html" class="nav-link active"><i class="fa-solid fa-user-pen"></i> Khách hàng</a></li>
+                    <li class="nav-item"><a href="shop.html" class="nav-link"><i class="fa-solid fa-desktop"></i> Sản phẩm</a></li>
+                    <li class="nav-item"><a href="cart.html" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> Đơn hàng</a></li>
+                    <li class="nav-item"><a href="order.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn hàng</a></li>
+                    <li class="nav-item"><a href="warranty.html" class="nav-link"><i class="fa-solid fa-shield-halved"></i> Tra cứu bảo hành</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fa-solid fa-headset"></i> Hỗ trợ</a></li>
+                </ul>
+
+                <ul class="sidebar-nav mt-auto" style="flex-grow: 0;">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-danger" onclick="confirmLogout(event)">
+                            <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <h1 class="page-title">Quản lý tài khoản</h1>
+            
+            <div class="profile-card">
+                <div class="profile-cover"></div>
+                
+                <div class="px-5 pb-5">
+                    <div class="d-flex flex-wrap justify-content-between align-items-end mb-5">
+                        <div class="d-flex align-items-end gap-4">
+                            <div class="profile-avatar-wrapper">
+                                <div class="profile-avatar"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="pb-2">
+                                <h3 class="fw-bold mb-1" id="display-fullname">Khách hàng mới</h3>
+                                <p class="text-muted mb-0"><i class="fa-regular fa-clock me-1"></i> Thành viên mới</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form>
+                        <div class="row g-5">
+                            <div class="col-xl-6">
+                                <h4 class="section-title">THÔNG TIN LIÊN HỆ</h4>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Họ và tên</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-regular fa-id-badge"></i></span>
+                                        <input type="text" class="form-control" id="profile-fullname" placeholder="Nhập họ và tên...">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Số điện thoại</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                                        <input type="tel" class="form-control" id="profile-phone" placeholder="Nhập số điện thoại...">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-regular fa-envelope"></i></span>
+                                        <input type="email" class="form-control" id="profile-email" placeholder="Nhập địa chỉ email...">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-6">
+                                <h4 class="section-title">ĐỊA CHỈ & BẢO MẬT</h4>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Địa chỉ giao hàng mặc định</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-map-location-dot"></i></span>
+                                        <input type="text" class="form-control" id="profile-address" placeholder="Nhập địa chỉ nhận hàng...">
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Tên đăng nhập</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-at"></i></span>
+                                        <input type="text" class="form-control" id="profile-username" disabled>
+                                    </div>
+                                    <small class="text-muted mt-1 d-block"><i class="fa-solid fa-circle-info me-1"></i> Tên đăng nhập không thể thay đổi.</small>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Mật khẩu</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                        <input type="password" class="form-control" value="********" disabled style="border-radius: 0;">
+                                        <button class="btn btn-secondary" type="button" style="border-radius: 0 8px 8px 0;">Đổi mật khẩu</button>
+                                    </div>
+                                </div>
+
+                                <div class="text-end mt-5">
+                                    <button type="button" class="btn-save" onclick="saveUserData()"><i class="fa-solid fa-floppy-disk me-2"></i> LƯU THAY ĐỔI</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <h4 style="color: var(--primary-yellow); font-weight: 800; margin-bottom: 15px;">Về Khoavang.vn</h4>
+                        <p class="footer-text mb-3">Được thành lập với sứ mệnh mang đến những giải pháp công nghệ tối ưu nhất, Khoavang.vn tự hào là hệ thống bán lẻ các dòng Laptop Gaming, Máy trạm (Workstation), MacBook và linh kiện Hi-End uy tín hàng đầu tại Việt Nam.</p>
+                        <p class="footer-text mb-0">© 2026 Khoavang.vn - High-End Hardware Retailer.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 15px; border: none;">
+                <div class="modal-body text-center py-5">
+                    <div style="width: 80px; height: 80px; background: #fee2e2; color: var(--red-price); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 20px auto;">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </div>
+                    <h3 class="fw-bold mb-2">Đăng xuất tài khoản?</h3>
+                    <p class="text-muted mb-4 fs-5">Bạn có chắc chắn muốn thoát khỏi hệ thống không?</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="button" class="btn btn-light border px-5 py-2 fw-bold fs-6" data-bs-dismiss="modal">Hủy</button>
+                        <a href="login.html" class="btn btn-danger px-5 py-2 fw-bold fs-6" onclick="logoutUser()">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // HÀM TẢI DỮ LIỆU KHI MỞ TRANG
+        function loadUserData() {
+            let savedUser = localStorage.getItem('khoavang_user');
+            
+            if (savedUser) {
+                let user = JSON.parse(savedUser);
+                
+                document.getElementById('profile-fullname').value = user.fullname || '';
+                document.getElementById('profile-phone').value = user.phone || '';
+                document.getElementById('profile-email').value = user.email || '';
+                document.getElementById('profile-address').value = user.address || '';
+                document.getElementById('profile-username').value = user.username || '';
+                
+                if(user.fullname) {
+                    document.getElementById('display-fullname').innerText = user.fullname;
+                }
+            } else {
+                document.getElementById('profile-username').value = 'khachhang_' + Math.floor(Math.random() * 10000);
+            }
+        }
+
+        // HÀM LƯU THAY ĐỔI
+        function saveUserData() {
+            let user = {
+                fullname: document.getElementById('profile-fullname').value,
+                phone: document.getElementById('profile-phone').value,
+                email: document.getElementById('profile-email').value,
+                address: document.getElementById('profile-address').value,
+                username: document.getElementById('profile-username').value
+            };
+            
+            localStorage.setItem('khoavang_user', JSON.stringify(user));
+            
+            if(user.fullname) {
+                document.getElementById('display-fullname').innerText = user.fullname;
+            }
+
+            const toast = document.getElementById('save-toast');
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function logoutUser() {
+            // Tùy chọn xóa phiên đăng nhập nếu cần
+        }
+
+        function confirmLogout(event) {
+            event.preventDefault(); 
+            var myModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+            myModal.show();
+        }
+
+        window.onload = loadUserData;
+    </script>
+</body>
+</html>

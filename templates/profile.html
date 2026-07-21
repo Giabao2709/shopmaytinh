@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khôi phục mật khẩu - Khoavang.vn</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-light: #F4F7FA;
+            --dark-navy: #0F172A;
+            --header-navy: #0b1528;
+            --primary-yellow: #FFB800;
+            --footer-bg: #F1EBE1;
+        }
+
+        /* GIỮ NGUYÊN 1 TRANG KHÔNG CUỘN */
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            height: 100vh; 
+            overflow: hidden; 
+        }
+
+        /* --- HEADER THEO MẪU MỚI --- */
+        .custom-header {
+            background-color: var(--header-navy);
+            padding: 15px 0;
+            flex-shrink: 0;
+        }
+        .logo-text {
+            color: var(--primary-yellow);
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+        .header-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+        }
+        .header-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+        }
+        .header-links a:hover {
+            color: var(--primary-yellow);
+        }
+        .header-links a.text-red-custom {
+            color: #e30019 !important;
+        }
+        
+        .header-login-btn {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        .header-login-btn i {
+            font-size: 1.2rem;
+        }
+        .header-login-btn:hover {
+            color: var(--primary-yellow);
+        }
+
+        /* --- KHÔNG GIAN CHÍNH --- */
+        .main-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* KHUNG FORM QUÊN MẬT KHẨU Ở GIỮA */
+        .forgot-pwd-container {
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 550px;
+            border: 1px solid #eee;
+        }
+
+        .form-control {
+            padding: 12px 15px;
+            font-size: 0.95rem;
+            background-color: #F8FAFC;
+            border: 1px solid #E2E8F0;
+        }
+        .form-control:focus { 
+            border-color: var(--primary-yellow); 
+            box-shadow: none; 
+            background-color: #fff;
+        }
+        .form-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #64748B;
+            text-transform: uppercase;
+        }
+        .btn-warning-custom {
+            background-color: var(--primary-yellow);
+            color: var(--dark-navy);
+            font-weight: 700;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        /* --- FOOTER --- */
+        .custom-footer {
+            background-color: var(--footer-bg);
+            padding: 20px 0 10px 0;
+            flex-shrink: 0;
+            color: #444;
+        }
+        .footer-links a {
+            color: #555;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--primary-yellow);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 991px) {
+            body { height: auto; overflow: auto; } 
+            .header-links { display: none !important; }
+            .forgot-pwd-container { padding: 30px 20px; }
+            .footer-links { justify-content: flex-start !important; margin: 10px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="custom-header">
+        <div class="container-fluid px-5 d-flex justify-content-between align-items-center">
+            
+            <!-- Link về trang chủ -->
+            <a href="index.html" class="logo-text">Khoavang.vn</a>
+            
+            <div class="header-links d-none d-xl-flex">
+                <a href="#">Tất cả</a>
+                <a href="#">Gaming</a>
+                <a href="#">MacBook</a>
+                <a href="#">Văn phòng</a>
+                <a href="#">Phụ kiện</a>
+                <a href="#" class="text-red-custom">Khuyến mãi</a>
+                <a href="#">Hỗ trợ</a>
+            </div>
+
+            <!-- Link về trang Login -->
+            <div>
+                <a href="login.html" class="header-login-btn">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Đăng nhập / Đăng ký</span>
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- KHÔNG GIAN CHÍNH: FORM ĐỔI MẬT KHẨU -->
+    <div class="main-wrapper">
+        <div class="forgot-pwd-container">
+            <h3 class="fw-bold mb-2 text-center" style="color: var(--dark-navy);">Khôi phục mật khẩu</h3>
+            <p class="text-muted text-center mb-4" style="font-size: 0.9rem;">Vui lòng nhập thông tin để tạo lại mật khẩu mới cho tài khoản của bạn.</p>
+
+            <!-- Hộp thoại thông báo lỗi / thành công -->
+            <div id="msgBox" class="alert d-none py-2" style="font-size: 0.85rem;"></div>
+
+            <form id="resetForm">
+                <div class="mb-3">
+                    <label class="form-label">TÀI KHOẢN HOẶC EMAIL</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-regular fa-user"></i></span>
+                        <input type="text" id="resetUser" class="form-control border-start-0" placeholder="Nhập tên tài khoản hoặc email đăng ký..." required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">MẬT KHẨU MỚI</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-lock"></i></span>
+                        <input type="password" id="newPass" class="form-control border-start-0 border-end-0 pwd-input" placeholder="Tạo mật khẩu mới" required>
+                        <span class="input-group-text bg-light text-muted border-start-0 toggle-pwd" style="cursor: pointer;">
+                            <i class="fa-regular fa-eye-slash"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">XÁC NHẬN MẬT KHẨU</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-lock"></i></span>
+                        <input type="password" id="confirmPass" class="form-control border-start-0 border-end-0 pwd-input" placeholder="Nhập lại mật khẩu mới" required>
+                        <span class="input-group-text bg-light text-muted border-start-0 toggle-pwd" style="cursor: pointer;">
+                            <i class="fa-regular fa-eye-slash"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-warning-custom w-100">XÁC NHẬN ĐỔI MẬT KHẨU</button>
+                
+                <div class="text-center mt-4">
+                    <a href="login.html" class="text-decoration-none fw-bold" style="color: var(--dark-navy); font-size: 0.9rem;">
+                        <i class="fa-solid fa-arrow-left me-1"></i> Quay lại Đăng nhập
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER THEO MẪU MỚI -->
+    <footer class="custom-footer">
+        <div class="container-fluid px-5">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-2 mb-lg-0">
+                    <h5 class="fw-bold text-dark mb-1">Khoavang.vn</h5>
+                    <p class="text-muted small mb-0">Đơn vị cung cấp giải pháp máy tính cao cấp, Workstation và Laptop Gaming.</p>
+                </div>
+                <div class="col-lg-3 d-flex gap-4 footer-links justify-content-lg-center">
+                    <a href="#">Về chúng tôi</a>
+                    <a href="#">Chính sách bảo hành</a>
+                    <a href="#">Hỗ trợ</a>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-2 mt-lg-0">
+                    <p class="text-muted small mb-0">© 2026 Khoavang.vn - High-End Computing Solutions</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JS CHỨC NĂNG -->
+    <script>
+        // Bật/Tắt Mắt xem Mật Khẩu
+        document.querySelectorAll('.toggle-pwd').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.parentElement.querySelector('.pwd-input');
+                const icon = this.querySelector('i');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                }
+            });
+        });
+
+        // Xử lý logic Đổi mật khẩu
+        document.getElementById('resetForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const usernameInput = document.getElementById('resetUser').value;
+            const newPass = document.getElementById('newPass').value;
+            const confirmPass = document.getElementById('confirmPass').value;
+            const msgBox = document.getElementById('msgBox');
+
+            // 1. Kiểm tra 2 mật khẩu có khớp nhau không
+            if (newPass !== confirmPass) {
+                msgBox.className = 'alert alert-danger py-2';
+                msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation me-1"></i> Hai mật khẩu không khớp nhau!';
+                msgBox.classList.remove('d-none');
+                return;
+            }
+
+            // 2. Lấy dữ liệu từ LocalStorage
+            let usersArray = JSON.parse(localStorage.getItem('tempDatabase')) || [];
+            
+            // Tìm tài khoản theo username hoặc email
+            let userIndex = usersArray.findIndex(u => u.username === usernameInput || u.email === usernameInput);
+
+            if (userIndex !== -1) {
+                // Nếu tìm thấy -> Cập nhật mật khẩu mới
+                usersArray[userIndex].password = newPass;
+                localStorage.setItem('tempDatabase', JSON.stringify(usersArray));
+                
+                msgBox.className = 'alert alert-success py-2';
+                msgBox.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> Đổi mật khẩu thành công! Bạn có thể quay lại đăng nhập.';
+                msgBox.classList.remove('d-none');
+                
+                // Reset form sau khi đổi thành công
+                this.reset();
+            } else {
+                // Nếu không tìm thấy tài khoản
+                msgBox.className = 'alert alert-danger py-2';
+                msgBox.innerHTML = '<i class="fa-solid fa-circle-xmark me-1"></i> Không tìm thấy tài khoản hoặc email này!';
+                msgBox.classList.remove('d-none');
+            }
+        });
+    </script>
+</body>
+</html>

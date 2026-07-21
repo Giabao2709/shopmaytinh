@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt hàng thành công - Khoavang.vn</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #FAFAFA;
+            --dark-navy: #0F172A;
+            --primary-yellow: #FFB800;
+            --red-price: #DC2626;
+            --border-color: #E2E8F0;
+            --dark-header: #0B1930;
+        }
+
+        body { background-color: var(--bg-body); font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        .main-content { flex: 1; display: flex; flex-direction: column; }
+
+        /* --- HEADER MỚI --- */
+        .custom-header { background-color: var(--dark-header); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
+        .logo-text { color: var(--primary-yellow) !important; font-size: 1.8rem; font-weight: 900; text-decoration: none; }
+        .header-links a { color: #ffffff !important; text-decoration: none; margin: 0 15px; font-weight: 500; font-size: 0.95rem; cursor: pointer; transition: 0.2s; padding-bottom: 5px; }
+        .header-links a:hover, .header-links a.active { color: var(--primary-yellow) !important; border-bottom: 2px solid var(--primary-yellow); }
+        .header-links a.link-deal { color: var(--red-price) !important; }
+        
+        .search-bar-header { background: #1E2B45; border: 1px solid #2A3B5C; border-radius: 20px; padding: 6px 15px; display: flex; align-items: center; width: 300px; }
+        .search-bar-header input { background: transparent; border: none; color: white; width: 100%; outline: none; font-size: 0.85rem; }
+        .search-bar-header input::placeholder { color: #8BA0B8; }
+        .search-bar-header i { color: #8BA0B8; cursor: pointer; }
+
+        .header-icons { display: flex; align-items: center; gap: 20px; }
+        .header-icons a { color: #ffffff; font-size: 1.2rem; text-decoration: none; position: relative; transition: 0.2s; margin-left: 0; }
+        .header-icons a:hover { color: var(--primary-yellow); }
+
+        /* --- SUCCESS CARD --- */
+        .success-wrapper { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 50px 20px; }
+        .success-card { background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); padding: 40px 30px; max-width: 680px; width: 100%; text-align: center; border: 1px solid var(--border-color); position: relative; overflow: hidden; }
+        .success-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--primary-yellow), #16A34A); }
+
+        .check-icon { width: 70px; height: 70px; background: #DCFCE7; color: #16A34A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto 15px auto; box-shadow: 0 0 0 8px rgba(22, 163, 74, 0.1); }
+        .success-title { font-weight: 800; color: var(--dark-navy); font-size: 1.7rem; margin-bottom: 8px; }
+        .success-desc { color: #64748B; margin-bottom: 25px; font-size: 0.95rem; }
+
+        /* Khối thông tin đơn hàng */
+        .order-info-box { background: #F8FAFC; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 20px; margin-bottom: 25px; text-align: left; }
+        .info-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; align-items: center; }
+        .info-label { color: #64748B; font-weight: 600; }
+        .info-value { color: var(--dark-navy); font-weight: 700; text-align: right; }
+        .order-id { color: #2563EB; font-size: 1.1rem; }
+        .total-paid { color: var(--red-price); font-size: 1.25rem; }
+
+        /* Danh sách từng máy & Mã bảo hành */
+        .products-warranty-list { border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; padding: 15px 0; margin: 15px 0; }
+        .product-warranty-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 15px; margin-bottom: 10px; }
+        .product-warranty-item:last-child { margin-bottom: 0; }
+        .item-title { font-weight: 700; color: #0F172A; font-size: 0.95rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .code-badge { font-family: monospace; font-size: 0.85rem; padding: 3px 8px; border-radius: 4px; font-weight: 700; }
+        .machine-code { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+        .warranty-code { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+
+        /* Nút điều hướng */
+        .btn-group-custom { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .btn-home { background: #fff; border: 1px solid #cbd5e1; color: var(--dark-navy); font-weight: 700; padding: 12px 25px; border-radius: 8px; text-decoration: none; transition: 0.2s; }
+        .btn-home:hover { background: #f1f5f9; border-color: #94a3b8; }
+        .btn-orders { background: var(--primary-yellow); color: var(--dark-navy); border: none; font-weight: 800; padding: 12px 25px; border-radius: 8px; text-decoration: none; transition: 0.2s; }
+        .btn-orders:hover { background: #e6a600; box-shadow: 0 4px 12px rgba(255, 184, 0, 0.3); }
+
+        /* --- FOOTER MỚI --- */
+        .custom-footer { background-color: var(--dark-header); color: #fff; padding-top: 50px; margin-top: auto; }
+        .footer-title { color: var(--primary-yellow); font-weight: 900; font-size: 1.6rem; }
+        .footer-text { color: #CBD5E1; line-height: 1.8; font-size: 0.95rem; margin-bottom: 20px; }
+        .feature-box { background: rgba(255, 255, 255, 0.03); padding: 15px 20px; border-radius: 8px; transition: 0.3s; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .feature-box:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
+        .feature-icon { width: 45px; height: 45px; background: rgba(255, 184, 0, 0.15); color: var(--primary-yellow); display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 1.3rem; flex-shrink: 0; }
+        .footer-bottom { background-color: #3E3222; padding: 20px 0; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER MỚI -->
+    <header class="custom-header">
+        <div class="container-fluid px-4 px-lg-5 d-flex justify-content-between align-items-center">
+            <a href="shop.html" class="logo-text">Khoavang.vn</a>
+            <div class="header-links d-none d-lg-flex">
+                <a href="shop.html">Tất cả</a>
+                <a href="shop.html">Gaming</a>
+                <a href="shop.html">MacBook</a>
+                <a href="shop.html">Văn phòng</a>
+                <a href="shop.html">Phụ kiện</a>
+                <a href="shop.html" class="link-deal fw-bold">Khuyến mãi</a>
+                <a href="contact.html">Hỗ trợ</a>
+            </div>
+            <div class="d-flex align-items-center gap-4">
+                <div class="search-bar-header d-none d-md-flex">
+                    <input type="text" placeholder="Tìm kiếm tên sản phẩm...">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <div class="header-icons">
+                    <a href="admin.html"><i class="fa-regular fa-user"></i></a>
+                    <a href="cart.html">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <!-- SUCCESS SECTION -->
+        <div class="success-wrapper container">
+            <div class="success-card">
+                <div class="check-icon"><i class="fa-solid fa-check"></i></div>
+                <h2 class="success-title">Đặt hàng thành công!</h2>
+                <p class="success-desc">Cảm ơn bạn đã tin tưởng mua sắm tại Khoavang.vn. Đơn hàng của bạn đã được khởi tạo thành công.</p>
+                
+                <div class="order-info-box">
+                    <div class="info-row">
+                        <span class="info-label">Mã đơn hàng chung:</span>
+                        <span class="info-value order-id" id="display-order-id">#KV-ĐANG TẠO...</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Ngày đặt hàng:</span>
+                        <span class="info-value" id="display-date">--/--/----</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Phương thức thanh toán:</span>
+                        <span class="info-value" id="display-method">Đang tải...</span>
+                    </div>
+
+                    <!-- KHU VỰC HIỂN THỊ TỪNG MÁY KHÁC NHAU VỚI MÃ MÁY VÀ MÃ BẢO HÀNH RIÊNG -->
+                    <div class="products-warranty-list">
+                        <div class="small fw-bold text-uppercase text-muted mb-2"><i class="fa-solid fa-laptop me-1"></i> Danh sách máy & Mã bảo hành chi tiết:</div>
+                        <div id="display-products-list">
+                            <!-- Javascript sẽ đổ từng máy vào đây -->
+                        </div>
+                    </div>
+
+                    <div class="info-row">
+                        <span class="info-label">Tổng thanh toán:</span>
+                        <span class="info-value total-paid" id="display-total">0đ</span>
+                    </div>
+                </div>
+
+                <p class="small text-muted mb-4">Chúng tôi đã gửi email xác nhận. Bạn có thể sử dụng các <b>Mã Bảo Hành</b> ở trên để tra cứu thời hạn bảo hành bất kỳ lúc nào.</p>
+
+                <div class="btn-group-custom">
+                    <a href="shop.html" class="btn-home"><i class="fa-solid fa-house me-2"></i> Về trang chủ</a>
+                    <a href="order.html" class="btn-orders">Xem lịch sử đơn hàng <i class="fa-solid fa-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER MỚI -->
+        <footer class="custom-footer">
+            <div class="container">
+                <div class="row g-5">
+                    <div class="col-lg-6">
+                        <h4 class="footer-title mb-4">Về Khoavang.vn</h4>
+                        <p class="footer-text">
+                            Được thành lập với sứ mệnh mang đến những giải pháp công nghệ tối ưu nhất, <strong>Khoavang.vn</strong> tự hào là hệ thống bán lẻ các dòng Laptop Gaming, Máy trạm (Workstation), MacBook và linh kiện Hi-End uy tín hàng đầu tại Việt Nam.
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="d-flex flex-column gap-3">
+                            <div class="feature-box d-flex align-items-center gap-3">
+                                <div class="feature-icon"><i class="fa-solid fa-award"></i></div>
+                                <div>
+                                    <h6 class="mb-1 text-white fw-bold">Sản phẩm chính hãng 100%</h6>
+                                    <small class="text-secondary">Đầy đủ giấy tờ CO, CQ. Nguyên seal từ nhà sản xuất.</small>
+                                </div>
+                            </div>
+                            <div class="feature-box d-flex align-items-center gap-3">
+                                <div class="feature-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                                <div>
+                                    <h6 class="mb-1 text-white fw-bold">Bảo hành siêu tốc</h6>
+                                    <small class="text-secondary">Hỗ trợ đổi trả trong 15 ngày đầu, bảo hành tận nơi tiện lợi.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom text-center">
+                <h5 class="logo-text mb-1" style="font-size: 1.5rem;">Khoavang.vn</h5>
+                <small class="text-secondary">© 2026 Khoavang.vn - High-End Hardware Retailer.</small>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- SCRIPT XỬ LÝ ĐA MÃ MÁY & MÃ BẢO HÀNH -->
+    <script>
+        window.onload = function() {
+            // 1. Tạo Mã đơn hàng tổng
+            const randomID = Math.floor(100000 + Math.random() * 900000);
+            const orderIdStr = "#KV-" + randomID;
+            document.getElementById('display-order-id').innerText = orderIdStr;
+
+            // 2. Lấy ngày hiện tại
+            const today = new Date();
+            const dateString = ("0" + today.getDate()).slice(-2) + "/" + ("0" + (today.getMonth() + 1)).slice(-2) + "/" + today.getFullYear();
+            document.getElementById('display-date').innerText = dateString;
+
+            // 3. Hiển thị phương thức thanh toán
+            const savedMethod = localStorage.getItem('khoavang_paymentMethod') || 'cod'; 
+            let methodText = "Thanh toán khi nhận hàng (COD)";
+            if (savedMethod === 'momo') methodText = "Thanh toán qua ví MoMo";
+            else if (savedMethod === 'bank') methodText = "Chuyển khoản ngân hàng";
+            document.getElementById('display-method').innerText = methodText;
+
+            // 4. Lấy dữ liệu giỏ hàng để TẠO MÃ MÁY & MÃ BẢO HÀNH RIÊNG BIỆT CHO TỪNG SẢN PHẨM
+            const savedData = localStorage.getItem('khoavang_cartData');
+            let finalTotal = 0;
+            let processedItems = [];
+            
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const productsListContainer = document.getElementById('display-products-list');
+                productsListContainer.innerHTML = '';
+                
+                if(data.items && data.items.length > 0) {
+                    data.items.forEach((item, index) => {
+                        finalTotal += (item.price * item.qty);
+
+                        // Tạo Mã máy riêng biệt (MM) và Mã bảo hành riêng biệt (BH) cho sản phẩm này
+                        const machineCode = "#MM-" + Math.floor(100000 + Math.random() * 900000);
+                        const warrantyCode = "#BH-" + Math.floor(100000 + Math.random() * 900000);
+
+                        // Lưu vào danh sách đã xử lý có đủ mã
+                        processedItems.push({
+                            name: item.name,
+                            img: item.img,
+                            price: item.price,
+                            qty: item.qty,
+                            machineCode: machineCode,     // Mã máy duy nhất
+                            warrantyCode: warrantyCode   // Mã bảo hành duy nhất
+                        });
+
+                        // Hiển thị ra giao diện
+                        productsListContainer.innerHTML += `
+                            <div class="product-warranty-item">
+                                <div class="item-title">
+                                    <i class="fa-solid fa-desktop text-primary"></i> 
+                                    <span>${item.name} <span class="text-muted fs-6">(SL: ${item.qty})</span></span>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 mt-2">
+                                    <div><small class="text-muted me-1">Mã máy:</small> <span class="code-badge machine-code">${machineCode}</span></div>
+                                    <div><small class="text-muted me-1">Mã bảo hành:</small> <span class="code-badge warranty-code">${warrantyCode}</span></div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    document.getElementById('display-total').innerText = finalTotal.toLocaleString('vi-VN') + ' đ';
+                    
+                    // 5. LƯU ĐƠN HÀNG VỚI CÁC MÃ RIÊNG VÀO LỊCH SỬ
+                    const newOrder = {
+                        orderId: orderIdStr,
+                        date: dateString,
+                        method: methodText,
+                        total: finalTotal,
+                        items: processedItems // Đã bao gồm cả machineCode và warrantyCode riêng
+                    };
+
+                    let history = JSON.parse(localStorage.getItem('khoavang_orderHistory')) || [];
+                    history.unshift(newOrder); // Thêm đơn mới vào đầu danh sách
+                    localStorage.setItem('khoavang_orderHistory', JSON.stringify(history));
+                }
+                
+                // 6. Xoá giỏ hàng tạm sau khi đã lưu xong
+                localStorage.removeItem('khoavang_cartData');
+                localStorage.removeItem('khoavang_paymentMethod');
+            }
+        };
+    </script>
+</body>
+</html>

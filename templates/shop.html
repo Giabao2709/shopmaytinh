@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh mục sản phẩm - Khoavang.vn</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+        /* Đảm bảo màu chữ hiển thị đúng trên header */
+        .header-links a { color: #ffffff !important; text-decoration: none; margin: 0 15px; font-weight: 500; font-size: 0.95rem; cursor: pointer; transition: 0.2s; padding-bottom: 5px; border-bottom: 2px solid transparent;}
+        .header-links a:hover, .header-links a.active { color: var(--primary-yellow) !important; border-bottom: 2px solid var(--primary-yellow); }
+        .header-links a.link-deal { color: var(--red-price) !important; }
+
+        /* Chỉ áp dụng style trượt cho màn hình Mobile/Tablet (dưới 992px) */
+        @media (max-width: 991px) {
+            .offcanvas-lg.offcanvas-end {
+                width: 60% !important; /* Menu chiếm 60% màn hình */
+            }
+            
+            .header-links a { margin: 10px 0; padding-bottom: 5px; display: block; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.05);}
+            .header-links a:hover, .header-links a.active { border-bottom: 1px solid var(--primary-yellow); color: var(--primary-yellow) !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="custom-header">
+        <div class="container-fluid px-4 px-lg-5 d-flex justify-content-between align-items-center">
+            
+            <a href="index.html" class="logo-text">Khoavang.vn</a>
+            
+            <div class="offcanvas-lg offcanvas-end" tabindex="-1" id="offcanvasShopMenu" style="background-color: var(--dark-header);">
+                
+                <div class="offcanvas-header border-bottom border-secondary d-lg-none">
+                    <h5 class="offcanvas-title logo-text m-0">Khoavang.vn</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasShopMenu"></button>
+                </div>
+                
+                <div class="offcanvas-body">
+                    <div class="header-links d-flex flex-column flex-lg-row align-items-lg-center" id="nav-links">
+                        <a href="#" onclick="setCategory('all')" id="nav-all" class="active">Tất cả</a>
+                        <a href="#" onclick="setCategory('gaming')" id="nav-gaming">Gaming</a>
+                        <a href="#" onclick="setCategory('macbook')" id="nav-macbook">MacBook</a>
+                        <a href="#" onclick="setCategory('office')" id="nav-office">Văn phòng</a>
+                        <a href="#" onclick="setCategory('accessory')" id="nav-accessory">Phụ kiện</a>
+                        <a href="#" onclick="setCategory('deals')" id="nav-deals" class="link-deal fw-bold">Khuyến mãi</a>
+                        <a href="contact.html">Hỗ trợ</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3 gap-lg-4">
+                <div class="search-bar-header d-none d-md-flex">
+                    <input type="text" id="search-input" placeholder="Tìm kiếm tên sản phẩm..." oninput="applyFilters()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                
+                <div class="header-icons">
+                    <a href="#" onclick="requireLogin(event, 'admin.html')">
+                        <i class="fa-regular fa-user"></i>
+                    </a>
+                    <a href="#" onclick="requireLogin(event, 'cart.html')">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="cart-badge" id="header-cart-badge">0</span>
+                    </a>
+                </div>
+
+                <button class="navbar-toggler border-0 p-0 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasShopMenu" style="background: none; color: white;">
+                    <i class="fa-solid fa-bars fs-3"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="toast-custom" id="cart-toast">
+        <i class="fa-solid fa-check-circle me-2"></i> Đã thêm vào giỏ hàng!
+    </div>
+
+    <div class="page-header">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="breadcrumb">
+                <a href="index.html">Trang chủ</a> / <a href="#">Laptop</a> / <span id="bread-category">Tất cả sản phẩm</span>
+            </div>
+            <h1 class="page-title" id="page-main-title">Khám Phá Thế Giới Công Nghệ</h1>
+            <p class="page-desc">Khám phá bộ sưu tập máy trạm chuyên nghiệp, dàn máy gaming đỉnh cao và ultrabook tinh xảo từ các nhà sản xuất hàng đầu thế giới.</p>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="row g-4">
+            <div class="col-lg-3 col-xl-2 d-none d-lg-block">
+                <div class="filter-sidebar">
+                    <h3 class="filter-title"><i class="fa-solid fa-filter text-muted"></i> BỘ LỌC TÌM KIẾM</h3>
+                    
+                    <div class="filter-group">
+                        <div class="filter-group-title">THƯƠNG HIỆU</div>
+                        <ul class="filter-list" id="brand-filters">
+                            <li><div class="form-check"><input class="form-check-input brand-cb" type="checkbox" id="br-apple" value="Apple"><label class="form-check-label" for="br-apple">Apple</label></div></li>
+                            <li><div class="form-check"><input class="form-check-input brand-cb" type="checkbox" id="br-asus" value="ASUS"><label class="form-check-label" for="br-asus">ASUS ROG / TUF</label></div></li>
+                            <li><div class="form-check"><input class="form-check-input brand-cb" type="checkbox" id="br-dell" value="Dell"><label class="form-check-label" for="br-dell">Dell Alienware / XPS</label></div></li>
+                            <li><div class="form-check"><input class="form-check-input brand-cb" type="checkbox" id="br-hp" value="HP"><label class="form-check-label" for="br-hp">HP Omen / Envy</label></div></li>
+                            <li><div class="form-check"><input class="form-check-input brand-cb" type="checkbox" id="br-lenovo" value="Lenovo"><label class="form-check-label" for="br-lenovo">Lenovo Legion</label></div></li>
+                            <li><div class="form-check"><input class="form-check-input brand-cb" type="checkbox" id="br-msi" value="MSI"><label class="form-check-label" for="br-msi">MSI</label></div></li>
+                            <li><div class="form-check"><input class="form-check-input brand-cb" type="checkbox" id="br-acer" value="Acer"><label class="form-check-label" for="br-acer">Acer</label></div></li>
+                            <li><div class="form-check"><input class="form-check-input brand-cb" type="checkbox" id="br-logi" value="Logitech"><label class="form-check-label" for="br-logi">Logitech</label></div></li>
+                            <li><div class="form-check"><input class="form-check-input brand-cb" type="checkbox" id="br-razer" value="Razer"><label class="form-check-label" for="br-razer">Razer</label></div></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <div class="filter-group-title">KHOẢNG GIÁ</div>
+                        <ul class="filter-list" id="price-filters">
+                            <li><div class="form-check"><input class="form-check-input price-cb" type="checkbox" id="pr-1" value="<15"><label class="form-check-label" for="pr-1">Dưới 15.000.000 đ</label></div></li>
+                            <li><div class="form-check"><input class="form-check-input price-cb" type="checkbox" id="pr-2" value="15-25"><label class="form-check-label" for="pr-2">15.000.000 - 25.000.000 đ</label></div></li>
+                            <li><div class="form-check"><input class="form-check-input price-cb" type="checkbox" id="pr-3" value="25-40"><label class="form-check-label" for="pr-3">25.000.000 - 40.000.000 đ</label></div></li>
+                            <li><div class="form-check"><input class="form-check-input price-cb" type="checkbox" id="pr-4" value=">40"><label class="form-check-label" for="pr-4">Trên 40.000.000 đ</label></div></li>
+                        </ul>
+                    </div>
+                    <button class="btn-apply-filter" onclick="applyFilters()">ÁP DỤNG LỌC</button>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-xl-10">
+                <div class="sort-bar">
+                    <span class="sort-label">SẮP XẾP:</span>
+                    <select class="sort-select" id="sort-select" onchange="applyFilters()">
+                        <option value="newest">Mới nhất</option>
+                        <option value="price-asc">Giá tăng dần</option>
+                        <option value="price-desc">Giá giảm dần</option>
+                        <option value="bestseller">Bán chạy</option>
+                    </select>
+                </div>
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4" id="product-grid">
+                    </div>
+
+                <div id="no-result">
+                    <i class="fa-solid fa-box-open fs-1 mb-3 text-muted"></i>
+                    <h4>Không tìm thấy sản phẩm phù hợp</h4>
+                    <p>Vui lòng thử điều chỉnh lại bộ lọc, giá hoặc từ khóa tìm kiếm.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-section">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="about-title">Về Khoavang.vn</h2>
+                    <p class="about-text">Được thành lập với sứ mệnh mang đến những giải pháp công nghệ tối ưu nhất, <strong>Khoavang.vn</strong> tự hào là hệ thống bán lẻ các dòng Laptop Gaming, Máy trạm (Workstation), MacBook và linh kiện Hi-End uy tín hàng đầu tại Việt Nam.</p>
+                    <p class="about-text">Với đội ngũ kỹ thuật viên giàu kinh nghiệm và dịch vụ chăm sóc khách hàng tận tâm, chúng tôi cam kết không chỉ bán một sản phẩm, mà còn trao sự an tâm tuyệt đối cho khách hàng.</p>
+                </div>
+                <div class="col-lg-5 offset-lg-1">
+                    <div class="feat-item">
+                        <div class="feat-icon"><i class="fa-solid fa-award"></i></div>
+                        <div class="feat-text">
+                            <h5>Sản phẩm chính hãng 100%</h5>
+                            <p>Đầy đủ giấy tờ CO, CQ. Nguyên seal từ nhà sản xuất.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                        <div class="feat-text">
+                            <h5>Bảo hành siêu tốc</h5>
+                            <p>Hỗ trợ đổi trả trong 15 ngày đầu, bảo hành tận nơi tiện lợi.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                        <div class="feat-text">
+                            <h5>Giao hàng hỏa tốc 2H</h5>
+                            <p>Miễn phí giao hàng nội thành, kiểm tra máy trước khi thanh toán.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-dark text-center">
+        <div class="container">
+            <h5 style="color: var(--primary-yellow); font-weight: 800; margin-bottom: 5px;">Khoavang.vn</h5>
+            <p class="small text-muted mb-0">© 2026 Khoavang.vn - High-End Hardware Retailer.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

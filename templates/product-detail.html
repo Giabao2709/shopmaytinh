@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm - Khoavang.vn</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #F4F6F8;
+            --dark-header: #0B1930;
+            --primary-yellow: #FFB800;
+            --primary-blue: #0A58CA;
+            --red-price: #DC2626;
+            --border-color: #E2E8F0;
+        }
+
+        body { background-color: var(--bg-body); font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        .main-content { flex: 1; }
+
+        /* HEADER */
+        .custom-header { background-color: var(--dark-header); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
+        .logo-text { color: var(--primary-yellow) !important; font-size: 1.8rem; font-weight: 900; text-decoration: none; }
+        .header-links a { color: #ffffff !important; text-decoration: none; margin: 0 15px; font-weight: 500; font-size: 0.95rem; cursor: pointer; transition: 0.2s; padding-bottom: 5px; }
+        .header-links a:hover, .header-links a.active { color: var(--primary-yellow) !important; border-bottom: 2px solid var(--primary-yellow); }
+        
+        /* Đã sửa màu chữ Khuyến mãi thành đỏ */
+        .header-links a.link-deal { color: var(--red-price) !important; }
+        
+        .search-bar-header { background: #1E2B45; border: 1px solid #2A3B5C; border-radius: 20px; padding: 6px 15px; display: flex; align-items: center; width: 300px; }
+        .search-bar-header input { background: transparent; border: none; color: white; width: 100%; outline: none; font-size: 0.85rem; }
+        .search-bar-header input::placeholder { color: #8BA0B8; }
+        .search-bar-header i { color: #8BA0B8; cursor: pointer; }
+
+        .header-icons { display: flex; align-items: center; gap: 20px; }
+        .header-icons a { color: #ffffff; font-size: 1.2rem; text-decoration: none; position: relative; transition: 0.2s; }
+        .header-icons a:hover { color: var(--primary-yellow); }
+        .cart-badge { position: absolute; top: -5px; right: -8px; background: var(--red-price); color: white; font-size: 0.65rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
+
+        /* BREADCRUMB */
+        .breadcrumb-box { background: #fff; padding: 15px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
+        .breadcrumb { margin: 0; font-size: 0.85rem; color: #64748B; }
+        .breadcrumb a { color: #64748B; text-decoration: none; }
+        .breadcrumb a:hover { color: var(--primary-blue); }
+        .breadcrumb span { color: var(--dark-header); font-weight: 600; }
+
+        /* CHI TIẾT SẢN PHẨM TRÊN */
+        .product-top { background: #fff; border-radius: 8px; padding: 30px; border: 1px solid var(--border-color); margin-bottom: 20px; }
+        .main-img-box { border: 1px solid #f1f5f9; border-radius: 8px; padding: 10px; text-align: center; margin-bottom: 15px; }
+        .main-img-box img { max-width: 100%; height: 350px; object-fit: contain; }
+
+        .prod-title { font-size: 1.6rem; font-weight: 800; color: #111; margin-bottom: 10px; line-height: 1.3; }
+        .prod-meta { font-size: 0.85rem; color: #64748B; margin-bottom: 20px; display: flex; gap: 20px; align-items: center; }
+        .prod-meta .stars { color: var(--primary-yellow); }
+        
+        .price-box { background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 1px dashed #cbd5e1; }
+        .price-current { font-size: 2rem; font-weight: 900; color: var(--red-price); }
+        .price-old { font-size: 1rem; color: #94a3b8; text-decoration: line-through; margin-left: 15px; font-weight: 500; }
+        
+        .short-specs { list-style: none; padding: 0; margin-bottom: 25px; }
+        .short-specs li { margin-bottom: 8px; font-size: 0.95rem; color: #475569; display: flex; align-items: flex-start; gap: 10px; }
+        .short-specs li i { color: var(--primary-blue); margin-top: 4px; }
+
+        .qty-box { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+        .qty-label { font-weight: 700; color: #333; }
+        .qty-input-group { display: flex; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden; }
+        .qty-btn { background: #f8fafc; border: none; padding: 8px 15px; font-weight: bold; color: #333; transition: 0.2s; }
+        .qty-btn:hover { background: #e2e8f0; }
+        .qty-input { width: 50px; text-align: center; border: none; border-left: 1px solid #cbd5e1; border-right: 1px solid #cbd5e1; font-weight: bold; outline: none; }
+
+        .btn-add-cart-large { background: var(--primary-yellow); color: #000; font-weight: 800; font-size: 1.1rem; padding: 15px; border-radius: 8px; border: none; width: 100%; text-transform: uppercase; transition: 0.2s; box-shadow: 0 5px 15px rgba(255,184,0,0.3); }
+        .btn-add-cart-large:hover { background: #e6a600; transform: translateY(-2px); }
+
+        .toast-custom { position: fixed; top: 80px; right: 20px; background: #16A34A; color: white; padding: 12px 25px; border-radius: 6px; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 9999; transform: translateX(150%); transition: transform 0.3s ease-in-out; }
+        .toast-custom.show { transform: translateX(0); }
+
+        /* SẢN PHẨM LIÊN QUAN VÀ MÔ TẢ */
+        .desc-box { background: #fff; padding: 25px; border-radius: 8px; border: 1px solid var(--border-color); height: 100%; }
+        
+        .related-card { background: #fff; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: 0.3s; height: 100%; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+        .related-card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.08); transform: translateY(-5px); border-color: var(--primary-yellow); }
+        .related-img-wrap { padding: 20px; text-align: center; background: #fff; }
+        .related-img-wrap img { height: 150px; object-fit: contain; max-width: 100%; }
+        .related-info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; border-top: 1px solid #f1f5f9; }
+        .related-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 10px; color: #111; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .related-price { font-weight: 800; color: var(--red-price); font-size: 1.1rem; margin-top: auto; }
+
+        /* THÊM MỚI: FOOTER */
+        .custom-footer { background-color: var(--dark-header); color: #fff; padding-top: 50px; margin-top: 60px; }
+        .footer-title { color: var(--primary-yellow); font-weight: 900; font-size: 1.6rem; }
+        .footer-text { color: #CBD5E1; line-height: 1.8; font-size: 0.95rem; margin-bottom: 20px; }
+        .feature-box { background: rgba(255, 255, 255, 0.03); padding: 15px 20px; border-radius: 8px; transition: 0.3s; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .feature-box:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
+        .feature-icon { width: 45px; height: 45px; background: rgba(255, 184, 0, 0.15); color: var(--primary-yellow); display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 1.3rem; flex-shrink: 0; }
+        .footer-bottom { background-color: #3E3222; padding: 20px 0; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="custom-header">
+        <div class="container-fluid px-4 px-lg-5 d-flex justify-content-between align-items-center">
+            <a href="shop.html" class="logo-text">Khoavang.vn</a>
+            <div class="header-links d-none d-lg-flex">
+                <a href="shop.html">Tất cả</a>
+                <a href="shop.html">Gaming</a>
+                <a href="shop.html">MacBook</a>
+                <a href="shop.html">Văn phòng</a>
+                <a href="shop.html">Phụ kiện</a>
+                <a href="shop.html" class="link-deal fw-bold">Khuyến mãi</a>
+                <a href="#">Hỗ trợ</a>
+            </div>
+            <div class="d-flex align-items-center gap-4">
+                <!-- Thanh tìm kiếm -->
+                <div class="search-bar-header d-none d-md-flex">
+                    <input type="text" placeholder="Tìm kiếm tên sản phẩm...">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <div class="header-icons">
+                    <a href="admin.html"><i class="fa-regular fa-user"></i></a>
+                    <a href="cart.html">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="cart-badge" id="header-cart-badge">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- TOAST THÔNG BÁO -->
+    <div class="toast-custom" id="cart-toast">
+        <i class="fa-solid fa-check-circle me-2"></i> Đã thêm vào giỏ hàng!
+    </div>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-content">
+        <!-- BREADCRUMB -->
+        <div class="breadcrumb-box">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="shop.html">Trang chủ</a> / <a href="shop.html" id="bread-cat">Danh mục</a> / <span id="bread-name">Đang tải...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN PRODUCT DETAIL -->
+        <div class="container">
+            <!-- Khối trên cùng: Hình ảnh và thông tin đặt hàng -->
+            <div class="product-top">
+                <div class="row g-5">
+                    <div class="col-lg-5">
+                        <div class="main-img-box">
+                            <img id="detail-img" src="" alt="Sản phẩm">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="text-uppercase fw-bold text-muted mb-2" style="font-size: 0.85rem;">Thương hiệu: <span class="text-primary" id="detail-brand">Brand</span></div>
+                        <h1 class="prod-title" id="detail-name">Đang tải tên sản phẩm...</h1>
+                        
+                        <div class="prod-meta">
+                            <span>Mã SP: <strong id="detail-code">KV-000</strong></span>
+                            <span>Tình trạng: <span class="badge bg-success">Còn hàng</span></span>
+                            <div class="stars">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                                <span class="text-muted ms-1" id="detail-reviews">(0 Đánh giá)</span>
+                            </div>
+                        </div>
+
+                        <div class="price-box">
+                            <span class="price-current" id="detail-price">0 đ</span>
+                            <span class="price-old" id="detail-old-price"></span>
+                            <span class="badge bg-danger ms-3" id="detail-discount-badge" style="display:none;">Sale</span>
+                        </div>
+
+                        <ul class="short-specs" id="detail-specs">
+                            <!-- Thông số ngắn sẽ đổ vào đây -->
+                        </ul>
+
+                        <div class="qty-box">
+                            <span class="qty-label">Số lượng:</span>
+                            <div class="qty-input-group">
+                                <button class="qty-btn" onclick="updateQty(-1)">−</button>
+                                <input type="text" id="detail-qty" class="qty-input" value="1" readonly>
+                                <button class="qty-btn" onclick="updateQty(1)">+</button>
+                            </div>
+                        </div>
+
+                        <button class="btn-add-cart-large" onclick="addCurrentToCart()">
+                            <i class="fa-solid fa-cart-arrow-down me-2"></i> THÊM VÀO GIỎ HÀNG
+                        </button>
+                        
+                        <div class="mt-4 pt-3 border-top text-muted small">
+                            <div class="mb-2"><i class="fa-solid fa-box-open me-2"></i> Bộ sản phẩm gồm: Hộp, Pin, Sạc, Sách hướng dẫn.</div>
+                            <div><i class="fa-solid fa-shield-halved me-2"></i> Bảo hành chính hãng toàn quốc.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MÔ TẢ VÀ THÔNG SỐ CHI TIẾT -->
+            <div class="row g-4 mb-5">
+                <div class="col-lg-8">
+                    <div class="desc-box">
+                        <h5 class="fw-bold mb-3 border-bottom pb-3">Đặc điểm nổi bật</h5>
+                        <div id="detail-description" style="line-height: 1.8; font-size: 0.95rem; color: #475569;">
+                            <!-- JS đổ văn bản tự động vào đây -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="desc-box">
+                        <h5 class="fw-bold mb-3 border-bottom pb-3">Thông số kỹ thuật</h5>
+                        <ul class="list-unstyled text-muted small" id="detail-full-specs" style="line-height: 2.2;">
+                            <!-- JS đổ thông số vào đây -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SẢN PHẨM LIÊN QUAN -->
+            <h4 class="fw-bold mb-4 border-start border-4 border-warning ps-3">Sản phẩm liên quan</h4>
+            <div class="row g-4" id="related-products">
+                <!-- JS đổ 3 sản phẩm vào đây -->
+            </div>
+        </div>
+    </div>
+
+    <!-- THÊM MỚI: FOOTER -->
+    <footer class="custom-footer">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <h4 class="footer-title mb-4">Về Khoavang.vn</h4>
+                    <p class="footer-text">
+                        Được thành lập với sứ mệnh mang đến những giải pháp công nghệ tối ưu nhất, <strong>Khoavang.vn</strong> tự hào là hệ thống bán lẻ các dòng Laptop Gaming, Máy trạm (Workstation), MacBook và linh kiện Hi-End uy tín hàng đầu tại Việt Nam.
+                    </p>
+                    <p class="footer-text mb-0">
+                        Với đội ngũ kỹ thuật viên giàu kinh nghiệm và dịch vụ chăm sóc khách hàng tận tâm, chúng tôi cam kết không chỉ bán một sản phẩm, mà còn trao sự an tâm tuyệt đối cho khách hàng.
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="d-flex flex-column gap-3">
+                        <div class="feature-box d-flex align-items-center gap-3">
+                            <div class="feature-icon"><i class="fa-solid fa-award"></i></div>
+                            <div>
+                                <h6 class="mb-1 text-white fw-bold">Sản phẩm chính hãng 100%</h6>
+                                <small class="text-secondary">Đầy đủ giấy tờ CO, CQ. Nguyên seal từ nhà sản xuất.</small>
+                            </div>
+                        </div>
+                        <div class="feature-box d-flex align-items-center gap-3">
+                            <div class="feature-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                            <div>
+                                <h6 class="mb-1 text-white fw-bold">Bảo hành siêu tốc</h6>
+                                <small class="text-secondary">Hỗ trợ đổi trả trong 15 ngày đầu, bảo hành tận nơi tiện lợi.</small>
+                            </div>
+                        </div>
+                        <div class="feature-box d-flex align-items-center gap-3">
+                            <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                            <div>
+                                <h6 class="mb-1 text-white fw-bold">Giao hàng hỏa tốc 2H</h6>
+                                <small class="text-secondary">Miễn phí giao hàng nội thành, kiểm tra máy trước khi thanh toán.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <h5 class="logo-text mb-1" style="font-size: 1.5rem;">Khoavang.vn</h5>
+            <small class="text-secondary">© 2026 Khoavang.vn - High-End Hardware Retailer.</small>
+        </div>
+    </footer>
+
+    <!-- SCRIPT -->
+    <script>
+        // CƠ SỞ DỮ LIỆU SẢN PHẨM
+        const products = [
+            // GAMING
+            { id: 1, cat: 'gaming', brand: 'MSI', name: 'Laptop MSI Raider GE78 HX Smart Touchpad', img: 'msiraider.jpg', price: 99500000, oldPrice: 105000000, specs: ['Core i9-13980HX', 'RTX 4080', '32GB RAM', '2TB SSD'], rating: 5, reviews: 32, isDeal: false },
+            { id: 2, cat: 'gaming', brand: 'ASUS', name: 'Laptop ASUS ROG Zephyrus G14 (2024)', img: 'rogg14.jpg', price: 36990000, oldPrice: 45000000, specs: ['Ryzen 9 8945HS', 'RTX 4060', 'Mini LED'], rating: 5, reviews: 102, isDeal: true },
+            { id: 3, cat: 'gaming', brand: 'Lenovo', name: 'Laptop Lenovo Legion Y7000P 2024', img: 'y7000p.jpg', price: 35850000, oldPrice: null, specs: ['Core i7-14650HX', 'RTX 4060', '16GB RAM'], rating: 4, reviews: 45, isDeal: false },
+            { id: 4, cat: 'gaming', brand: 'Lenovo', name: 'Laptop Lenovo Legion Y9000P 2024 White', img: 'y9000p.jpg', price: 56990000, oldPrice: null, specs: ['Core i9-14900HX', 'RTX 4060', '16GB RAM'], rating: 5, reviews: 89, isDeal: false },
+            { id: 5, cat: 'gaming', brand: 'Acer', name: 'Laptop Acer Predator Helios Neo 16', img: 'acer-predator.jpg', price: 29990000, oldPrice: 35000000, specs: ['Core i7-13700HX', 'RTX 4060', '16GB RAM'], rating: 4, reviews: 67, isDeal: true },
+            { id: 6, cat: 'gaming', brand: 'Dell', name: 'Laptop Gaming Dell Alienware m16 R2', img: 'dell-alienware.jpg', price: 68990000, oldPrice: 75000000, specs: ['Core i9-13900HX', 'RTX 4080', '32GB DDR5'], rating: 5, reviews: 48, isDeal: true },
+            { id: 7, cat: 'gaming', brand: 'HP', name: 'HP Omen 17" Gaming Workstation', img: 'hp-omen.jpg', price: 42500000, oldPrice: null, specs: ['Core i7-13700H', 'RTX 4070', '1TB SSD'], rating: 4, reviews: 21, isDeal: false },
+            { id: 8, cat: 'gaming', brand: 'Gigabyte', name: 'Laptop Gigabyte Aorus 15X', img: 'gigabyte-aorus.jpg', price: 38900000, oldPrice: 42000000, specs: ['Core i7', 'RTX 4070', '16GB RAM'], rating: 4, reviews: 15, isDeal: true },
+            
+            // MACBOOK
+            { id: 9, cat: 'macbook', brand: 'Apple', name: 'MacBook Pro 16-inch M3 Max (2024)', img: 'pro16m3.jpeg', price: 89990000, oldPrice: null, specs: ['M3 Max Chip', '64GB Unified Memory', '1TB SSD'], rating: 5, reviews: 254, isDeal: false },
+            { id: 10, cat: 'macbook', brand: 'Apple', name: 'MacBook Air M1 13" 2020', img: 'mac-air-m1.jpg', price: 18490000, oldPrice: 20000000, specs: ['M1 Chip', '8GB RAM', '256GB SSD'], rating: 5, reviews: 1520, isDeal: true },
+            { id: 11, cat: 'macbook', brand: 'Apple', name: 'MacBook Air M2 13" 2022', img: 'mac-air-m2.jpg', price: 24990000, oldPrice: null, specs: ['M2 Chip', '8GB RAM', '256GB SSD'], rating: 4, reviews: 840, isDeal: false },
+            { id: 12, cat: 'macbook', brand: 'Apple', name: 'MacBook Air M3 15" 2024', img: 'mac-air-m3.jpg', price: 37990000, oldPrice: 39990000, specs: ['M3 Chip', '16GB RAM', '512GB SSD'], rating: 5, reviews: 120, isDeal: true },
+            { id: 13, cat: 'macbook', brand: 'Apple', name: 'MacBook Pro 14" M3 Pro', img: 'mac-pro-14.jpg', price: 49990000, oldPrice: null, specs: ['M3 Pro Chip', '18GB RAM', '512GB SSD'], rating: 5, reviews: 315, isDeal: false },
+
+            // OFFICE
+            { id: 14, cat: 'office', brand: 'Dell', name: 'Dell XPS 13 Plus 9320 (2023)', img: 'dell-xps13.jpg', price: 42500000, oldPrice: 47000000, specs: ['Core i7-1360P', '16GB RAM', 'OLED 3.5K'], rating: 5, reviews: 85, isDeal: true },
+            { id: 15, cat: 'office', brand: 'Dell', name: 'Dell Inspiron 15 3520', img: 'dell-inspiron.jpg', price: 12990000, oldPrice: 14500000, specs: ['Core i5-1235U', '8GB RAM', '512GB SSD'], rating: 4, reviews: 420, isDeal: true },
+            { id: 16, cat: 'office', brand: 'HP', name: 'HP Envy x360 2-in-1', img: 'hp-envy.jpg', price: 22500000, oldPrice: null, specs: ['Ryzen 7', '16GB RAM', 'Cảm ứng'], rating: 4, reviews: 110, isDeal: false },
+            { id: 17, cat: 'office', brand: 'HP', name: 'HP Pavilion 15', img: 'hp-pavilion.jpg', price: 14500000, oldPrice: null, specs: ['Core i5', '8GB RAM', '256GB SSD'], rating: 4, reviews: 205, isDeal: false },
+            { id: 18, cat: 'office', brand: 'ASUS', name: 'ASUS Zenbook 14 OLED', img: 'asus-zenbook.jpg', price: 25990000, oldPrice: null, specs: ['Core Ultra 7', '16GB RAM', 'OLED 120Hz'], rating: 5, reviews: 90, isDeal: false },
+            { id: 19, cat: 'office', brand: 'ASUS', name: 'ASUS Vivobook 15', img: 'asus-vivobook.jpg', price: 11990000, oldPrice: 13500000, specs: ['Core i3', '8GB RAM', '512GB SSD'], rating: 3, reviews: 150, isDeal: true },
+            { id: 20, cat: 'office', brand: 'Lenovo', name: 'Lenovo ThinkPad X1 Carbon Gen 11', img: 'lenovo-thinkpad.jpg', price: 39990000, oldPrice: null, specs: ['Core i7-1355U', '16GB RAM', 'WUXGA'], rating: 5, reviews: 300, isDeal: false },
+            { id: 21, cat: 'office', brand: 'Lenovo', name: 'Lenovo IdeaPad Slim 5', img: 'lenovo-ideapad.jpg', price: 16990000, oldPrice: null, specs: ['Core i5', '16GB RAM', '512GB SSD'], rating: 4, reviews: 180, isDeal: false },
+            { id: 22, cat: 'office', brand: 'Acer', name: 'Acer Swift 3', img: 'acer-swift.jpg', price: 17500000, oldPrice: null, specs: ['Core i5', '16GB RAM', 'EVO'], rating: 4, reviews: 60, isDeal: false },
+            { id: 23, cat: 'office', brand: 'LG', name: 'LG Gram 14 2023', img: 'lg-gram.jpg', price: 26900000, oldPrice: 30000000, specs: ['Core i5', '16GB RAM', '999g'], rating: 5, reviews: 140, isDeal: true },
+
+            // PHỤ KIỆN
+            { id: 24, cat: 'accessory', brand: 'Logitech', name: 'Chuột không dây Logitech G Pro X Superlight', img: 'logitech.jpg', price: 2990000, oldPrice: 3500000, specs: ['Không dây', '63 gram', 'Hero 25K'], rating: 5, reviews: 850, isDeal: true },
+            { id: 25, cat: 'accessory', brand: 'Razer', name: 'Chuột Razer DeathAdder V3 Pro', img: 'mouse-razer.jpg', price: 3490000, oldPrice: null, specs: ['Không dây', 'Ergonomic', '30K DPI'], rating: 5, reviews: 420, isDeal: false },
+            { id: 26, cat: 'accessory', brand: 'Corsair', name: 'Chuột Corsair Harpoon RGB', img: 'mouse-corsair.jpg', price: 1200000, oldPrice: null, specs: ['Không dây', 'RGB', '10K DPI'], rating: 4, reviews: 150, isDeal: false },
+            { id: 27, cat: 'accessory', brand: 'ASUS', name: 'Chuột ASUS ROG Gladius III', img: 'mouse-asus.jpg', price: 1890000, oldPrice: 2200000, specs: ['Có dây/Không dây', 'RGB'], rating: 4, reviews: 200, isDeal: true },
+            { id: 28, cat: 'accessory', brand: 'Sony', name: 'Tai nghe Sony WH-1000XM5 Black', img: 'sonyWH.jpg', price: 7290000, oldPrice: 8500000, specs: ['Chống ồn ANC', 'Hi-Res Audio', 'Pin 30h'], rating: 5, reviews: 1200, isDeal: true },
+            { id: 29, cat: 'accessory', brand: 'Apple', name: 'Tai nghe Apple AirPods Max', img: 'headphone-airpods.jpg', price: 11500000, oldPrice: null, specs: ['Chống ồn', 'Spatial Audio'], rating: 4, reviews: 500, isDeal: false },
+            { id: 30, cat: 'accessory', brand: 'Logitech', name: 'Tai nghe Logitech G Pro X Wireless', img: 'headphone-logitech.jpg', price: 4500000, oldPrice: null, specs: ['Lightspeed', 'Blue VO!CE'], rating: 5, reviews: 300, isDeal: false },
+            { id: 31, cat: 'accessory', brand: 'Razer', name: 'Tai nghe Razer BlackShark V2', img: 'headphone-razer.jpg', price: 2500000, oldPrice: 2990000, specs: ['THX Spatial', 'TriForce 50mm'], rating: 4, reviews: 450, isDeal: true },
+            { id: 32, cat: 'accessory', brand: 'HyperX', name: 'Micro HyperX QuadCast S', img: 'mic-hyperx.jpg', price: 3890000, oldPrice: null, specs: ['RGB', 'Condenser', 'USB'], rating: 5, reviews: 600, isDeal: false },
+            { id: 33, cat: 'accessory', brand: 'Rode', name: 'Micro Rode NT-USB', img: 'mic-rode.jpg', price: 4200000, oldPrice: null, specs: ['Studio Quality', 'Pop filter'], rating: 5, reviews: 250, isDeal: false },
+            { id: 34, cat: 'accessory', brand: 'Shure', name: 'Micro Shure MV7', img: 'mic-shure.jpg', price: 6500000, oldPrice: 7000000, specs: ['XLR/USB', 'Podcast'], rating: 5, reviews: 400, isDeal: true },
+            { id: 35, cat: 'accessory', brand: 'JBL', name: 'Loa Bluetooth JBL Charge 5', img: 'speaker-jbl.jpg', price: 3500000, oldPrice: null, specs: ['Chống nước', 'Pin 20h'], rating: 4, reviews: 800, isDeal: false },
+            { id: 36, cat: 'accessory', brand: 'Marshall', name: 'Loa Marshall Stanmore III', img: 'speaker-marshall.jpg', price: 9500000, oldPrice: null, specs: ['Bluetooth 5.2', '80W'], rating: 5, reviews: 350, isDeal: false }
+        ];
+
+        let currentProduct = null;
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = parseInt(urlParams.get('id')) || 2; 
+
+            currentProduct = products.find(p => p.id === productId);
+
+            if (currentProduct) {
+                document.title = currentProduct.name + " - Khoavang.vn";
+                let catName = currentProduct.cat === 'gaming' ? 'Laptop Gaming' : currentProduct.cat === 'macbook' ? 'Apple MacBook' : currentProduct.cat === 'office' ? 'Laptop Văn Phòng' : 'Phụ Kiện';
+                document.getElementById('bread-cat').innerText = catName;
+                document.getElementById('bread-name').innerText = currentProduct.name;
+
+                document.getElementById('detail-img').src = "/static/img/" + currentProduct.img;
+                document.getElementById('detail-brand').innerText = currentProduct.brand;
+                document.getElementById('detail-name').innerText = currentProduct.name;
+                document.getElementById('detail-code').innerText = "KV-" + currentProduct.id.toString().padStart(4, '0');
+                document.getElementById('detail-reviews').innerText = `(${currentProduct.reviews} Đánh giá)`;
+
+                document.getElementById('detail-price').innerText = currentProduct.price.toLocaleString('vi-VN') + ' đ';
+                if (currentProduct.oldPrice) {
+                    document.getElementById('detail-old-price').innerText = currentProduct.oldPrice.toLocaleString('vi-VN') + ' đ';
+                    let discountPercent = Math.round(((currentProduct.oldPrice - currentProduct.price) / currentProduct.oldPrice) * 100);
+                    let badge = document.getElementById('detail-discount-badge');
+                    badge.style.display = 'inline-block';
+                    badge.innerText = "-" + discountPercent + "%";
+                } else {
+                    document.getElementById('detail-old-price').innerText = "";
+                    document.getElementById('detail-discount-badge').style.display = 'none';
+                }
+
+                let specsHTML = "";
+                let icons = ['fa-microchip', 'fa-memory', 'fa-hard-drive', 'fa-desktop'];
+                currentProduct.specs.forEach((spec, index) => {
+                    let icon = icons[index] || 'fa-circle-check';
+                    specsHTML += `<li><i class="fa-solid ${icon}"></i> ${spec}</li>`;
+                });
+                document.getElementById('detail-specs').innerHTML = specsHTML;
+
+                document.getElementById('detail-description').innerHTML = `
+                    <p>Sản phẩm <strong>${currentProduct.name}</strong> là một trong những sự lựa chọn hàng đầu đến từ thương hiệu <strong>${currentProduct.brand}</strong>. Được trang bị cấu hình cực tốt với <strong>${currentProduct.specs.join(', ')}</strong>, thiết bị hứa hẹn mang lại hiệu năng ổn định, đáp ứng hoàn hảo nhu cầu sử dụng của bạn.</p>
+                    <p>Bên cạnh đó, thiết kế tinh tế và độ bền bỉ cao luôn là điểm nhấn của dòng sản phẩm này. Đây chắc chắn là một khoản đầu tư xứng đáng cho công việc cũng như trải nghiệm giải trí hàng ngày.</p>
+                `;
+
+                let fullSpecs = "";
+                currentProduct.specs.forEach(spec => {
+                    fullSpecs += `<li class="border-bottom py-2"><i class="fa-solid fa-check text-success me-2"></i> ${spec}</li>`;
+                });
+                document.getElementById('detail-full-specs').innerHTML = fullSpecs;
+
+                let related = products.filter(p => p.cat === currentProduct.cat && p.id !== currentProduct.id);
+                if (related.length < 3) {
+                    let others = products.filter(p => p.id !== currentProduct.id && !related.includes(p));
+                    related = related.concat(others.slice(0, 3 - related.length));
+                }
+                related = related.slice(0, 3);
+
+                let relatedHTML = "";
+                related.forEach(p => {
+                    let priceStr = p.price.toLocaleString('vi-VN') + ' đ';
+                    relatedHTML += `
+                        <div class="col-md-4">
+                            <a href="product-detail.html?id=${p.id}" class="related-card">
+                                <div class="related-img-wrap">
+                                    <img src="/static/img/${p.img}" alt="${p.name}">
+                                </div>
+                                <div class="related-info">
+                                    <div class="related-name">${p.name}</div>
+                                    <div class="related-price">${priceStr}</div>
+                                </div>
+                            </a>
+                        </div>
+                    `;
+                });
+                document.getElementById('related-products').innerHTML = relatedHTML;
+            }
+            
+            updateCartBadge();
+        };
+
+        function updateQty(change) {
+            let input = document.getElementById('detail-qty');
+            let currentVal = parseInt(input.value);
+            let newVal = currentVal + change;
+            if(newVal >= 1) input.value = newVal;
+        }
+
+        function updateCartBadge() {
+            let savedData = localStorage.getItem('khoavang_cartData');
+            let totalQty = 0;
+            if (savedData) {
+                let cartData = JSON.parse(savedData);
+                if(cartData.items) cartData.items.forEach(item => totalQty += item.qty);
+            }
+            const badge = document.getElementById('header-cart-badge');
+            if (totalQty > 0) {
+                badge.style.display = 'flex';
+                badge.innerText = totalQty;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function addCurrentToCart() {
+            if(!currentProduct) return;
+            let qtyToAdd = parseInt(document.getElementById('detail-qty').value);
+            
+            let savedData = localStorage.getItem('khoavang_cartData');
+            let cartData = savedData ? JSON.parse(savedData) : { items: [], subtotal: 0, discount: 0, total: 0 };
+            if (!cartData.items) cartData.items = [];
+
+            let existingItem = cartData.items.find(item => item.name === currentProduct.name);
+            if (existingItem) {
+                existingItem.qty += qtyToAdd;
+            } else {
+                cartData.items.push({ 
+                    img: "/static/img/" + currentProduct.img, 
+                    name: currentProduct.name, 
+                    price: currentProduct.price, 
+                    qty: qtyToAdd 
+                });
+            }
+
+            localStorage.setItem('khoavang_cartData', JSON.stringify(cartData));
+            updateCartBadge();
+
+            const toast = document.getElementById('cart-toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+    </script>
+</body>
+</html>

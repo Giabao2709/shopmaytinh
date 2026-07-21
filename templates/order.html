@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử đơn hàng - Khoavang.vn</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #F4F6F8;
+            --dark-header: #0B1930;
+            --primary-yellow: #FFB800;
+            --primary-blue: #0A58CA;
+            --hover-blue: #1E2B45;
+            --border-color: #E2E8F0;
+        }
+
+        body { 
+            background-color: var(--bg-body); 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            color: #333; 
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- BỐ CỤC CHUNG & SIDEBAR TRÁI --- */
+        .wrapper { display: flex; min-height: 100vh; flex-direction: column; }
+        
+        .sidebar { background-color: var(--dark-header); color: #fff; z-index: 1050; }
+        .sidebar-brand { display: flex; align-items: center; gap: 10px; color: var(--primary-yellow) !important; font-size: 1.4rem; font-weight: 900; text-decoration: none; margin-bottom: 30px; padding: 0 5px; transition: 0.3s; }
+        .sidebar-brand:hover { transform: scale(1.05); }
+        .sidebar-brand-icon { background: var(--primary-yellow); color: var(--dark-header); padding: 5px 8px; border-radius: 8px; font-size: 1.2rem; }
+        
+        .sidebar-nav { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+        .nav-item { margin-bottom: 8px; }
+        .nav-link { color: #cbd5e1 !important; font-size: 1.05rem; font-weight: 500; padding: 12px 20px; border-radius: 8px; display: flex; align-items: center; gap: 15px; transition: 0.3s; text-decoration: none; }
+        .nav-link i { font-size: 1.2rem; width: 25px; text-align: center; }
+        .nav-link:hover { background-color: var(--hover-blue); color: #fff !important; }
+        .nav-link.active { background-color: var(--primary-blue); color: #fff !important; box-shadow: 0 4px 10px rgba(10, 88, 202, 0.3); }
+
+        /* --- KHU VỰC NỘI DUNG PHẢI --- */
+        .page-title { font-weight: 900; color: var(--dark-header); margin-bottom: 30px; font-size: 2rem; }
+        
+        .content-card { background: #fff; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.03); overflow: hidden; margin-bottom: 50px; }
+        
+        /* Trạng thái trống */
+        .empty-state { text-align: center; padding: 50px 20px; }
+        .empty-state-icon { font-size: 5rem; color: #cbd5e1; margin-bottom: 20px; }
+        .empty-state h3 { font-weight: 800; color: var(--dark-header); margin-bottom: 10px; }
+        .empty-state p { color: #64748b; font-size: 1rem; margin-bottom: 30px; }
+        
+        .btn-shop-now { background: var(--primary-yellow); color: #000; font-weight: 800; padding: 12px 35px; border-radius: 8px; border: none; text-decoration: none; transition: 0.3s; display: inline-block; }
+        .btn-shop-now:hover { background: #e6a600; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,184,0,0.3); color: #000; }
+
+        /* --- GIAO DIỆN HIỂN THỊ ĐƠN HÀNG THẬT --- */
+        .order-item-card { border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 25px; overflow: hidden; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .order-header { background: #F8FAFC; padding: 15px 25px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .order-body { padding: 25px; }
+        .order-footer { background: #F8FAFC; padding: 15px 25px; border-top: 1px dashed var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        
+        .product-row { display: flex; align-items: flex-start; gap: 20px; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid #f1f5f9; }
+        .product-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .product-img { width: 100px; height: 100px; object-fit: contain; border: 1px solid #e2e8f0; border-radius: 8px; padding: 5px; background: #fff; }
+        
+        .product-info { flex-grow: 1; }
+        .product-name { font-weight: 700; font-size: 1.1rem; color: var(--dark-header); margin-bottom: 8px; }
+        .product-meta { color: #64748b; font-size: 0.95rem; }
+
+        /* Mã máy / Mã bảo hành riêng cho từng sản phẩm */
+        .code-badge { font-family: monospace; font-size: 0.9rem; padding: 4px 10px; border-radius: 6px; font-weight: 700; display: inline-block;}
+        .machine-code { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+        .warranty-code { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+
+        .info-block { display: flex; flex-direction: column; }
+        .info-label { font-size: 0.85rem; color: #64748b; font-weight: 600; margin-bottom: 3px; }
+        .info-value { font-weight: 700; color: var(--dark-header); font-size: 1rem; }
+        .total-price { color: #DC2626; font-size: 1.4rem; font-weight: 900; }
+
+        /* =========================================
+           RESPONSIVE
+           ========================================= */
+        @media (min-width: 992px) {
+            .wrapper { flex-direction: row; }
+            .sidebar { width: 260px; position: fixed; top: 0; left: 0; height: 100vh; padding: 20px 15px; }
+            .sidebar .offcanvas-body { padding: 0; overflow-y: visible; }
+            .main-content { margin-left: 260px; padding: 40px 40px 0 40px; width: calc(100% - 260px); display: flex; flex-direction: column; min-height: 100vh;}
+            .content-card { padding: 40px; }
+            .footer-bottom { margin-top: auto; background-color: var(--dark-header); color: #fff; padding: 40px; border-radius: 15px 15px 0 0; margin-left: -40px; margin-right: -40px;}
+        }
+
+        @media (max-width: 991px) {
+            .sidebar.offcanvas-start { width: 280px; }
+            .main-content { margin-left: 0; padding: 20px 15px 0 15px; width: 100%; display: flex; flex-direction: column; min-height: calc(100vh - 70px);}
+            .page-title { font-size: 1.6rem; margin-bottom: 20px;}
+            .content-card { padding: 15px; margin-bottom: 30px;}
+            .order-header { padding: 12px 15px; }
+            .order-body { padding: 15px; }
+            .order-footer { padding: 15px; flex-direction: column; align-items: flex-start; gap: 10px; }
+            .order-footer .text-md-end { text-align: left !important; margin-top: 5px; }
+            .product-row { gap: 15px; flex-direction: column; align-items: flex-start; }
+            .product-img { width: 100%; height: 150px; }
+            .footer-bottom { margin-top: auto; background-color: var(--dark-header); color: #fff; padding: 30px 20px; border-radius: 15px 15px 0 0; margin-left: -15px; margin-right: -15px;}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nút mở menu trên Mobile -->
+    <div class="d-flex d-lg-none justify-content-between align-items-center px-4 py-3 shadow-sm" style="background-color: var(--dark-header); position: sticky; top: 0; z-index: 999;">
+        <a href="index.html" class="text-decoration-none" style="color: var(--primary-yellow); font-size: 1.4rem; font-weight: 900;">Khoavang.vn</a>
+        <button class="btn text-white fs-3 p-0 border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#orderSidebar">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+
+    <div class="wrapper">
+        
+        <!-- SIDEBAR -->
+        <div class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="orderSidebar">
+            <div class="offcanvas-header d-lg-none border-bottom border-secondary mb-3">
+                <h5 class="offcanvas-title mb-0" style="color: var(--primary-yellow); font-weight: 900;">
+                    <i class="fa-solid fa-laptop-code sidebar-brand-icon p-1 me-2" style="font-size: 1rem;"></i> Khoavang.vn
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#orderSidebar"></button>
+            </div>
+
+            <div class="offcanvas-body d-flex flex-column h-100 flex-grow-1 p-3 p-lg-0">
+                <a href="shop.html" class="sidebar-brand d-none d-lg-flex">
+                    <i class="fa-solid fa-laptop-code sidebar-brand-icon"></i> Khoavang.vn
+                </a>
+                
+                <ul class="sidebar-nav">
+                    <li class="nav-item"><a href="admin.html" class="nav-link"><i class="fa-solid fa-user-pen"></i> Khách hàng</a></li>
+                    <li class="nav-item"><a href="shop.html" class="nav-link"><i class="fa-solid fa-desktop"></i> Sản phẩm</a></li>
+                    <li class="nav-item"><a href="cart.html" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</a></li>
+                    <li class="nav-item"><a href="order.html" class="nav-link active"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn hàng</a></li>
+                    <li class="nav-item"><a href="warranty.html" class="nav-link"><i class="fa-solid fa-shield-halved"></i> Tra cứu bảo hành</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fa-solid fa-headset"></i> Hỗ trợ</a></li>
+                </ul>
+
+                <ul class="sidebar-nav mt-auto" style="flex-grow: 0; margin-bottom: 20px;">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-danger" onclick="confirmLogout(event)">
+                            <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <h1 class="page-title">Lịch sử đơn hàng</h1>
+            
+            <div class="content-card">
+                
+                <!-- Hiển thị khi không có đơn hàng -->
+                <div class="empty-state" id="empty-orders-view">
+                    <i class="fa-solid fa-box-open empty-state-icon"></i>
+                    <h3>Bạn chưa có đơn hàng nào</h3>
+                    <p>Có vẻ như bạn chưa thực hiện giao dịch nào. Hãy khám phá các sản phẩm công nghệ đỉnh cao của chúng tôi!</p>
+                    <a href="shop.html" class="btn-shop-now"><i class="fa-solid fa-cart-plus me-2"></i> TIẾP TỤC MUA SẮM</a>
+                </div>
+
+                <!-- Nơi chứa dữ liệu đơn hàng render bằng JS -->
+                <div id="real-orders-view" class="d-none"></div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <h4 style="color: var(--primary-yellow); font-weight: 800; margin-bottom: 15px;">Về Khoavang.vn</h4>
+                        <p class="footer-text mb-3">Được thành lập với sứ mệnh mang đến những giải pháp công nghệ tối ưu nhất, Khoavang.vn tự hào là hệ thống bán lẻ các dòng Laptop Gaming, Máy trạm (Workstation), MacBook và linh kiện Hi-End uy tín hàng đầu tại Việt Nam.</p>
+                        <p class="footer-text mb-0">© 2026 Khoavang.vn - High-End Hardware Retailer.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL ĐĂNG XUẤT -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 15px; border: none;">
+                <div class="modal-body text-center py-5">
+                    <div style="width: 80px; height: 80px; background: #fee2e2; color: #DC2626; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 20px auto;">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </div>
+                    <h3 class="fw-bold mb-2">Đăng xuất tài khoản?</h3>
+                    <p class="text-muted mb-4 fs-5">Bạn có chắc chắn muốn thoát khỏi hệ thống không?</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="button" class="btn btn-light border px-5 py-2 fw-bold fs-6" data-bs-dismiss="modal">Hủy</button>
+                        <a href="login.html" class="btn btn-danger px-5 py-2 fw-bold fs-6" onclick="logoutUser()">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function confirmLogout(event) {
+            event.preventDefault(); 
+            var myModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+            myModal.show();
+        }
+
+        function logoutUser() {
+            // localStorage.removeItem('khoavang_user'); 
+        }
+
+        // --- ĐỌC VÀ HIỂN THỊ DỮ LIỆU ĐƠN HÀNG TỪ LOCALSTORAGE ---
+        window.onload = function() {
+            const historyData = localStorage.getItem('khoavang_orderHistory');
+            
+            if (historyData) {
+                const orders = JSON.parse(historyData);
+                
+                if (orders.length > 0) {
+                    // Ẩn giao diện trống, hiện khối dữ liệu
+                    document.getElementById('empty-orders-view').classList.add('d-none');
+                    const realView = document.getElementById('real-orders-view');
+                    realView.classList.remove('d-none');
+                    
+                    let htmlContent = '';
+                    
+                    // Đảo ngược mảng để đơn hàng mới nhất hiện lên trên cùng
+                    orders.reverse().forEach(order => {
+                        
+                        let itemsHtml = '';
+                        order.items.forEach(item => {
+                            // Dự phòng ảnh mặc định nếu không load được
+                            let imgSrc = item.img ? item.img : 'https://via.placeholder.com/100?text=No+Image';
+
+                            itemsHtml += `
+                                <div class="product-row">
+                                    <img src="${imgSrc}" alt="${item.name}" class="product-img">
+                                    <div class="product-info">
+                                        <div class="product-name">${item.name}</div>
+                                        <div class="product-meta mb-3">Số lượng: <strong class="text-dark">x${item.qty}</strong></div>
+                                        <div class="d-flex flex-wrap gap-3">
+                                            <div><small class="text-muted me-1">Mã máy:</small> <span class="code-badge machine-code">${item.machineCode || 'Đang cập nhật'}</span></div>
+                                            <div><small class="text-muted me-1">Mã bảo hành:</small> <span class="code-badge warranty-code">${item.warrantyCode || 'Đang cập nhật'}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="fw-bold text-dark fs-5 text-md-end" style="min-width: 130px;">${(item.price * item.qty).toLocaleString('vi-VN')} đ</div>
+                                </div>
+                            `;
+                        });
+
+                        htmlContent += `
+                            <div class="order-item-card">
+                                <div class="order-header">
+                                    <div class="d-flex align-items-center flex-wrap gap-4">
+                                        <div class="info-block">
+                                            <span class="info-label">Mã đơn hàng</span>
+                                            <span class="info-value text-primary fs-5">${order.orderId}</span>
+                                        </div>
+                                        <div class="info-block">
+                                            <span class="info-label">Ngày đặt</span>
+                                            <span class="info-value"><i class="fa-regular fa-calendar me-1 text-muted"></i> ${order.date}</span>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-success px-3 py-2" style="font-size: 0.9rem;"><i class="fa-solid fa-truck-fast me-1"></i> Đang xử lý</span>
+                                </div>
+                                
+                                <div class="order-body">
+                                    ${itemsHtml}
+                                </div>
+                                
+                                <div class="order-footer">
+                                    <div class="d-flex flex-wrap gap-4">
+                                        <div class="info-block">
+                                            <span class="info-label">Phương thức thanh toán</span>
+                                            <span class="info-value"><i class="fa-solid fa-wallet me-1 text-muted"></i> ${order.method}</span>
+                                        </div>
+                                    </div>
+                                    <div class="info-block text-md-end">
+                                        <span class="info-label">Tổng thanh toán</span>
+                                        <span class="total-price">${order.total.toLocaleString('vi-VN')} đ</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    realView.innerHTML = htmlContent;
+                }
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán - Khoavang.vn</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { 
+            --bg-body: #FAFAFA; 
+            --dark-navy: #0F172A; 
+            --primary-yellow: #FFB800; 
+            --red-price: #DC2626; 
+            --border-color: #E2E8F0; 
+            --dark-header: #0B1930;
+        }
+        
+        body { background-color: var(--bg-body); font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        .main-content { flex: 1; }
+
+        /* HEADER CSS (Đồng bộ với shop.html) */
+        .custom-header { background-color: var(--dark-header); padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: none; }
+        .logo-text { color: var(--primary-yellow) !important; font-size: 1.8rem; font-weight: 900; text-decoration: none; }
+        .header-links a { color: #ffffff !important; text-decoration: none; margin: 0 15px; font-weight: 500; font-size: 0.95rem; cursor: pointer; transition: 0.2s; padding-bottom: 5px; }
+        .header-links a:hover, .header-links a.active { color: var(--primary-yellow) !important; border-bottom: 2px solid var(--primary-yellow); }
+        .header-links a.link-deal { color: var(--red-price) !important; }
+        
+        .search-bar-header { background: #1E2B45; border: 1px solid #2A3B5C; border-radius: 20px; padding: 6px 15px; display: flex; align-items: center; width: 300px; }
+        .search-bar-header input { background: transparent; border: none; color: white; width: 100%; outline: none; font-size: 0.85rem; }
+        .search-bar-header input::placeholder { color: #8BA0B8; }
+        .search-bar-header i { color: #8BA0B8; cursor: pointer; }
+
+        .header-icons { display: flex; align-items: center; gap: 20px; }
+        .header-icons a { color: #ffffff; font-size: 1.2rem; text-decoration: none; position: relative; transition: 0.2s; margin-left: 0; }
+        .header-icons a:hover { color: var(--primary-yellow); }
+        .cart-badge { position: absolute; top: -5px; right: -8px; background: var(--red-price); color: white; font-size: 0.65rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
+
+        /* CHECKOUT CONTENT CSS */
+        .page-title { font-weight: 800; color: #111; margin-top: 30px; margin-bottom: 25px; font-size: 1.8rem; }
+        .checkout-box { background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; margin-bottom: 25px; }
+        .box-title { font-size: 1.1rem; font-weight: 800; color: var(--dark-navy); margin-bottom: 20px; text-transform: uppercase; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+
+        .form-label { font-size: 0.85rem; font-weight: 700; color: #555; }
+        .form-control, .form-select { border-radius: 6px; border: 1px solid #ccc; font-size: 0.95rem; padding: 10px 15px; }
+        .form-control:focus, .form-select:focus { border-color: var(--dark-navy); box-shadow: none; }
+
+        .payment-option { display: flex; align-items: center; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-bottom: 15px; cursor: pointer; transition: all 0.2s; }
+        .payment-option.selected { border-color: var(--primary-yellow); background-color: #FFFAEE; box-shadow: 0 4px 10px rgba(255, 184, 0, 0.1); }
+        .payment-option input[type="radio"] { width: 20px; height: 20px; margin-right: 15px; accent-color: var(--primary-yellow); cursor: pointer; }
+        .payment-icon { width: 40px; height: 40px; object-fit: contain; margin-right: 15px; border-radius: 4px; }
+        .payment-text { font-weight: 700; color: var(--dark-navy); margin: 0; font-size: 1rem; }
+        .payment-subtext { font-size: 0.8rem; color: #666; margin: 0; }
+
+        .bank-details { display: none; background: #F8FAFC; border: 1px dashed #ccc; padding: 15px; border-radius: 8px; margin-top: 10px; font-size: 0.9rem; }
+        .bank-details.active { display: block; }
+
+        .summary-box { background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; position: sticky; top: 100px; }
+        .summary-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 20px; color: #111; }
+        .summary-item { display: flex; gap: 15px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        .summary-item img { width: 60px; height: 60px; object-fit: contain; border: 1px solid #eee; border-radius: 6px; padding: 2px; }
+        .summary-item-name { font-size: 0.9rem; font-weight: 700; color: #111; margin-bottom: 5px; line-height: 1.3; }
+        .summary-item-price { font-size: 0.9rem; font-weight: 700; color: var(--red-price); }
+        
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; color: #555; }
+        .total-row { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #eee; padding-top: 20px; margin-top: 10px; }
+        .total-label { font-weight: 800; font-size: 1.2rem; color: #111; }
+        .total-amount { font-weight: 900; color: var(--red-price); font-size: 1.5rem; text-align: right; line-height: 1; }
+
+        .btn-place-order { display: block; width: 100%; background: var(--primary-yellow); color: var(--dark-navy); text-align: center; font-weight: 900; font-size: 1.2rem; padding: 16px; border-radius: 6px; border: none; margin-top: 25px; text-transform: uppercase; transition: 0.2s; }
+        .btn-place-order:hover { background: #e6a600; transform: translateY(-2px); }
+
+        /* FOOTER CSS (Đồng bộ với shop.html) */
+        .custom-footer { background-color: var(--dark-header); color: #fff; padding-top: 50px; margin-top: 60px; }
+        .footer-title { color: var(--primary-yellow); font-weight: 900; font-size: 1.6rem; }
+        .footer-text { color: #CBD5E1; line-height: 1.8; font-size: 0.95rem; margin-bottom: 20px; }
+        .feature-box { background: rgba(255, 255, 255, 0.03); padding: 15px 20px; border-radius: 8px; transition: 0.3s; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .feature-box:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
+        .feature-icon { width: 45px; height: 45px; background: rgba(255, 184, 0, 0.15); color: var(--primary-yellow); display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 1.3rem; flex-shrink: 0; }
+        .footer-bottom { background-color: #3E3222; padding: 20px 0; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER MỚI -->
+    <header class="custom-header">
+        <div class="container-fluid px-4 px-lg-5 d-flex justify-content-between align-items-center">
+            <a href="shop.html" class="logo-text">Khoavang.vn</a>
+            <div class="header-links d-none d-lg-flex">
+                <a href="shop.html">Tất cả</a>
+                <a href="shop.html">Gaming</a>
+                <a href="shop.html">MacBook</a>
+                <a href="shop.html">Văn phòng</a>
+                <a href="shop.html">Phụ kiện</a>
+                <a href="shop.html" class="link-deal fw-bold">Khuyến mãi</a>
+                <a href="#">Hỗ trợ</a>
+            </div>
+            <div class="d-flex align-items-center gap-4">
+                <div class="search-bar-header d-none d-md-flex">
+                    <input type="text" placeholder="Tìm kiếm tên sản phẩm...">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <div class="header-icons">
+                    <a href="admin.html"><i class="fa-regular fa-user"></i></a>
+                    <a href="cart.html">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="cart-badge" id="header-cart-badge">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container mt-2 mb-5">
+            <h1 class="page-title">Tiến hành thanh toán</h1>
+
+            <div class="row g-4">
+                <!-- CỘT TRÁI: ĐỊA CHỈ & THANH TOÁN -->
+                <div class="col-lg-7 col-xl-8">
+                    
+                    <div class="checkout-box">
+                        <h3 class="box-title"><i class="fa-solid fa-location-dot me-2"></i> 1. Thông tin giao hàng</h3>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Họ và tên <span class="text-danger">*</span></label>
+                                <!-- Đã thêm id="fullName" -->
+                                <input type="text" id="fullName" class="form-control" placeholder="Nhập họ tên" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Số điện thoại <span class="text-danger">*</span></label>
+                                <!-- Đã thêm id="phoneNumber" -->
+                                <input type="tel" id="phoneNumber" class="form-control" placeholder="Nhập số điện thoại" required>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="form-label">Tỉnh / Thành phố <span class="text-danger">*</span></label>
+                                <select class="form-select bg-light" disabled>
+                                    <option value="HCM" selected>Hồ Chí Minh</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Quận / Huyện <span class="text-danger">*</span></label>
+                                <select class="form-select" id="districtSelect" onchange="loadWards()">
+                                    <option value="">Chọn Quận/Huyện</option>
+                                    <option value="Q1">Quận 1</option>
+                                    <option value="Q3">Quận 3</option>
+                                    <option value="Q10">Quận 10</option>
+                                    <option value="GV">Quận Gò Vấp</option>
+                                    <option value="TB">Quận Tân Bình</option>
+                                    <option value="TPT">TP Thủ Đức</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Phường / Xã <span class="text-danger">*</span></label>
+                                <select class="form-select" id="wardSelect">
+                                    <option value="">Chọn Phường/Xã</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Địa chỉ cụ thể (Số nhà, tên đường) <span class="text-danger">*</span></label>
+                                <!-- Đã thêm id="addressDetail" -->
+                                <input type="text" id="addressDetail" class="form-control" placeholder="Ví dụ: 283/47 CMT8" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checkout-box">
+                        <h3 class="box-title"><i class="fa-solid fa-credit-card me-2"></i> 2. Phương thức thanh toán</h3>
+                        
+                        <label class="payment-option selected" id="opt-cod">
+                            <input type="radio" name="payment_method" value="cod" checked onchange="changePaymentMethod()">
+                            <div class="d-flex align-items-center">
+                                <div class="payment-icon bg-light d-flex align-items-center justify-content-center border fs-4 text-success"><i class="fa-solid fa-truck"></i></div>
+                                <div>
+                                    <p class="payment-text">Thanh toán khi nhận hàng (COD)</p>
+                                    <p class="payment-subtext">Khách hàng thanh toán tiền mặt cho nhân viên giao hàng.</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="payment-option" id="opt-momo">
+                            <input type="radio" name="payment_method" value="momo" onchange="changePaymentMethod()">
+                            <div class="d-flex align-items-center">
+                                <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-MoMo-Square.png" class="payment-icon" alt="MoMo">
+                                <div>
+                                    <p class="payment-text">Thanh toán qua ví MoMo</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="payment-option" id="opt-bank">
+                            <input type="radio" name="payment_method" value="bank" onchange="changePaymentMethod()">
+                            <div class="d-flex align-items-center">
+                                <div class="payment-icon bg-light d-flex align-items-center justify-content-center border fs-4 text-primary"><i class="fa-solid fa-building-columns"></i></div>
+                                <div>
+                                    <p class="payment-text">Chuyển khoản ngân hàng</p>
+                                </div>
+                            </div>
+                        </label>
+                        
+                        <div id="bank-info" class="bank-details">
+                            <p class="mb-2 fw-bold text-dark">Thông tự tài khoản nhận tiền:</p>
+                            <p class="mb-1">• Ngân hàng: <strong>Vietcombank</strong></p>
+                            <p class="mb-1">• Số tài khoản: <strong class="text-danger fs-6">1029 3847 56</strong></p>
+                            <p class="mb-1">• Chủ tài khoản: <strong>CÔNG TY CỔ PHẦN KHOA VÀNG</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CỘT PHẢI: TÓM TẮT ĐƠN HÀNG -->
+                <div class="col-lg-5 col-xl-4">
+                    <div class="summary-box">
+                        <h3 class="summary-title">Đơn hàng của bạn</h3>
+                        
+                        <div id="checkout-item-list">
+                            <!-- JS sẽ đổ dữ liệu vào đây -->
+                        </div>
+
+                        <div class="summary-row mt-4">
+                            <span>Tạm tính</span>
+                            <span class="fw-bold text-dark" id="chk-subtotal">0đ</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Giảm giá</span>
+                            <span class="fw-bold text-danger" id="chk-discount">0đ</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Phí vận chuyển</span>
+                            <span class="fw-bold text-success">Miễn phí</span>
+                        </div>
+
+                        <div class="total-row">
+                            <span class="total-label">Tổng<br>cộng</span>
+                            <div class="total-amount" id="chk-total">0đ</div>
+                        </div>
+
+                        <!-- Nút hoàn tất đặt hàng -->
+                        <button type="button" class="btn-place-order" onclick="processOrder()">HOÀN TẤT ĐẶT HÀNG</button>               
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER MỚI -->
+    <footer class="custom-footer">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <h4 class="footer-title mb-4">Về Khoavang.vn</h4>
+                    <p class="footer-text">
+                        Được thành lập với sứ mệnh mang đến những giải pháp công nghệ tối ưu nhất, <strong>Khoavang.vn</strong> tự hào là hệ thống bán lẻ các dòng Laptop Gaming, Máy trạm (Workstation), MacBook và linh kiện Hi-End uy tín hàng đầu tại Việt Nam.
+                    </p>
+                    <p class="footer-text mb-0">
+                        Với đội ngũ kỹ thuật viên giàu kinh nghiệm và dịch vụ chăm sóc khách hàng tận tâm, chúng tôi cam kết không chỉ bán một sản phẩm, mà còn trao sự an tâm tuyệt đối cho khách hàng.
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="d-flex flex-column gap-3">
+                        <div class="feature-box d-flex align-items-center gap-3">
+                            <div class="feature-icon"><i class="fa-solid fa-award"></i></div>
+                            <div>
+                                <h6 class="mb-1 text-white fw-bold">Sản phẩm chính hãng 100%</h6>
+                                <small class="text-secondary">Đầy đủ giấy tờ CO, CQ. Nguyên seal từ nhà sản xuất.</small>
+                            </div>
+                        </div>
+                        <div class="feature-box d-flex align-items-center gap-3">
+                            <div class="feature-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                            <div>
+                                <h6 class="mb-1 text-white fw-bold">Bảo hành siêu tốc</h6>
+                                <small class="text-secondary">Hỗ trợ đổi trả trong 15 ngày đầu, bảo hành tận nơi tiện lợi.</small>
+                            </div>
+                        </div>
+                        <div class="feature-box d-flex align-items-center gap-3">
+                            <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                            <div>
+                                <h6 class="mb-1 text-white fw-bold">Giao hàng hỏa tốc 2H</h6>
+                                <small class="text-secondary">Miễn phí giao hàng nội thành, kiểm tra máy trước khi thanh toán.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <h5 class="logo-text mb-1" style="font-size: 1.5rem;">Khoavang.vn</h5>
+            <small class="text-secondary">© 2026 Khoavang.vn - High-End Hardware Retailer.</small>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // 1. DỮ LIỆU CÁC PHƯỜNG/XÃ THEO QUẬN/HUYỆN (TP.HCM)
+        const wardData = {
+            "Q1": ["Phường Bến Nghé", "Phường Bến Thành", "Phường Đa Kao", "Phường Phạm Ngũ Lão", "Phường Tân Định"],
+            "Q3": ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 14"],
+            "Q10": ["Phường 1", "Phường 2", "Phường 4", "Phường 12", "Phường 14", "Phường 15"],
+            "GV": ["Phường 1", "Phường 3", "Phường 4", "Phường 5", "Phường 7", "Phường 10", "Phường 17"],
+            "TB": ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 12", "Phường 15"],
+            "TPT": ["Phường Linh Trung", "Phường Linh Chiểu", "Phường Thảo Điền", "Phường An Phú"]
+        };
+
+        function loadWards() {
+            const district = document.getElementById("districtSelect").value;
+            const wardSelect = document.getElementById("wardSelect");
+            
+            wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+            
+            if (district && wardData[district]) {
+                wardData[district].forEach(ward => {
+                    const option = document.createElement("option");
+                    option.value = ward;
+                    option.textContent = ward;
+                    wardSelect.appendChild(option);
+                });
+            }
+        }
+
+        // 2. HIỆU ỨNG CHỌN PHƯƠNG THỨC THANH TOÁN
+        function changePaymentMethod() {
+            document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
+            let checkedRadio = document.querySelector('input[name="payment_method"]:checked');
+            if(checkedRadio) checkedRadio.closest('.payment-option').classList.add('selected');
+            
+            let bankInfo = document.getElementById('bank-info');
+            if(checkedRadio.value === 'bank') bankInfo.classList.add('active');
+            else bankInfo.classList.remove('active');
+        }
+
+        // 3. ĐỌC DỮ LIỆU TỪ GIỎ HÀNG VÀ TÍNH TOÁN TIỀN TỰ ĐỘNG
+        window.onload = function() {
+            const savedData = localStorage.getItem('khoavang_cartData');
+            let totalQty = 0;
+
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const itemList = document.getElementById('checkout-item-list');
+                itemList.innerHTML = '';
+                
+                let calculatedSubtotal = 0;
+
+                if (data.items && data.items.length > 0) {
+                    data.items.forEach(item => {
+                        let itemTotal = item.price * item.qty;
+                        calculatedSubtotal += itemTotal; 
+                        totalQty += item.qty; 
+                        
+                        itemList.innerHTML += `
+                            <div class="summary-item">
+                                <img src="${item.img}" alt="Product">
+                                <div style="flex-grow: 1;">
+                                    <div class="summary-item-name">${item.name}</div>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <span class="small text-muted">SL: ${item.qty}</span>
+                                        <span class="summary-item-price">${itemTotal.toLocaleString('vi-VN')}đ</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    itemList.innerHTML = '<p class="text-muted small">Giỏ hàng của bạn đang trống.</p>';
+                }
+
+                document.getElementById('chk-subtotal').innerText = calculatedSubtotal.toLocaleString('vi-VN') + 'đ';
+                document.getElementById('chk-discount').innerText = '0đ';
+                document.getElementById('chk-total').innerText = calculatedSubtotal.toLocaleString('vi-VN') + 'đ';
+            }
+
+            const badge = document.getElementById('header-cart-badge');
+            if (totalQty > 0) {
+                badge.style.display = 'flex';
+                badge.innerText = totalQty;
+            }
+        };
+
+        // 4. XỬ LÝ ĐẶT HÀNG: KIỂM TRA DỮ LIỆU VÀ CHUYỂN TRANG
+        function processOrder() {
+            // Lấy giá trị từ các ô nhập liệu
+            const fullName = document.getElementById('fullName').value.trim();
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const district = document.getElementById('districtSelect').value;
+            const ward = document.getElementById('wardSelect').value;
+            const addressDetail = document.getElementById('addressDetail').value.trim();
+
+            // Kiểm tra xem có ô nào bị bỏ trống không
+            if (!fullName || !phoneNumber || !district || !ward || !addressDetail) {
+                alert("Mời bạn nhập đầy đủ thông tin!");
+                return; // Nếu thiếu thông tin, dừng lại và không cho chuyển trang
+            }
+
+            // Nếu đầy đủ, tiến hành lưu phương thức thanh toán
+            let checkedRadio = document.querySelector('input[name="payment_method"]:checked');
+            if (checkedRadio) {
+                localStorage.setItem('khoavang_paymentMethod', checkedRadio.value);
+            }
+            
+            // Chuyển sang trang đặt hàng thành công
+            window.location.href = 'order-success.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+
+        :root {
+            --bg-body: #F4F6F8;
+            --dark-header: #0B1930;
+            --primary-yellow: #FFB800;
+            --primary-blue: #0A58CA;
+            --red-price: #DC2626; 
+            --border-color: #E2E8F0;
+        }
+
+        body { background-color: var(--bg-body); font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; }
+
+        /* --- HEADER --- */
+        .custom-header { background-color: var(--dark-header); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
+        .logo-text { color: var(--primary-yellow) !important; font-size: 1.8rem; font-weight: 900; text-decoration: none; }
+        
+        .header-links a { 
+            color: #ffffff !important; text-decoration: none; margin: 0 15px; font-weight: 500; 
+            font-size: 0.95rem; cursor: pointer; transition: 0.2s; padding-bottom: 5px; border-bottom: 2px solid transparent; 
+        }
+        .header-links a:hover, .header-links a.active { color: var(--primary-yellow) !important; border-bottom: 2px solid var(--primary-yellow); }
+        .header-links a.link-deal { color: var(--red-price) !important; }
+        
+        .search-bar-header { background: #1E2B45; border: 1px solid #2A3B5C; border-radius: 20px; padding: 6px 15px; display: flex; align-items: center; width: 300px; }
+        .search-bar-header input { background: transparent; border: none; color: white; width: 100%; outline: none; font-size: 0.85rem; }
+        .search-bar-header input::placeholder { color: #8BA0B8; }
+        .search-bar-header i { color: #8BA0B8; }
+
+        .header-icons { display: flex; align-items: center; gap: 20px; }
+        .header-icons a { color: #ffffff; font-size: 1.2rem; text-decoration: none; position: relative; transition: 0.2s; }
+        .header-icons a:hover { color: var(--primary-yellow); }
+        .cart-badge { position: absolute; top: -5px; right: -8px; background: var(--red-price); color: white; font-size: 0.65rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
+
+        /* --- PAGE TITLE --- */
+        .page-header { background: #fff; padding: 20px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; }
+        .breadcrumb { font-size: 0.85rem; margin-bottom: 10px; color: #64748B; }
+        .breadcrumb a { color: #64748B; text-decoration: none; }
+        .breadcrumb span { color: var(--primary-yellow); font-weight: 700; }
+        .page-title { font-weight: 800; color: #111; margin: 0 0 5px 0; font-size: 2rem; }
+        .page-desc { color: #64748B; font-size: 0.95rem; margin: 0; }
+
+        /* --- SIDEBAR LỌC --- */
+        .filter-sidebar { background: #fff; border-radius: 8px; padding: 25px; border: 1px solid var(--border-color); position: sticky; top: 90px; }
+        .filter-title { font-weight: 800; font-size: 1.1rem; color: #111; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px;}
+        .filter-group { margin-bottom: 25px; }
+        .filter-group-title { font-size: 0.85rem; font-weight: 800; color: #64748B; text-transform: uppercase; margin-bottom: 15px; }
+        .filter-list { list-style: none; padding-left: 10px; margin: 0; }
+        .filter-list li { margin-bottom: 12px; }
+        .form-check { display: flex; align-items: center; padding-left: 0; }
+        .form-check-input { width: 18px; height: 18px; margin-top: 0; margin-right: 10px; cursor: pointer; border: 1px solid #cbd5e1; }
+        .form-check-input:checked { background-color: var(--primary-blue); border-color: var(--primary-blue); }
+        .form-check-label { font-size: 0.9rem; color: #333; cursor: pointer; user-select: none; flex-grow: 1; }
+        .btn-apply-filter { width: 100%; background: var(--dark-header); color: #fff; font-weight: 700; border: none; padding: 12px; border-radius: 6px; transition: 0.2s; }
+        .btn-apply-filter:hover { background: #1E2B45; }
+
+        /* --- PRODUCT GRID --- */
+        .sort-bar { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 20px; gap: 10px; }
+        .sort-label { font-size: 0.85rem; font-weight: 700; color: #475569; text-transform: uppercase;}
+        .sort-select { border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px 12px; font-size: 0.9rem; cursor: pointer; outline: none; background: #fff; }
+
+        .product-card { background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; transition: all 0.3s; height: 100%; display: flex; flex-direction: column; position: relative; }
+        .product-card:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(0,0,0,0.08); border-color: #cbd5e1; }
+        
+        .brand-tag { position: absolute; top: 15px; left: 15px; background: var(--dark-header); color: #fff; font-size: 0.65rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; z-index: 2; text-transform: uppercase; }
+        .promo-tag { position: absolute; top: 40px; left: 15px; font-size: 0.65rem; font-weight: 800; padding: 3px 8px; border-radius: 4px; z-index: 2; text-transform: uppercase; }
+        .tag-new { background: var(--primary-yellow); color: #000; }
+        .tag-sale { background: var(--red-price); color: #fff; }
+
+        .product-img-box { height: 180px; margin-bottom: 15px; padding: 10px; overflow: hidden; }
+        .product-img-box a { display: block; width: 100%; height: 100%; }
+        .product-img { width: 100%; height: 100%; object-fit: contain; transition: 0.3s; }
+        .product-card:hover .product-img { transform: scale(1.05); }
+        .rating { font-size: 0.75rem; color: var(--primary-yellow); margin-bottom: 8px; }
+        .rating span { color: #94A3B8; margin-left: 5px; }
+        .product-name { font-size: 1rem; font-weight: 800; color: #111; margin-bottom: 10px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-decoration: none; }
+        .product-name:hover { color: var(--primary-blue); }
+        .specs-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px; flex-grow: 1; align-items: flex-start; }
+        .specs-tags span { background: #F1F5F9; color: #8B7E74; font-size: 0.7rem; font-weight: 600; padding: 4px 8px; border-radius: 4px; border: 1px solid #E2E8F0;}
+        .card-bottom { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #f1f5f9; padding-top: 15px; }
+        .price-box { display: flex; flex-direction: column; }
+        .price-old { font-size: 0.75rem; color: #94A3B8; text-decoration: line-through; margin-bottom: 2px; }
+        .price-current { font-weight: 800; color: var(--red-price); font-size: 1.25rem; line-height: 1; }
+        .btn-cart-blue { background: var(--primary-blue); color: #fff; border: none; width: 35px; height: 35px; border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: 0.2s; cursor: pointer;}
+        .btn-cart-blue:hover { background: #084298; }
+
+        #no-result { display: none; text-align: center; padding: 50px 20px; background: #fff; border-radius: 8px; border: 1px dashed #cbd5e1; color: #64748B; }
+        .toast-custom { position: fixed; top: 80px; right: 20px; background: #16A34A; color: white; padding: 12px 25px; border-radius: 6px; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 9999; transform: translateX(150%); transition: transform 0.3s ease-in-out; }
+        .toast-custom.show { transform: translateX(0); }
+
+        /* --- ABOUT US & FOOTER (CẬP NHẬT MỚI) --- */
+        .about-section { padding: 60px 0; background: var(--dark-header); color: #fff; margin-top: 50px; }
+        .about-title { color: var(--primary-yellow); font-weight: 900; margin-bottom: 20px; font-size: 2rem; }
+        .about-text { color: #cbd5e1; line-height: 1.8; font-size: 1.05rem; margin-bottom: 30px; }
+        .feat-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .feat-icon { width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: var(--primary-yellow); }
+        .feat-text h5 { font-weight: 700; margin: 0 0 5px 0; font-size: 1rem; }
+        .feat-text p { color: #94A3B8; margin: 0; font-size: 0.85rem; }
+        
+        .footer-dark { background-color: #3E3832; color: #e5e7eb; padding: 40px 0 20px 0; font-size: 0.85rem; }
+
+        /* ==========================================================================
+   BẢN VÁ LỖI: CHỈNH LẠI BỐ CỤC GIỎ HÀNG & FOOTER ADMIN
+   ========================================================================== */
+/* Cân đối lại tỷ lệ cột trong Giỏ Hàng */
+.cart-table-header, .cart-item {
+    display: flex;
+    align-items: center;
+}
+.col-product { flex: 5 !important; padding-right: 15px; } /* Thu nhỏ cột sản phẩm lại một chút */
+.col-price { flex: 2 !important; text-align: center; white-space: nowrap !important; } /* nowrap cấm rớt dòng */
+.col-qty { flex: 2 !important; display: flex; justify-content: center; }
+.col-total { flex: 2 !important; text-align: right; white-space: nowrap !important; }
+
+/* Tăng nhẹ size chữ cho giá tiền dễ nhìn hơn */
+.item-price-val { font-size: 1.05rem !important; }
+.item-total-val { font-size: 1.15rem !important; }
+
+/* Ngăn Footer bị lỗi đè chữ "Về Khoavang.vn" ở dưới cùng */
+.about-section, .footer-dark {
+    position: relative !important;
+    z-index: 10 !important;
+    width: 100%;
+}
